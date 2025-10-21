@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Colors */
+    --color-primary: #2d5a27; /* deep forest green */
+    --color-primary-foreground: #ffffff; /* white */
+
+    /* Secondary Colors */
+    --color-secondary: #8b4513; /* warm saddle brown */
+    --color-secondary-foreground: #ffffff; /* white */
+
+    /* Accent Colors */
+    --color-accent: #ff6b35; /* energetic coral orange */
+    --color-accent-foreground: #ffffff; /* white */
+
+    /* Background Colors */
+    --color-background: #fafafa; /* soft off-white */
+    --color-foreground: #1a1a1a; /* near-black */
+
+    /* Surface Colors */
+    --color-card: #ffffff; /* pure white */
+    --color-card-foreground: #1a1a1a; /* near-black */
+    --color-popover: #ffffff; /* pure white */
+    --color-popover-foreground: #1a1a1a; /* near-black */
+
+    /* Muted Colors */
+    --color-muted: #f3f4f6; /* light gray */
+    --color-muted-foreground: #6b7280; /* medium gray */
+
+    /* Border and Input */
+    --color-border: #e5e7eb; /* light gray border */
+    --color-input: #ffffff; /* white */
+    --color-ring: #2d5a27; /* deep forest green */
+
+    /* Status Colors */
+    --color-success: #10b981; /* fresh green */
+    --color-success-foreground: #ffffff; /* white */
+    --color-warning: #f59e0b; /* amber */
+    --color-warning-foreground: #ffffff; /* white */
+    --color-error: #ef4444; /* clear red */
+    --color-error-foreground: #ffffff; /* white */
+    --color-destructive: #ef4444; /* clear red */
+    --color-destructive-foreground: #ffffff; /* white */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Source Sans Pro", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Inter", sans-serif;
+  }
+
+  .font-caption {
+    font-family: "Roboto", sans-serif;
+  }
+
+  .font-mono {
+    font-family: "JetBrains Mono", monospace;
+  }
+}
+
+@layer components {
+  .shadow-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-modal {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .transition-micro {
+    transition: all 200ms ease-out;
+  }
+
+  .transition-state {
+    transition: all 300ms ease-in-out;
+  }
+}
