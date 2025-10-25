@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Header from "src/components/ui/Header.jsx";
-import HeroSection from "src/pages/equipment-catalog/components/HeroSection.jsx";
-import Footer from "src/components/ui/Footer.jsx";
+import Header from "../../components/ui/Header.jsx";
+import HeroSection from "../../pages/equipment-catalog/components/HeroSection.jsx";
+import Footer from "../../components/ui/Footer.jsx";
 import EquipmentList from "./components/EquipmentList";
-import { mockEquipment } from "src/pages/equipment-catalog/equipment-data.js";
+import { mockEquipment } from "../../pages/equipment-catalog/equipment-data.js";
 
 const LandingPage = () => {
   const [cartCount, setCartCount] = useState(0);
