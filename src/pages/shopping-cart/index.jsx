@@ -31,11 +31,11 @@ const ShoppingCart = () => {
     const mockCartItems = [
       {
         id: 1,
-        name: "Lều Cắm Trại Coleman Sundome 4 Người",
-        category: "Lều trại",
+        name: "Coleman Sundome 4-Person Tent",
+        category: "Tents",
         image: "https://images.unsplash.com/photo-1687762035856-cab4f81f2b39",
         imageAlt:
-          "Orange dome tent set up in forest clearing with camping gear nearby",
+          "Orange dome tent set up in a forest clearing with camping gear nearby",
         pricePerDay: 150000,
         quantity: 1,
         startDate: "2025-10-25",
@@ -44,11 +44,11 @@ const ShoppingCart = () => {
       },
       {
         id: 2,
-        name: "Túi Ngủ North Face Cat\'s Meow",
-        category: "Đồ ngủ",
+        name: "The North Face Cat's Meow Sleeping Bag",
+        category: "Sleeping Gear",
         image: "https://images.unsplash.com/photo-1623903441132-91d5ecc02b45",
         imageAlt:
-          "Blue sleeping bag laid out on wooden cabin floor with camping equipment",
+          "Blue sleeping bag laid out on a wooden cabin floor with camping equipment",
         pricePerDay: 80000,
         quantity: 2,
         startDate: "2025-10-25",
@@ -57,11 +57,11 @@ const ShoppingCart = () => {
       },
       {
         id: 3,
-        name: "Bếp Gas Mini Jetboil Flash",
-        category: "Nấu ăn",
+        name: "Jetboil Flash Mini Camping Stove",
+        category: "Cooking Equipment",
         image: "https://images.unsplash.com/photo-1722607731856-ff7d914b1be3",
         imageAlt:
-          "Compact camping stove with orange flame cooking pot outdoors on rocky surface",
+          "Compact camping stove with an orange flame heating a pot outdoors on rocky ground",
         pricePerDay: 60000,
         quantity: 1,
         startDate: "2025-10-25",
@@ -191,16 +191,16 @@ const ShoppingCart = () => {
                 onClick={() => navigate("/equipment-catalog")}
                 className="hover:text-primary"
               >
-                Trang chủ
+                Home
               </button>
               <Icon name="ChevronRight" size={16} />
-              <span>Giỏ hàng</span>
+              <span>Cart</span>
             </div>
             <h1 className="font-heading font-bold text-3xl text-foreground">
-              Giỏ hàng của bạn
+              Your Shopping Cart
             </h1>
             <p className="text-muted-foreground mt-2">
-              Xem lại và chỉnh sửa các sản phẩm trước khi thanh toán
+              Re-check and Adjust Cart Items before Purchasing
             </p>
           </div>
 
@@ -210,7 +210,7 @@ const ShoppingCart = () => {
               {/* Items Header */}
               <div className="flex items-center justify-between">
                 <h2 className="font-heading font-semibold text-xl text-foreground">
-                  Sản phẩm ({cartItems?.length})
+                  Cart Items ({cartItems?.length})
                 </h2>
                 <Button
                   variant="ghost"
@@ -220,7 +220,7 @@ const ShoppingCart = () => {
                   onClick={() => setConfirmClearAll(true)}
                   className="text-destructive hover:text-destructive"
                 >
-                  Xóa tất cả
+                  Clear Cart
                 </Button>
               </div>
 
@@ -245,7 +245,7 @@ const ShoppingCart = () => {
                   iconPosition="left"
                   onClick={() => navigate("/equipment-catalog")}
                 >
-                  Tiếp tục mua sắm
+                  Continue Shopping
                 </Button>
               </div>
             </div>
@@ -273,7 +273,7 @@ const ShoppingCart = () => {
           {/* Mobile Sticky Checkout */}
           <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border p-4 z-50">
             <div className="flex items-center justify-between mb-3">
-              <span className="font-medium text-foreground">Tổng cộng:</span>
+              <span className="font-medium text-foreground">Total: </span>
               <span className="font-semibold text-lg text-primary">
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
@@ -295,7 +295,7 @@ const ShoppingCart = () => {
                 })
               }
             >
-              {isProcessing ? "Đang xử lý..." : "Thanh toán ngay"}
+              {isProcessing ? "Processing..." : "Proceed to purchase"}
             </Button>
           </div>
         </div>
@@ -305,16 +305,16 @@ const ShoppingCart = () => {
       <ConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(open) => !open && setDeleteTarget(null)}
-        title="Xóa sản phẩm?"
-        description="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
+        title="Delete Cart Item?"
+        description="Are you sure you want to delete this item"
         onConfirm={confirmRemoveItem}
       />
 
       <ConfirmDialog
         open={confirmClearAll}
         onOpenChange={setConfirmClearAll}
-        title="Xóa tất cả sản phẩm?"
-        description="Bạn có chắc chắn muốn xóa toàn bộ sản phẩm khỏi giỏ hàng?"
+        title="Clear All Cart Item?"
+        description="Are you sure you want to clear the cart"
         onConfirm={confirmRemoveAll}
       />
     </div>
