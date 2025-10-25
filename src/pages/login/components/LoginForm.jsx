@@ -111,10 +111,10 @@ const LoginForm = () => {
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-2xl font-heading font-bold text-foreground mb-2">
-            Đăng nhập
+            Login
           </h1>
           <p className="text-muted-foreground text-sm">
-            Chào mừng trở lại! Vui lòng đăng nhập vào tài khoản của bạn.
+           Welcome Back. Please Login into your account
           </p>
         </div>
 
@@ -135,10 +135,10 @@ const LoginForm = () => {
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
-            label="Địa chỉ email"
+            label="Email Address"
             type="email"
             name="email"
-            placeholder="Nhập địa chỉ email của bạn"
+            placeholder="Input your email address"
             value={formData?.email}
             onChange={handleInputChange}
             error={errors?.email}
@@ -146,10 +146,10 @@ const LoginForm = () => {
           />
 
           <Input
-            label="Mật khẩu"
+            label="Password"
             type="password"
             name="password"
-            placeholder="Nhập mật khẩu của bạn"
+            placeholder="Input your password"
             value={formData?.password}
             onChange={handleInputChange}
             error={errors?.password}
@@ -158,7 +158,7 @@ const LoginForm = () => {
 
           <div className="flex items-center justify-between">
             <Checkbox
-              label="Ghi nhớ đăng nhập"
+              label="Remember me"
               name="rememberMe"
               checked={formData?.rememberMe}
               onChange={handleInputChange}
@@ -168,7 +168,7 @@ const LoginForm = () => {
               to="/forgot-password"
               className="text-sm text-primary hover:text-primary/80 transition-micro"
             >
-              Quên mật khẩu?
+              Forgot Password?
             </Link>
           </div>
 
@@ -180,7 +180,7 @@ const LoginForm = () => {
             loading={isLoading}
             disabled={isLoading}
           >
-            {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
+            {isLoading ? "Logging In..." : "Login"}
           </Button>
         </form>
 
@@ -191,7 +191,7 @@ const LoginForm = () => {
           </div>
           <div className="relative flex justify-center text-sm">
             <span className="px-2 bg-card text-muted-foreground">
-              Hoặc đăng nhập với
+              Or
             </span>
           </div>
         </div>
@@ -206,7 +206,7 @@ const LoginForm = () => {
             iconName="Mail"
             iconPosition="left"
           >
-            Đăng nhập với Google
+            Continue With Google
           </Button>
 
           <Button
@@ -217,19 +217,19 @@ const LoginForm = () => {
             iconName="Facebook"
             iconPosition="left"
           >
-            Đăng nhập với Facebook
+            Continue with Facebook
           </Button>
         </div>
 
         {/* Register Link */}
         <div className="mt-6 text-center">
           <p className="text-sm text-muted-foreground">
-            Chưa có tài khoản?{" "}
+            No Account?{" "}
             <Link
               to="/register"
               className="text-primary hover:text-primary/80 font-medium transition-micro"
             >
-              Đăng ký ngay
+              Register now
             </Link>
           </p>
         </div>
