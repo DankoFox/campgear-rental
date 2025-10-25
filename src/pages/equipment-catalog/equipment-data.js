@@ -4,6 +4,8 @@ export const mockEquipment = [
   {
     id: 1,
     name: "Coleman Sundome 4-Person Tent",
+    brand: "Coleman",
+    type: "tents",
     image: "https://images.unsplash.com/photo-1633805159007-8e198bbcc931",
     imageAlt:
       "Orange Coleman Sundome tent set up in grassy camping area with trees in background",
@@ -25,6 +27,8 @@ export const mockEquipment = [
   {
     id: 2,
     name: "The North Face Dolomite Sleeping Bag -7°C",
+    brand: "The North Face",
+    type: "sleeping",
     image: "https://images.unsplash.com/photo-1606339777002-71a53b059c36",
     imageAlt:
       "Blue sleeping bag laid out on wooden camping platform with forest background",
@@ -39,6 +43,8 @@ export const mockEquipment = [
   {
     id: 3,
     name: "MSR PocketRocket 2 Stove",
+    brand: "MSR",
+    type: "cooking",
     image: "https://images.unsplash.com/photo-1727150177117-62e9ed58154e",
     imageAlt:
       "Compact camping stove with blue flame burning under metal pot in outdoor setting",
@@ -53,6 +59,8 @@ export const mockEquipment = [
   {
     id: 4,
     name: "Deuter Aircontact 65+10L Trekking Backpack",
+    brand: "Deuter",
+    type: "backpacks",
     image: "https://images.unsplash.com/photo-1702359061641-7c59b24d905f",
     imageAlt:
       "Large green hiking backpack with multiple compartments displayed against mountain landscape",
@@ -72,6 +80,8 @@ export const mockEquipment = [
   {
     id: 5,
     name: "Petzl Actik Core 450 Lumens LED Headlamp",
+    brand: "Petzl",
+    type: "lighting",
     image: "https://images.pexels.com/photos/2422915/pexels-photo-2422915.jpeg",
     imageAlt:
       "Bright LED headlamp with adjustable strap illuminating dark forest path at night",
@@ -91,6 +101,8 @@ export const mockEquipment = [
   {
     id: 6,
     name: "Jetboil Flash 1L Cooking System",
+    brand: "Jetboil",
+    type: "cooking",
     image: "https://images.unsplash.com/photo-1516893623281-98535aaa2205",
     imageAlt:
       "Orange camping cookware system with integrated burner and insulated cup on rocky surface",
@@ -105,6 +117,8 @@ export const mockEquipment = [
   {
     id: 7,
     name: "Helinox Chair One Folding Chair",
+    brand: "Helinox",
+    type: "tools",
     image: "https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg",
     imageAlt:
       "Lightweight folding camping chair in red fabric set up beside tent with mountain view",
@@ -119,6 +133,8 @@ export const mockEquipment = [
   {
     id: 8,
     name: "Sea to Summit Nano Mosquito Net",
+    brand: "Sea to Summit",
+    type: "tools",
     image: "https://images.pexels.com/photos/2662816/pexels-photo-2662816.jpeg",
     imageAlt:
       "Fine mesh mosquito net suspended over camping area with person sleeping peacefully inside",
@@ -133,6 +149,8 @@ export const mockEquipment = [
   {
     id: 9,
     name: "Garmin Instinct 2 Solar Outdoor Watch",
+    brand: "Garmin",
+    type: "tools",
     image: "https://images.unsplash.com/photo-1612831818501-9873d532fc10",
     imageAlt:
       "Rugged GPS smartwatch with solar charging displayed on rock surface",
@@ -147,6 +165,8 @@ export const mockEquipment = [
   {
     id: 10,
     name: "Therm-a-Rest NeoAir Xlite Sleeping Pad",
+    brand: "Therm-a-Rest",
+    type: "sleeping",
     image: "https://images.unsplash.com/photo-1629396887840-2a6b5e18a9b1",
     imageAlt:
       "Ultralight yellow sleeping pad inflated inside tent for camping comfort",
@@ -161,6 +181,8 @@ export const mockEquipment = [
   {
     id: 11,
     name: "Black Diamond Trail Pro Trekking Poles",
+    brand: "Black Diamond",
+    type: "tools",
     image: "https://images.unsplash.com/photo-1525981084964-5cc6556929f7",
     imageAlt: "Pair of trekking poles lying on rocky trail with mountain view",
     price: 60000,
@@ -179,6 +201,8 @@ export const mockEquipment = [
   {
     id: 12,
     name: "Osprey Daylite Plus 20L Backpack",
+    brand: "Osprey",
+    type: "backpacks",
     image: "https://images.unsplash.com/photo-1609743522659-23fd6e4a78dc",
     imageAlt:
       "Small blue hiking backpack hanging on a tree with forest background",
@@ -193,6 +217,8 @@ export const mockEquipment = [
   {
     id: 13,
     name: "YETI Rambler 1L Insulated Bottle",
+    brand: "YETI",
+    type: "cooking",
     image: "https://images.unsplash.com/photo-1600180758890-6a5b3f3a11f8",
     imageAlt:
       "Insulated stainless steel water bottle on wooden camping table with coffee setup",
@@ -212,6 +238,8 @@ export const mockEquipment = [
   {
     id: 14,
     name: "ENO DoubleNest Hammock",
+    brand: "ENO",
+    type: "sleeping",
     image: "https://images.unsplash.com/photo-1594221557721-8e0e1cbe2041",
     imageAlt:
       "Colorful hammock strung between two trees overlooking a lake at sunset",
@@ -226,6 +254,8 @@ export const mockEquipment = [
   {
     id: 15,
     name: "BioLite CampStove 2+",
+    brand: "BioLite",
+    type: "cooking",
     image: "https://images.unsplash.com/photo-1629396909833-99864ef60df6",
     imageAlt:
       "Compact wood-burning camping stove charging a phone while cooking outdoors",
@@ -240,6 +270,8 @@ export const mockEquipment = [
   {
     id: 16,
     name: "Columbia Watertight II Rain Jacket",
+    brand: "Columbia",
+    type: "tools",
     image: "https://images.unsplash.com/photo-1520975910057-c7d4a28bbfe7",
     imageAlt:
       "Person wearing waterproof rain jacket hiking through misty forest",
@@ -254,6 +286,8 @@ export const mockEquipment = [
   {
     id: 17,
     name: "Naturehike Ultralight Folding Table",
+    brand: "Naturehike",
+    type: "tools",
     image: "https://images.unsplash.com/photo-1629397009922-43d77cf93a25",
     imageAlt:
       "Portable aluminum camping table with tea set and lantern outdoors",
@@ -268,6 +302,8 @@ export const mockEquipment = [
   {
     id: 18,
     name: "Platypus GravityWorks 4L Water Filter",
+    brand: "Platypus",
+    type: "tools",
     image: "https://images.unsplash.com/photo-1618222229958-4a8e8dcf563b",
     imageAlt:
       "Gravity water filter system hanging from tree filtering water into clean reservoir",
@@ -282,6 +318,8 @@ export const mockEquipment = [
   {
     id: 19,
     name: "GSI Outdoors Pinnacle Camper Cookset",
+    brand: "GSI Outdoors",
+    type: "cooking",
     image: "https://images.unsplash.com/photo-1615471341251-7118f6e7c23b",
     imageAlt:
       "Compact camping cookware set with pots, pans, and bowls neatly stacked together",
@@ -296,6 +334,8 @@ export const mockEquipment = [
   {
     id: 20,
     name: "REI Co-op Trail 25L Daypack",
+    brand: "REI Co-op",
+    type: "backpacks",
     image: "https://images.unsplash.com/photo-1612474052442-cce6486e6555",
     imageAlt:
       "Person wearing 25L daypack hiking up a rocky trail with scenic mountain view",
