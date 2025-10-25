@@ -64,7 +64,7 @@ const CheckoutSection = ({
           options={timeSlotOptions}
           value={timeSlot}
           onChange={setTimeSlot}
-          placeholder="Chọn khung giờ"
+          placeholder="Select Time Window"
           required
         />
 

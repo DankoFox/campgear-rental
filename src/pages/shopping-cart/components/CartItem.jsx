@@ -188,7 +188,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                   iconPosition="left"
                   onClick={handleCancelEdit}
                 >
-                  Cancle
+                  Cancel
                 </Button>
               </>
             )}

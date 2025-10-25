@@ -46,60 +46,61 @@ const OrderSummary = ({
       onApplyPromo(promoInput?.toUpperCase());
       setPromoInput("");
     } else {
-      setPromoError("Mã giảm giá không hợp lệ");
+      setPromoError("Invalid Promo Code");
     }
   };
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 space-y-6">
       <h2 className="font-heading font-semibold text-xl text-foreground">
-        Tóm tắt đơn hàng
+        Order summary
       </h2>
       {/* Order Details */}
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">
-            Tạm tính ({cartItems?.length} sản phẩm)
+            Subtotal ({cartItems?.length} item{cartItems?.length > 1 ? "s" : ""}
+            )
           </span>
           <span className="text-foreground">{formatPrice(subtotal)}</span>
         </div>
 
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Phí vận chuyển</span>
+          <span className="text-muted-foreground">Shopping fee</span>
           <span className="text-foreground">
-            {deliveryFee === 0 ? "Miễn phí" : formatPrice(deliveryFee)}
+            {deliveryFee === 0 ? "Free of Charge" : formatPrice(deliveryFee)}
           </span>
         </div>
 
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Thuế VAT (10%)</span>
+          <span className="text-muted-foreground">VAT (10%)</span>
           <span className="text-foreground">{formatPrice(tax)}</span>
         </div>
 
         {promoCode && (
           <div className="flex justify-between text-sm">
-            <span className="text-success">Giảm giá ({promoCode})</span>
+            <span className="text-success">Promotion ({promoCode})</span>
             <span className="text-success">-{formatPrice(discount)}</span>
           </div>
         )}
 
         <div className="border-t border-border pt-3">
           <div className="flex justify-between font-semibold text-lg">
-            <span className="text-foreground">Tổng cộng</span>
+            <span className="text-foreground">Total</span>
             <span className="text-primary">{formatPrice(total)}</span>
           </div>
         </div>
       </div>
       {/* Promo Code Section */}
       <div className="space-y-3">
-        <h3 className="font-medium text-foreground">Mã giảm giá</h3>
+        <h3 className="font-medium text-foreground">Promo Code</h3>
 
         {!promoCode ? (
           <div className="flex gap-2">
             <div className="flex-1">
               <Input
                 type="text"
-                placeholder="Nhập mã giảm giá"
+                placeholder="Enter Promo Code"
                 value={promoInput}
                 onChange={(e) => setPromoInput(e?.target?.value)}
                 error={promoError}
@@ -110,7 +111,7 @@ const OrderSummary = ({
               onClick={handleApplyPromo}
               disabled={!promoInput?.trim()}
             >
-              Áp dụng
+              Apply
             </Button>
           </div>
         ) : (
@@ -118,7 +119,7 @@ const OrderSummary = ({
             <div className="flex items-center gap-2">
               <Icon name="Check" size={16} className="text-success" />
               <span className="text-sm font-medium text-success">
-                Mã {promoCode} đã được áp dụng
+                Promo Code {promoCode} had been applied
               </span>
             </div>
             <Button
@@ -133,19 +134,17 @@ const OrderSummary = ({
       </div>
       {/* Delivery Information */}
       <div className="space-y-3 pt-3 border-t border-border">
-        <h3 className="font-medium text-foreground">Thông tin giao hàng</h3>
+        <h3 className="font-medium text-foreground">Delivery Information</h3>
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm">
             <Icon name="Truck" size={16} className="text-muted-foreground" />
             <span className="text-muted-foreground">
-              Giao hàng tiêu chuẩn: 1-2 ngày
+              Standard Delivery: 1-2 days
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Icon name="MapPin" size={16} className="text-muted-foreground" />
-            <span className="text-muted-foreground">
-              Hoặc nhận tại cửa hàng
-            </span>
+            <span className="text-muted-foreground">Or Pick Up at Store</span>
           </div>
         </div>
       </div>
@@ -154,16 +153,16 @@ const OrderSummary = ({
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Icon name="Shield" size={14} />
-            <span>Thanh toán bảo mật</span>
+            <span>Secured Payment</span>
           </div>
           <div className="flex items-center gap-1">
             <Icon name="Lock" size={14} />
-            <span>Mã hóa SSL</span>
+            <span>SSL Encryption</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>Chấp nhận:</span>
+          <span>We Accept:</span>
           <div className="flex items-center gap-1">
             <div className="w-6 h-4 bg-primary rounded-sm flex items-center justify-center">
               <span className="text-[8px] text-primary-foreground font-bold">

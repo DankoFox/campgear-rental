@@ -27,7 +27,7 @@ export function ConfirmDialog({
         </DialogHeader>
         <DialogFooter className="flex justify-end gap-2 pt-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Hủy
+            Cancel
           </Button>
           <Button
             variant="destructive"
@@ -36,7 +36,7 @@ export function ConfirmDialog({
               onOpenChange(false);
             }}
           >
-            Xóa
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>
