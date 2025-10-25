@@ -7,6 +7,7 @@ import Button from "../../components/ui/Button";
 import Icon from "../../components/AppIcon";
 import { mockEquipment } from "./equipment-data";
 import HeroSection from "./components/HeroSection";
+import Footer from "components/ui/Footer";
 
 const EquipmentCatalog = () => {
   const [filters, setFilters] = useState({
@@ -123,7 +124,6 @@ const EquipmentCatalog = () => {
           </div>
         </section>
       </main>
-
       {/* Quick View Modal */}
       <QuickViewModal
         equipment={selectedEquipment}
@@ -131,17 +131,8 @@ const EquipmentCatalog = () => {
         onClose={() => setIsQuickViewOpen(false)}
         onAddToCart={handleAddToCart}
       />
-
       {/* Footer */}
-      <footer className="bg-card border-t border-border mt-16">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-muted-foreground">
-            <p>
-              &copy; {new Date().getFullYear()} CampGear. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
