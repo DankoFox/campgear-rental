@@ -11,7 +11,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
   if (!isOpen || !equipment) return null;
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN")?.format(price);
+    return new Intl.NumberFormat("en-US")?.format(price);
   };
 
   const handleAddToCart = () => {
@@ -26,7 +26,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center mt-12">
       <div
         className="fixed inset-0 bg-background/80 backdrop-blur-sm"
         onClick={handleBackdropClick}
@@ -34,9 +34,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
       <div className="relative bg-card border border-border rounded-lg shadow-modal max-w-4xl w-full max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <h2 className="font-heading font-semibold text-lg">
-            Xem nhanh thiết bị
-          </h2>
+          <h2 className="font-heading font-semibold text-lg">Quick View</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <Icon name="X" size={20} />
           </Button>
@@ -68,7 +66,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                   >
                     <Image
                       src={image}
-                      alt={`${equipment?.name} - Hình ${index + 1}`}
+                      alt={`${equipment?.name} - Image ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -128,7 +126,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                 {equipment?.rating}
               </span>
               <span className="text-sm text-muted-foreground">
-                ({equipment?.reviewCount} đánh giá)
+                ({equipment?.reviewCount} reviews)
               </span>
             </div>
 
@@ -144,13 +142,15 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                   </span>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground">Giá thuê mỗi ngày</p>
+              <p className="text-sm text-muted-foreground">
+                Rental price per day
+              </p>
             </div>
 
             {/* Features */}
             <div className="space-y-2">
               <h4 className="font-heading font-semibold text-foreground">
-                Tính năng nổi bật
+                Key Features
               </h4>
               <div className="flex flex-wrap gap-2">
                 {equipment?.features?.map((feature, index) => (
@@ -190,14 +190,16 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                     : "text-warning"
                 }
               >
-                {equipment?.availability === "available" ? "Có sẵn" : "Còn ít"}
+                {equipment?.availability === "available"
+                  ? "Available"
+                  : "Limited Stock"}
               </span>
             </div>
 
             {/* Quantity */}
             <div className="space-y-2">
               <label className="font-heading font-semibold text-foreground">
-                Số lượng
+                Quantity
               </label>
               <div className="flex items-center space-x-3">
                 <Button
@@ -229,7 +231,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                 fullWidth
                 disabled={equipment?.availability === "unavailable"}
               >
-                Thêm vào giỏ hàng
+                Add to Cart
               </Button>
 
               <Link to="/equipment-details">
@@ -239,7 +241,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                   iconPosition="left"
                   fullWidth
                 >
-                  Xem chi tiết đầy đủ
+                  View Full Details
                 </Button>
               </Link>
             </div>
