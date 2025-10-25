@@ -65,11 +65,25 @@ const EquipmentCatalog = () => {
     setIsMobileFilterOpen(!isMobileFilterOpen);
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = () => {
+    const filtered = mockEquipment.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setEquipment(filtered);
+  };
+
+
   return (
     <div className="min-h-screen bg-background">
       <Header cartCount={cartCount} />
       <main className="pt-16">
-        <HeroSection />
+        <HeroSection 
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onSearch={handleSearch}
+        />
 
         {/* Main Content */}
         <section className="container mx-auto px-4 py-8">
