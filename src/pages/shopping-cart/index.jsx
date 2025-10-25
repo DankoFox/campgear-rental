@@ -7,11 +7,19 @@ import EmptyCart from "./components/EmptyCart";
 import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
+import { ConfirmDialog } from "../../components/ConfirmDialog";
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
+
+  // Core
   const [cartItems, setCartItems] = useState([]);
   const [promoCode, setPromoCode] = useState("");
+
+  // Pop-up Modal
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [confirmClearAll, setConfirmClearAll] = useState(false);
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [user] = useState({
     name: "Nguyễn Văn An",
@@ -98,11 +106,17 @@ const ShoppingCart = () => {
   };
 
   const handleRemoveItem = (itemId) => {
-    if (
-      window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
-    ) {
-      setCartItems((items) => items?.filter((item) => item?.id !== itemId));
-    }
+    setDeleteTarget(itemId); // open confirmation dialog
+  };
+
+  const confirmRemoveItem = () => {
+    setCartItems((items) => items?.filter((item) => item?.id !== deleteTarget));
+    setDeleteTarget(null);
+  };
+
+  const confirmRemoveAll = () => {
+    setCartItems([]);
+    setConfirmClearAll(false);
   };
 
   const handleApplyPromo = (code) => {
@@ -203,15 +217,7 @@ const ShoppingCart = () => {
                   size="sm"
                   iconName="Trash2"
                   iconPosition="left"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "Bạn có chắc chắn muốn xóa tất cả sản phẩm?",
-                      )
-                    ) {
-                      setCartItems([]);
-                    }
-                  }}
+                  onClick={() => setConfirmClearAll(true)}
                   className="text-destructive hover:text-destructive"
                 >
                   Xóa tất cả
@@ -294,6 +300,23 @@ const ShoppingCart = () => {
           </div>
         </div>
       </main>
+
+      {/* Confirmation Modals */}
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="Xóa sản phẩm?"
+        description="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
+        onConfirm={confirmRemoveItem}
+      />
+
+      <ConfirmDialog
+        open={confirmClearAll}
+        onOpenChange={setConfirmClearAll}
+        title="Xóa tất cả sản phẩm?"
+        description="Bạn có chắc chắn muốn xóa toàn bộ sản phẩm khỏi giỏ hàng?"
+        onConfirm={confirmRemoveAll}
+      />
     </div>
   );
 };
