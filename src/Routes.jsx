@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
-import ScrollToTop from "components/ScrollToTop";
-import ErrorBoundary from "components/ErrorBoundary";
-import NotFound from "pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
+import ErrorBoundary from "./components/ErrorBoundary";
+import NotFound from "./pages/NotFound";
 
 import ShoppingCart from "./pages/shopping-cart";
 import EquipmentCatalog from "./pages/equipment-catalog";
-import LoginPage from "pages/login";
-import UserDashboard from "pages/user-dashboard";
-import EquipmentDetails from "pages/equipment-details";
-import RegisterPage from "pages/register";
+import LoginPage from "./pages/login";
+import UserDashboard from "./pages/user-dashboard";
+import EquipmentDetails from "./pages/equipment-details";
+import RegisterPage from "./pages/register";
 
 const Routes = () => {
   return (

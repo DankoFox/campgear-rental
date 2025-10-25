@@ -7,7 +7,7 @@ import Button from "../../components/ui/Button";
 import Icon from "../../components/AppIcon";
 import { mockEquipment } from "./equipment-data";
 import HeroSection from "./components/HeroSection";
-import Footer from "components/ui/Footer";
+import Footer from "../../components/ui/Footer";
 
 const EquipmentCatalog = () => {
   const [filters, setFilters] = useState({
