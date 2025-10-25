@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Button from "../../../components/ui/Button";
 import Select from "../../../components/ui/Select";
 import { Checkbox } from "../../../components/ui/Checkbox";
 import Icon from "../../../components/AppIcon";
 
 const FilterPanel = ({
+  products = [],
   filters,
   onFiltersChange,
   isOpen,
@@ -13,88 +14,148 @@ const FilterPanel = ({
 }) => {
   const [priceRange, setPriceRange] = useState([0, 2000000]);
 
-  const categories = [
-    { id: "tents", label: "Tents", count: 45 },
-    { id: "sleeping", label: "Sleeping Bags", count: 32 },
-    { id: "cooking", label: "Cooking Gear", count: 28 },
-    { id: "backpacks", label: "Backpacks", count: 24 },
-    { id: "lighting", label: "Lighting", count: 18 },
-    { id: "tools", label: "Tools", count: 15 },
-  ];
+  // --- Dynamic min & max prices ---
+  const minPrice = useMemo(
+    () => (products.length ? Math.min(...products.map((p) => p.price || 0)) : 0),
+    [products]
+  );
+  const maxPrice = useMemo(
+    () =>
+      products.length ? Math.max(...products.map((p) => p.price || 0)) : 2000000,
+    [products]
+  );
 
-  const locations = [
-    { value: "hanoi", label: "Hanoi" },
-    { value: "hcm", label: "Ho Chi Minh City" },
-    { value: "danang", label: "Da Nang" },
-    { value: "halong", label: "Ha Long" },
-    { value: "dalat", label: "Da Lat" },
-    { value: "nhatrang", label: "Nha Trang" },
+  useEffect(() => {
+    if (filters?.priceRange) setPriceRange(filters.priceRange);
+  }, [filters.priceRange]);
+
+ 
+
+  // --- Dynamic category and brand counts ---
+  const categoryCounts = useMemo(() => {
+  const counts = {};
+  products.forEach((p) => {
+    const cat = p.type?.toLowerCase() || "other";
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  return counts;
+}, [products]);
+
+
+ const brandCounts = useMemo(() => {
+  const counts = {};
+  products.forEach((p) => {
+    // normalize: lowercase and remove non-alphanumeric characters
+    const normalized = (p.brand || "unknown")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+    counts[normalized] = (counts[normalized] || 0) + 1;
+  });
+  return counts;
+}, [products]);
+
+
+  // --- Filter options ---
+  const categories = [
+    { id: "tents", label: "Tents" },
+    { id: "sleeping", label: "Sleeping Bags" },
+    { id: "cooking", label: "Cooking Gear" },
+    { id: "backpacks", label: "Backpacks" },
+    { id: "lighting", label: "Lighting" },
+    { id: "tools", label: "Tools" },
   ];
 
   const brands = [
-    { id: "coleman", label: "Coleman", count: 23 },
-    { id: "northface", label: "The North Face", count: 18 },
-    { id: "decathlon", label: "Decathlon", count: 15 },
-    { id: "naturehike", label: "Naturehike", count: 12 },
-    { id: "msr", label: "MSR", count: 8 },
+  { id: "coleman", label: "Coleman" },
+  { id: "thenorthface", label: "The North Face" },
+  { id: "msr", label: "MSR" },
+  { id: "deuter", label: "Deuter" },
+  { id: "petzl", label: "Petzl" },
+  { id: "jetboil", label: "Jetboil" },
+  { id: "helinox", label: "Helinox" },
+  { id: "seatosummit", label: "Sea to Summit" },
+  { id: "garmin", label: "Garmin" },
+  { id: "thermarest", label: "Therm-a-Rest" },
+  { id: "blackdiamond", label: "Black Diamond" },
+  { id: "osprey", label: "Osprey" },
+  { id: "yeti", label: "YETI" },
+  { id: "eno", label: "ENO" },
+  { id: "biolite", label: "BioLite" },
+  { id: "columbia", label: "Columbia" },
+  { id: "naturehike", label: "Naturehike" },
+  { id: "platypus", label: "Platypus" },
+  { id: "gsioutdoors", label: "GSI Outdoors" },
+  { id: "reicoop", label: "REI Co-op" },
+];
+
+  const locations = [
+    { value: "Hanoi", label: "Hanoi" },
+    { value: "Ho Chi Minh City", label: "Ho Chi Minh City" },
+    { value: "Da Nang", label: "Da Nang" },
+    { value: "Ha Long", label: "Ha Long" },
+    { value: "Da Lat", label: "Da Lat" },
+    { value: "Nha Trang", label: "Nha Trang" },
   ];
 
   const sortOptions = [
     { value: "relevance", label: "Most Relevant" },
     { value: "price_low", label: "Price: Low to High" },
     { value: "price_high", label: "Price: High to Low" },
-    { value: "rating", label: "Highest Rated" },
-    { value: "distance", label: "Closest" },
+    { value: "rating", label: "Top Rated" },
   ];
 
-  const handleCategoryChange = (categoryId, checked) => {
+  // --- Event handlers ---
+  const handleCategoryChange = (id, checked) => {
     const newCategories = checked
-      ? [...(filters?.categories || []), categoryId]
-      : (filters?.categories || [])?.filter((id) => id !== categoryId);
-
+      ? [...(filters.categories || []), id]
+      : (filters.categories || []).filter((c) => c !== id);
     onFiltersChange({ ...filters, categories: newCategories });
   };
 
-  const handleBrandChange = (brandId, checked) => {
+  const handleBrandChange = (id, checked) => {
     const newBrands = checked
-      ? [...(filters?.brands || []), brandId]
-      : (filters?.brands || [])?.filter((id) => id !== brandId);
-
+      ? [...(filters.brands || []), id]
+      : (filters.brands || []).filter((b) => b !== id);
     onFiltersChange({ ...filters, brands: newBrands });
   };
 
   const handlePriceChange = (index, value) => {
     const newRange = [...priceRange];
-    newRange[index] = parseInt(value);
+    newRange[index] = Math.min(
+      Math.max(parseInt(value) || 0, minPrice),
+      maxPrice
+    );
+    if (newRange[0] > newRange[1]) newRange[0] = newRange[1];
     setPriceRange(newRange);
     onFiltersChange({ ...filters, priceRange: newRange });
   };
 
   const clearFilters = () => {
-    setPriceRange([0, 2000000]);
+    const defaultRange = [minPrice, maxPrice];
+    setPriceRange(defaultRange);
     onFiltersChange({
       categories: [],
       brands: [],
       location: "",
-      priceRange: [0, 2000000],
+      priceRange: defaultRange,
       sortBy: "relevance",
     });
   };
 
+  // --- Render UI ---
   const FilterContent = () => (
     <div className="space-y-6">
-      {/* Sort Options */}
+      {/* Sort By */}
       <div className="space-y-3">
         <h3 className="font-heading font-semibold text-foreground">Sort By</h3>
         <Select
           options={sortOptions}
           value={filters?.sortBy || "relevance"}
           onChange={(value) => onFiltersChange({ ...filters, sortBy: value })}
-          placeholder="Select sorting method"
         />
       </div>
 
-      {/* Location Filter */}
+      {/* Location */}
       <div className="space-y-3">
         <h3 className="font-heading font-semibold text-foreground">Location</h3>
         <Select
@@ -111,56 +172,46 @@ const FilterPanel = ({
         <h3 className="font-heading font-semibold text-foreground">
           Price Range (₫/day)
         </h3>
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <input
-              type="range"
-              min="0"
-              max="2000000"
-              step="50000"
-              value={priceRange?.[0]}
-              onChange={(e) => handlePriceChange(0, e?.target?.value)}
-              className="flex-1 h-2 bg-muted rounded-lg appearance-none cursor-pointer"
-            />
-          </div>
-          <div className="flex items-center space-x-2">
-            <input
-              type="range"
-              min="0"
-              max="2000000"
-              step="50000"
-              value={priceRange?.[1]}
-              onChange={(e) => handlePriceChange(1, e?.target?.value)}
-              className="flex-1 h-2 bg-muted rounded-lg appearance-none cursor-pointer"
-            />
-          </div>
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span>{priceRange?.[0]?.toLocaleString("en-US")}₫</span>
-            <span>{priceRange?.[1]?.toLocaleString("en-US")}₫</span>
+        <div className="flex flex-col space-y-2">
+          <input
+            type="range"
+            min={minPrice}
+            max={maxPrice}
+            step="10000"
+            value={priceRange[0]}
+            onChange={(e) => handlePriceChange(0, e.target.value)}
+            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+          />
+          <input
+            type="range"
+            min={minPrice}
+            max={maxPrice}
+            step="10000"
+            value={priceRange[1]}
+            onChange={(e) => handlePriceChange(1, e.target.value)}
+            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+          />
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <span>{priceRange[0].toLocaleString("en-US")}₫</span>
+            <span>{priceRange[1].toLocaleString("en-US")}₫</span>
           </div>
         </div>
       </div>
 
       {/* Categories */}
       <div className="space-y-3">
-        <h3 className="font-heading font-semibold text-foreground">
-          Categories
-        </h3>
+        <h3 className="font-heading font-semibold text-foreground">Categories</h3>
         <div className="space-y-2">
-          {categories?.map((category) => (
-            <div
-              key={category?.id}
-              className="flex items-center justify-between"
-            >
+          {categories.map((c) => (
+            <div key={c.id} className="flex items-center justify-between">
               <Checkbox
-                label={category?.label}
-                checked={(filters?.categories || [])?.includes(category?.id)}
-                onChange={(e) =>
-                  handleCategoryChange(category?.id, e?.target?.checked)
-                }
+                label={c.label}
+                checked={filters.categories.includes(c.id)}
+                onChange={(e) => handleCategoryChange(c.id, e.target.checked)}
               />
               <span className="text-sm text-muted-foreground">
-                ({category?.count})
+                ({categoryCounts[c.id] || 0})
+
               </span>
             </div>
           ))}
@@ -171,24 +222,22 @@ const FilterPanel = ({
       <div className="space-y-3">
         <h3 className="font-heading font-semibold text-foreground">Brands</h3>
         <div className="space-y-2">
-          {brands?.map((brand) => (
-            <div key={brand?.id} className="flex items-center justify-between">
+          {brands.map((b) => (
+            <div key={b.id} className="flex items-center justify-between">
               <Checkbox
-                label={brand?.label}
-                checked={(filters?.brands || [])?.includes(brand?.id)}
-                onChange={(e) =>
-                  handleBrandChange(brand?.id, e?.target?.checked)
-                }
+                label={b.label}
+                checked={filters.brands.includes(b.id)}
+                onChange={(e) => handleBrandChange(b.id, e.target.checked)}
               />
               <span className="text-sm text-muted-foreground">
-                ({brand?.count})
+                ({brandCounts[b.id] || 0})
               </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Clear Filters */}
+      {/* Reset */}
       <Button
         variant="outline"
         onClick={clearFilters}
@@ -201,10 +250,10 @@ const FilterPanel = ({
     </div>
   );
 
+  // --- Mobile Drawer ---
   if (isMobile) {
     return (
       <>
-        {/* Mobile Filter Toggle */}
         <Button
           variant="outline"
           onClick={onToggle}
@@ -214,8 +263,6 @@ const FilterPanel = ({
         >
           Filters
         </Button>
-
-        {/* Mobile Filter Panel */}
         {isOpen && (
           <div className="fixed inset-0 z-50 md:hidden">
             <div
@@ -239,8 +286,9 @@ const FilterPanel = ({
     );
   }
 
+  // --- Desktop Panel ---
   return (
-    <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 h-fit sticky top-20">
+    <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 h-fit  top-20">
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-heading font-semibold text-lg">Filters</h2>
         <Icon name="Filter" size={20} className="text-muted-foreground" />
