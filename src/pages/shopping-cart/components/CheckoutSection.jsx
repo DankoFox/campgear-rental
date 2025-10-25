@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import Select from "../../../components/ui/Select";
+import { ConfirmDialog } from "../../../components/ConfirmDialog";
 
 const CheckoutSection = ({
   cartItems,
@@ -13,6 +14,8 @@ const CheckoutSection = ({
   const navigate = useNavigate();
   const [deliveryOption, setDeliveryOption] = useState("delivery");
   const [timeSlot, setTimeSlot] = useState("");
+
+  const [showTimeSlotAlert, setShowTimeSlotAlert] = useState(false);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -35,7 +38,7 @@ const CheckoutSection = ({
 
   const handleProceedToCheckout = () => {
     if (!timeSlot) {
-      alert("Vui lòng chọn khung giờ giao hàng");
+      setShowTimeSlotAlert(true);
       return;
     }
     onProceedToCheckout({ deliveryOption, timeSlot });
@@ -155,6 +158,14 @@ const CheckoutSection = ({
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={showTimeSlotAlert}
+        onOpenChange={setShowTimeSlotAlert}
+        title="Chưa chọn khung giờ"
+        description="Vui lòng chọn khung giờ giao hàng trước khi tiếp tục thanh toán."
+        onConfirm={() => setShowTimeSlotAlert(false)}
+      />
     </div>
   );
 };
