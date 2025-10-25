@@ -21,24 +21,28 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
   };
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN")?.format(price);
+    return new Intl.NumberFormat("en-US")?.format(price);
   };
 
   const getAvailabilityStatus = () => {
     if (equipment?.availability === "available") {
       return {
-        text: "Có sẵn",
+        text: "Available",
         color: "text-success",
         bgColor: "bg-success/10",
       };
     } else if (equipment?.availability === "limited") {
       return {
-        text: "Còn ít",
+        text: "Limited",
         color: "text-warning",
         bgColor: "bg-warning/10",
       };
     } else {
-      return { text: "Hết hàng", color: "text-error", bgColor: "bg-error/10" };
+      return {
+        text: "Out of stock",
+        color: "text-error",
+        bgColor: "bg-error/10",
+      };
     }
   };
 
@@ -46,7 +50,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
 
   return (
     <div
-      className="group bg-card border border-border rounded-lg overflow-hidden shadow-card hover:shadow-modal transition-all duration-300 cursor-pointer"
+      className="group bg-card border border-border rounded-lg overflow-hidden shadow-card hover:shadow-modal transition-all duration-300 cursor-pointer w-full sm:w-[260px] md:w-[280px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -71,25 +75,25 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
           {/* Overlay Actions - Desktop Only */}
           {isHovered && (
             <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex">
-              <div className="flex space-x-2">
+              <div className="flex flex-col items-center justify-center space-y-2">
                 <Button
                   variant="default"
-                  size="sm"
+                  size="xs"
                   onClick={handleQuickView}
                   iconName="Eye"
                   iconPosition="left"
                 >
-                  Xem nhanh
+                  Quick View
                 </Button>
                 <Button
                   variant="outline"
-                  size="sm"
+                  size="xs"
                   onClick={handleAddToCart}
                   iconName="ShoppingCart"
                   iconPosition="left"
                   disabled={equipment?.availability === "unavailable"}
                 >
-                  Thêm vào giỏ
+                  Add to Cart
                 </Button>
               </div>
             </div>
@@ -184,7 +188,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
                   </span>
                 )}
               </div>
-              <span className="text-xs text-muted-foreground">/ ngày</span>
+              <span className="text-xs text-muted-foreground">/ day</span>
             </div>
 
             {/* Rating */}
@@ -215,7 +219,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
               iconPosition="left"
               className="flex-1"
             >
-              Xem nhanh
+              Quick View
             </Button>
             <Button
               variant="default"
@@ -226,7 +230,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
               className="flex-1"
               disabled={equipment?.availability === "unavailable"}
             >
-              Thuê ngay
+              Rent Now
             </Button>
           </div>
         </div>
