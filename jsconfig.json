@@ -1,5 +1,18 @@
+// jsconfig.json
 {
   "compilerOptions": {
-    "baseUrl": "./src"
-  }
+    "target": "es2020",
+    "module": "esnext",
+    "checkJs": true, // ✅ enable JS type checking
+    "jsx": "react-jsx", // ✅ for React projects (or "react" if using React 17)
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"]
 }
