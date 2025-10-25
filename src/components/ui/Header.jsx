@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon from "../AppIcon";
@@ -55,10 +56,7 @@ const Header = ({ user = null, cartCount = 0 }) => {
     <header className="fixed top-0 left-0 right-0 z-[1000] bg-card border-b border-border">
       <nav className="flex items-center justify-between h-16 px-4 lg:px-6">
         {/* Logo */}
-        <Link
-          to="/equipment-catalog"
-          className="flex items-center space-x-2 flex-shrink-0"
-        >
+        <Link to="/main" className="flex items-center space-x-2 flex-shrink-0">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <Icon name="Mountain" size={20} color="white" />
           </div>
