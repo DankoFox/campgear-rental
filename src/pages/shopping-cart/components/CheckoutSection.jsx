@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import Select from "../../../components/ui/Select";
+import { ConfirmDialog } from "../../../components/ConfirmDialog";
 
 const CheckoutSection = ({
   cartItems,
@@ -14,6 +15,8 @@ const CheckoutSection = ({
   const [deliveryOption, setDeliveryOption] = useState("delivery");
   const [timeSlot, setTimeSlot] = useState("");
 
+  const [showTimeSlotAlert, setShowTimeSlotAlert] = useState(false);
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -22,8 +25,8 @@ const CheckoutSection = ({
   };
 
   const deliveryOptions = [
-    { value: "delivery", label: "Giao hàng tận nơi" },
-    { value: "pickup", label: "Nhận tại cửa hàng" },
+    { value: "delivery", label: "Home Delivery" },
+    { value: "pickup", label: "Pick up at Store" },
   ];
 
   const timeSlotOptions = [
@@ -35,7 +38,7 @@ const CheckoutSection = ({
 
   const handleProceedToCheckout = () => {
     if (!timeSlot) {
-      alert("Vui lòng chọn khung giờ giao hàng");
+      setShowTimeSlotAlert(true);
       return;
     }
     onProceedToCheckout({ deliveryOption, timeSlot });
@@ -46,18 +49,18 @@ const CheckoutSection = ({
       {/* Delivery Options */}
       <div className="bg-card border border-border rounded-lg p-6 space-y-4">
         <h3 className="font-heading font-semibold text-lg text-foreground">
-          Tùy chọn nhận hàng
+          Delivery Options
         </h3>
 
         <Select
-          label="Phương thức nhận hàng"
+          label="Delivery Methods"
           options={deliveryOptions}
           value={deliveryOption}
           onChange={setDeliveryOption}
         />
 
         <Select
-          label="Khung giờ"
+          label="Time Window"
           options={timeSlotOptions}
           value={timeSlot}
           onChange={setTimeSlot}
@@ -71,11 +74,11 @@ const CheckoutSection = ({
               <Icon name="Info" size={16} className="text-primary mt-0.5" />
               <div className="text-sm space-y-1">
                 <p className="font-medium text-foreground">
-                  Thông tin giao hàng
+                  Delivery Information
                 </p>
                 <p className="text-muted-foreground">
-                  Phí giao hàng miễn phí cho đơn hàng trên 1.000.000₫. Thời gian
-                  giao hàng: 1-2 ngày làm việc.
+                  Free delivery for orders over 1,000,000₫. Estimated delivery
+                  time: 1–2 business days.
                 </p>
               </div>
             </div>
@@ -87,11 +90,11 @@ const CheckoutSection = ({
             <div className="flex items-start gap-3">
               <Icon name="MapPin" size={16} className="text-primary mt-0.5" />
               <div className="text-sm space-y-1">
-                <p className="font-medium text-foreground">Địa chỉ cửa hàng</p>
+                <p className="font-medium text-foreground">Store Address</p>
                 <p className="text-muted-foreground">
-                  123 Đường Lê Lợi, Quận 1, TP.HCM
+                  123 Lê Lợi, Sai Gon Ward, Ho Chi Minh City
                   <br />
-                  Giờ mở cửa: 8:00 - 20:00 (Thứ 2 - Chủ nhật)
+                  Business Hours: 8:00 - 20:00 (Mon - Sun)
                 </p>
               </div>
             </div>
@@ -119,7 +122,7 @@ const CheckoutSection = ({
           onClick={handleProceedToCheckout}
           disabled={cartItems?.length === 0}
         >
-          {isProcessing ? "Đang xử lý..." : "Tiến hành thanh toán"}
+          {isProcessing ? "Processing..." : "Proceed to purchasing"}
         </Button>
 
         <div className="text-center">
@@ -127,7 +130,7 @@ const CheckoutSection = ({
             onClick={() => navigate("/equipment-catalog")}
             className="text-sm text-primary hover:underline"
           >
-            ← Tiếp tục mua sắm
+            ← Continue Shopping
           </button>
         </div>
       </div>
@@ -135,10 +138,10 @@ const CheckoutSection = ({
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
           <Icon name="Shield" size={16} />
-          <span>Thanh toán được bảo mật bởi SSL 256-bit</span>
+          <span>Payment is secured using SSL 256-bit</span>
         </div>
         <p className="text-xs text-muted-foreground">
-          Thông tin thanh toán của bạn được mã hóa và bảo vệ an toàn
+          Your payment information is encrypted and safely protected
         </p>
       </div>
       {/* Session Timer */}
@@ -147,14 +150,22 @@ const CheckoutSection = ({
           <Icon name="Clock" size={16} className="text-warning" />
           <div className="text-sm">
             <p className="font-medium text-warning">
-              Giỏ hàng sẽ được lưu trong 30 phút
+              Your package will be saved within 30 minutes
             </p>
             <p className="text-muted-foreground">
-              Hoàn tất đơn hàng để không mất các sản phẩm đã chọn
+              Finishing the orders' payment to not lose your chosen items
             </p>
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={showTimeSlotAlert}
+        onOpenChange={setShowTimeSlotAlert}
+        title="Delivery Time Window Not Selected"
+        description="Please choose a Delivery Time Window before Proceeding to Checkout"
+        onConfirm={() => setShowTimeSlotAlert(false)}
+      />
     </div>
   );
 };
