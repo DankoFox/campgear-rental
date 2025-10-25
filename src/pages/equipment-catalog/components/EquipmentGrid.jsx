@@ -11,7 +11,7 @@ const EquipmentGrid = ({
   onLoadMore,
 }) => {
   const SkeletonCard = () => (
-    <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card">
+    <div className="bg-card border border-border rounded-lg overflow-hidden shadow-card w-[280px]">
       <div className="aspect-[4/3] bg-muted animate-pulse" />
       <div className="p-4 space-y-3">
         <div className="flex items-center space-x-2">
@@ -34,9 +34,9 @@ const EquipmentGrid = ({
 
   if (loading && equipment?.length === 0) {
     return (
-      <div className="flex-1">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {Array.from({ length: 12 })?.map((_, index) => (
+      <div className="flex-1 flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+          {Array.from({ length: 9 })?.map((_, index) => (
             <SkeletonCard key={index} />
           ))}
         </div>
@@ -73,8 +73,9 @@ const EquipmentGrid = ({
           <span>Lưới</span>
         </div>
       </div>
+
       {/* Equipment Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
         {equipment?.map((item) => (
           <EquipmentCard
             key={item?.id}
@@ -87,12 +88,13 @@ const EquipmentGrid = ({
         {/* Loading More Skeletons */}
         {loading && equipment?.length > 0 && (
           <>
-            {Array.from({ length: 4 })?.map((_, index) => (
+            {Array.from({ length: 3 })?.map((_, index) => (
               <SkeletonCard key={`loading-${index}`} />
             ))}
           </>
         )}
       </div>
+
       {/* Load More Button */}
       {hasMore && !loading && (
         <div className="flex justify-center pt-8">
@@ -105,6 +107,7 @@ const EquipmentGrid = ({
           </button>
         </div>
       )}
+
       {/* End of Results */}
       {!hasMore && equipment?.length > 0 && (
         <div className="text-center py-8">

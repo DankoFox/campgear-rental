@@ -14,20 +14,20 @@ const FilterPanel = ({
   const [priceRange, setPriceRange] = useState([0, 2000000]);
 
   const categories = [
-    { id: "tents", label: "Lều trại", count: 45 },
-    { id: "sleeping", label: "Túi ngủ", count: 32 },
-    { id: "cooking", label: "Dụng cụ nấu ăn", count: 28 },
-    { id: "backpacks", label: "Ba lô", count: 24 },
-    { id: "lighting", label: "Đèn chiếu sáng", count: 18 },
-    { id: "tools", label: "Dụng cụ", count: 15 },
+    { id: "tents", label: "Tents", count: 45 },
+    { id: "sleeping", label: "Sleeping Bags", count: 32 },
+    { id: "cooking", label: "Cooking Gear", count: 28 },
+    { id: "backpacks", label: "Backpacks", count: 24 },
+    { id: "lighting", label: "Lighting", count: 18 },
+    { id: "tools", label: "Tools", count: 15 },
   ];
 
   const locations = [
-    { value: "hanoi", label: "Hà Nội" },
-    { value: "hcm", label: "TP. Hồ Chí Minh" },
-    { value: "danang", label: "Đà Nẵng" },
-    { value: "halong", label: "Hạ Long" },
-    { value: "dalat", label: "Đà Lạt" },
+    { value: "hanoi", label: "Hanoi" },
+    { value: "hcm", label: "Ho Chi Minh City" },
+    { value: "danang", label: "Da Nang" },
+    { value: "halong", label: "Ha Long" },
+    { value: "dalat", label: "Da Lat" },
     { value: "nhatrang", label: "Nha Trang" },
   ];
 
@@ -40,11 +40,11 @@ const FilterPanel = ({
   ];
 
   const sortOptions = [
-    { value: "relevance", label: "Phù hợp nhất" },
-    { value: "price_low", label: "Giá thấp đến cao" },
-    { value: "price_high", label: "Giá cao đến thấp" },
-    { value: "rating", label: "Đánh giá cao nhất" },
-    { value: "distance", label: "Khoảng cách gần nhất" },
+    { value: "relevance", label: "Most Relevant" },
+    { value: "price_low", label: "Price: Low to High" },
+    { value: "price_high", label: "Price: High to Low" },
+    { value: "rating", label: "Highest Rated" },
+    { value: "distance", label: "Closest" },
   ];
 
   const handleCategoryChange = (categoryId, checked) => {
@@ -85,25 +85,23 @@ const FilterPanel = ({
     <div className="space-y-6">
       {/* Sort Options */}
       <div className="space-y-3">
-        <h3 className="font-heading font-semibold text-foreground">
-          Sắp xếp theo
-        </h3>
+        <h3 className="font-heading font-semibold text-foreground">Sort By</h3>
         <Select
           options={sortOptions}
           value={filters?.sortBy || "relevance"}
           onChange={(value) => onFiltersChange({ ...filters, sortBy: value })}
-          placeholder="Chọn cách sắp xếp"
+          placeholder="Select sorting method"
         />
       </div>
 
       {/* Location Filter */}
       <div className="space-y-3">
-        <h3 className="font-heading font-semibold text-foreground">Địa điểm</h3>
+        <h3 className="font-heading font-semibold text-foreground">Location</h3>
         <Select
           options={locations}
           value={filters?.location || ""}
           onChange={(value) => onFiltersChange({ ...filters, location: value })}
-          placeholder="Chọn thành phố"
+          placeholder="Select city"
           clearable
         />
       </div>
@@ -111,7 +109,7 @@ const FilterPanel = ({
       {/* Price Range */}
       <div className="space-y-3">
         <h3 className="font-heading font-semibold text-foreground">
-          Khoảng giá (₫/ngày)
+          Price Range (₫/day)
         </h3>
         <div className="space-y-3">
           <div className="flex items-center space-x-2">
@@ -137,15 +135,17 @@ const FilterPanel = ({
             />
           </div>
           <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span>{priceRange?.[0]?.toLocaleString("vi-VN")}₫</span>
-            <span>{priceRange?.[1]?.toLocaleString("vi-VN")}₫</span>
+            <span>{priceRange?.[0]?.toLocaleString("en-US")}₫</span>
+            <span>{priceRange?.[1]?.toLocaleString("en-US")}₫</span>
           </div>
         </div>
       </div>
 
       {/* Categories */}
       <div className="space-y-3">
-        <h3 className="font-heading font-semibold text-foreground">Danh mục</h3>
+        <h3 className="font-heading font-semibold text-foreground">
+          Categories
+        </h3>
         <div className="space-y-2">
           {categories?.map((category) => (
             <div
@@ -169,9 +169,7 @@ const FilterPanel = ({
 
       {/* Brands */}
       <div className="space-y-3">
-        <h3 className="font-heading font-semibold text-foreground">
-          Thương hiệu
-        </h3>
+        <h3 className="font-heading font-semibold text-foreground">Brands</h3>
         <div className="space-y-2">
           {brands?.map((brand) => (
             <div key={brand?.id} className="flex items-center justify-between">
@@ -198,7 +196,7 @@ const FilterPanel = ({
         iconPosition="left"
         fullWidth
       >
-        Xóa bộ lọc
+        Clear Filters
       </Button>
     </div>
   );
@@ -214,7 +212,7 @@ const FilterPanel = ({
           iconPosition="left"
           className="md:hidden"
         >
-          Bộ lọc
+          Filters
         </Button>
 
         {/* Mobile Filter Panel */}
@@ -226,7 +224,7 @@ const FilterPanel = ({
             />
             <div className="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-card border-l border-border shadow-modal">
               <div className="flex items-center justify-between p-4 border-b border-border">
-                <h2 className="font-heading font-semibold text-lg">Bộ lọc</h2>
+                <h2 className="font-heading font-semibold text-lg">Filters</h2>
                 <Button variant="ghost" size="icon" onClick={onToggle}>
                   <Icon name="X" size={20} />
                 </Button>
@@ -244,7 +242,7 @@ const FilterPanel = ({
   return (
     <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 h-fit sticky top-20">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-heading font-semibold text-lg">Bộ lọc</h2>
+        <h2 className="font-heading font-semibold text-lg">Filters</h2>
         <Icon name="Filter" size={20} className="text-muted-foreground" />
       </div>
       <FilterContent />
