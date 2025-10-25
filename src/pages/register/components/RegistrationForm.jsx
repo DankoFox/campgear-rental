@@ -113,7 +113,7 @@ const RegistrationForm = () => {
 
       case "termsAccepted":
         if (!value) {
-          newErrors.termsAccepted = "Vui lòng đồng ý với điều khoản sử dụng";
+          newErrors.termsAccepted = "Please Agree with the Terms of Use";
         } else {
           delete newErrors?.termsAccepted;
         }
@@ -228,39 +228,22 @@ const RegistrationForm = () => {
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-          Tạo tài khoản
+          Register Your Account
         </h1>
-        <p className="text-muted-foreground">
-          Tham gia cộng đồng cắm trại CampGear
-        </p>
+        
       </div>
       {/* Progress Indicator */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-foreground">
-            Tiến độ hoàn thành
-          </span>
-          <span className="text-sm text-muted-foreground">{formProgress}%</span>
-        </div>
-        <div className="w-full bg-muted rounded-full h-2">
-          <div
-            className="bg-primary h-2 rounded-full transition-all duration-300"
-            style={{ width: `${formProgress}%` }}
-          />
-        </div>
-      </div>
+   
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Information */}
         <div className="space-y-4">
-          <h3 className="text-lg font-heading font-semibold text-foreground">
-            Thông tin cá nhân
-          </h3>
+        
 
           <Input
-            label="Họ và tên"
+            label="Your Full Name"
             type="text"
             name="fullName"
-            placeholder="Nhập họ và tên đầy đủ"
+            placeholder="Diddy?"
             value={formData?.fullName}
             onChange={handleInputChange}
             error={errors?.fullName}
@@ -268,51 +251,42 @@ const RegistrationForm = () => {
           />
 
           <Input
-            label="Địa chỉ email"
+            label="Email Address"
             type="email"
             name="email"
-            placeholder="example@email.com"
+            placeholder="Diddywillskibidyyou@email.com"
             value={formData?.email}
             onChange={handleInputChange}
             error={errors?.email}
             required
           />
 
-          <Input
-            label="Số điện thoại"
-            type="tel"
-            name="phone"
-            placeholder="0123 456 789"
-            value={formData?.phone}
-            onChange={handleInputChange}
-            error={errors?.phone}
-            required
-          />
+         
         </div>
 
         {/* Account Credentials */}
         <div className="space-y-4">
           <h3 className="text-lg font-heading font-semibold text-foreground">
-            Thông tin tài khoản
+             Account Information
           </h3>
 
           <Input
-            label="Mật khẩu"
+            label="Password"
             type="password"
             name="password"
-            placeholder="Nhập mật khẩu"
+            placeholder="WeKnowDiddy'sHere"
             value={formData?.password}
             onChange={handleInputChange}
             error={errors?.password}
-            description="Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và số"
+            description="At least 8 characters, including Characters and numbers."
             required
           />
 
           <Input
-            label="Xác nhận mật khẩu"
+            label="Confirm your password"
             type="password"
             name="confirmPassword"
-            placeholder="Nhập lại mật khẩu"
+            placeholder="You know what to do"
             value={formData?.confirmPassword}
             onChange={handleInputChange}
             error={errors?.confirmPassword}
@@ -322,13 +296,11 @@ const RegistrationForm = () => {
 
         {/* User Type and Location */}
         <div className="space-y-4">
-          <h3 className="text-lg font-heading font-semibold text-foreground">
-            Thông tin bổ sung
-          </h3>
+          
 
           <Select
-            label="Loại tài khoản"
-            placeholder="Chọn loại tài khoản"
+            label="Role"
+            placeholder="Why are you here?"
             options={userTypeOptions}
             value={formData?.userType}
             onChange={(value) => handleSelectChange("userType", value)}
@@ -336,37 +308,23 @@ const RegistrationForm = () => {
             required
           />
 
-          <Select
-            label="Khu vực"
-            placeholder="Chọn khu vực của bạn"
-            options={locationOptions}
-            value={formData?.location}
-            onChange={(value) => handleSelectChange("location", value)}
-            error={errors?.location}
-            description="Giúp chúng tôi gợi ý thiết bị phù hợp trong khu vực"
-            required
-          />
+          
         </div>
 
         {/* Consent and Terms */}
         <div className="space-y-4">
-          <Checkbox
-            label="Tôi muốn nhận thông tin khuyến mãi và tin tức từ CampGear"
-            name="marketingConsent"
-            checked={formData?.marketingConsent}
-            onChange={handleInputChange}
-          />
+         
 
           <Checkbox
             label={
               <span>
-                Tôi đồng ý với{" "}
+                I Agree With{" "}
                 <Link to="/terms" className="text-primary hover:underline">
-                  Điều khoản sử dụng
+                  Terms of Use
                 </Link>{" "}
                 và{" "}
                 <Link to="/privacy" className="text-primary hover:underline">
-                  Chính sách bảo mật
+                  Privacy Policy
                 </Link>
               </span>
             }
@@ -395,17 +353,17 @@ const RegistrationForm = () => {
           loading={isLoading}
           disabled={formProgress < 100}
         >
-          Tạo tài khoản
+          Give me my Account
         </Button>
 
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            Đã có tài khoản?{" "}
+            You got your password?{" "}
             <Link
               to="/login"
               className="text-primary hover:underline font-medium"
             >
-              Đăng nhập ngay
+              Go to Login
             </Link>
           </p>
         </div>

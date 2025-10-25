@@ -80,7 +80,7 @@ const TrustPanel = () => {
         {/* Security Features */}
         <div>
           <h3 className="font-heading font-semibold text-foreground mb-4">
-            Bảo mật & An toàn
+            Secure & Save
           </h3>
           <div className="space-y-3">
             {securityFeatures?.map((feature, index) => (
@@ -106,40 +106,7 @@ const TrustPanel = () => {
         </div>
 
         {/* Testimonials */}
-        <div>
-          <h3 className="font-heading font-semibold text-foreground mb-4">
-            Khách hàng nói gì
-          </h3>
-          <div className="space-y-4">
-            {testimonials?.map((testimonial) => (
-              <div key={testimonial?.id} className="bg-muted/50 rounded-lg p-4">
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-                    <Image
-                      src={testimonial?.avatar}
-                      alt={testimonial?.avatarAlt}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-foreground truncate">
-                      {testimonial?.name}
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      {testimonial?.role}
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    {renderStars(testimonial?.rating)}
-                  </div>
-                </div>
-                <p className="text-sm text-foreground leading-relaxed">
-                  "{testimonial?.content}"
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        
 
         {/* Certifications */}
         <div>
@@ -168,11 +135,10 @@ const TrustPanel = () => {
         <div className="bg-primary/5 rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-2">
             <Icon name="Headphones" size={16} className="text-primary" />
-            <h4 className="text-sm font-medium text-foreground">Hỗ trợ 24/7</h4>
+            <h4 className="text-sm font-medium text-foreground">24/7 Support</h4>
           </div>
           <p className="text-xs text-muted-foreground">
-            Đội ngũ hỗ trợ khách hàng luôn sẵn sàng giúp đỡ bạn mọi lúc, mọi
-            nơi.
+            We’re always here to help — anytime, anywhere!
           </p>
           <div className="mt-3 flex items-center space-x-4 text-xs text-muted-foreground">
             <div className="flex items-center space-x-1">
