@@ -51,11 +51,11 @@ const EquipmentGrid = ({
           <Icon name="Search" size={32} className="text-muted-foreground" />
         </div>
         <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
-          Không tìm thấy thiết bị
+          No equipment found
         </h3>
         <p className="text-muted-foreground max-w-md">
-          Không có thiết bị nào phù hợp với tiêu chí tìm kiếm của bạn. Hãy thử
-          điều chỉnh bộ lọc hoặc tìm kiếm với từ khóa khác.
+          There is no equipment matching your search criteria. Try adjusting the
+          filters or searching with different keywords.
         </p>
       </div>
     );
@@ -66,12 +66,8 @@ const EquipmentGrid = ({
       {/* Results Header */}
       <div className="flex items-center justify-between">
         <p className="text-muted-foreground">
-          Hiển thị {equipment?.length} thiết bị
+          Showing {equipment?.length} items
         </p>
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <Icon name="Grid3X3" size={16} />
-          <span>Lưới</span>
-        </div>
       </div>
 
       {/* Equipment Grid */}
@@ -103,7 +99,7 @@ const EquipmentGrid = ({
             className="px-6 py-3 bg-card border border-border rounded-lg hover:bg-muted transition-colors flex items-center space-x-2"
           >
             <Icon name="Plus" size={16} />
-            <span>Xem thêm thiết bị</span>
+            <span>Load more equipment</span>
           </button>
         </div>
       )}
@@ -112,7 +108,7 @@ const EquipmentGrid = ({
       {!hasMore && equipment?.length > 0 && (
         <div className="text-center py-8">
           <p className="text-muted-foreground">
-            Bạn đã xem hết tất cả thiết bị có sẵn
+            You have viewed all available equipment
           </p>
         </div>
       )}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Image from "../../../components/AppImage";
 import Button from "../../../components/ui/Button";
 import Icon from "../../../components/AppIcon";
+import ReviewHover from "@/components/ui/ReviewHover";
 
 const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -77,62 +78,28 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
           </div>
 
           {/* Details */}
-          <div className="space-y-6">
-            {/* Provider */}
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground text-sm font-medium">
-                  {equipment?.provider?.name?.charAt(0)}
-                </span>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">
-                  {equipment?.provider?.name}
-                </p>
-                <div className="flex items-center space-x-1">
-                  <Icon
-                    name="Star"
-                    size={14}
-                    className="text-warning fill-current"
-                  />
-                  <span className="text-sm text-muted-foreground">
-                    {equipment?.provider?.rating}
-                  </span>
-                </div>
-              </div>
-            </div>
-
+          <div className="space-y-4">
             {/* Name */}
-            <h3 className="font-heading font-bold text-xl text-foreground">
-              {equipment?.name}
-            </h3>
-
-            {/* Rating */}
-            <div className="flex items-center space-x-2">
-              <div className="flex items-center space-x-1">
-                {Array.from({ length: 5 })?.map((_, index) => (
-                  <Icon
-                    key={index}
-                    name="Star"
-                    size={16}
-                    className={
-                      index < Math.floor(equipment?.rating)
-                        ? "text-warning fill-current"
-                        : "text-muted"
-                    }
-                  />
-                ))}
-              </div>
-              <span className="font-medium text-foreground">
-                {equipment?.rating}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                ({equipment?.reviewCount} reviews)
-              </span>
+            <div>
+              <h3 className="font-heading font-bold text-xl text-foreground">
+                {equipment?.name}
+              </h3>
+              <p
+                className="
+              text-sm text-green-800 
+              mt-1 
+              transition-colors duration-300 
+              hover:text-green-700
+            "
+              >
+                {equipment?.brand}
+              </p>
             </div>
+
+            <ReviewHover equipmentName={equipment?.name} />
 
             {/* Price */}
-            <div className="space-y-2">
+            <div>
               <div className="flex items-baseline space-x-2">
                 <span className="text-2xl font-bold text-foreground">
                   {formatPrice(equipment?.price)}₫
@@ -143,9 +110,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                   </span>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground">
-                Rental price per day
-              </p>
+              <p className="text-sm text-muted-foreground">per day</p>
             </div>
 
             {/* Features */}
