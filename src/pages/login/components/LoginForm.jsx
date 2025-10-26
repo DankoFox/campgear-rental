@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
@@ -27,7 +28,6 @@ const LoginForm = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
 
-    // Clear error when user starts typing
     if (errors?.[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -40,15 +40,15 @@ const LoginForm = () => {
     const newErrors = {};
 
     if (!formData?.email) {
-      newErrors.email = "Vui lòng nhập địa chỉ email";
-    } else if (!/\S+@\S+\.\S+/?.test(formData?.email)) {
-      newErrors.email = "Địa chỉ email không hợp lệ";
+      newErrors.email = "Please enter your email address";
+    } else if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+      newErrors.email = "Please enter a valid email address";
     }
 
     if (!formData?.password) {
-      newErrors.password = "Vui lòng nhập mật khẩu";
+      newErrors.password = "Please enter your password";
     } else if (formData?.password?.length < 6) {
-      newErrors.password = "Mật khẩu phải có ít nhất 6 ký tự";
+      newErrors.password = "Password must be at least 6 characters";
     }
 
     setErrors(newErrors);
@@ -63,37 +63,30 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Check mock credentials
       if (
         formData?.email === mockCredentials?.email &&
         formData?.password === mockCredentials?.password
       ) {
-        // Simulate successful login
         localStorage.setItem(
           "user",
           JSON.stringify({
             id: 1,
-            name: "Nguyễn Văn An",
+            name: "Nguyen Van An",
             email: formData?.email,
-            avatar:
-              "https://images.unsplash.com/photo-1708946697595-89931282824c",
-            avatarAlt:
-              "Professional headshot of Vietnamese man with short black hair in casual shirt",
           })
         );
 
         navigate("/equipment-catalog");
       } else {
         setErrors({
-          general: `Thông tin đăng nhập không chính xác. Vui lòng thử: ${mockCredentials?.email} / ${mockCredentials?.password}`,
+          general: `Invalid credentials. Try using: ${mockCredentials?.email} / ${mockCredentials?.password}`,
         });
       }
-    } catch (error) {
+    } catch {
       setErrors({
-        general: "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+        general: "Something went wrong. Please try again later.",
       });
     } finally {
       setIsLoading(false);
@@ -102,7 +95,6 @@ const LoginForm = () => {
 
   const handleSocialLogin = (provider) => {
     console.log(`Social login with ${provider}`);
-    // Social login implementation would go here
   };
 
   return (
@@ -114,7 +106,7 @@ const LoginForm = () => {
             Login
           </h1>
           <p className="text-muted-foreground text-sm">
-           Welcome Back. Please Login into your account
+            Welcome back! Please log in to your account
           </p>
         </div>
 
@@ -138,7 +130,7 @@ const LoginForm = () => {
             label="Email Address"
             type="email"
             name="email"
-            placeholder="Input your email address"
+            placeholder="Enter your email"
             value={formData?.email}
             onChange={handleInputChange}
             error={errors?.email}
@@ -149,7 +141,7 @@ const LoginForm = () => {
             label="Password"
             type="password"
             name="password"
-            placeholder="Input your password"
+            placeholder="Enter your password"
             value={formData?.password}
             onChange={handleInputChange}
             error={errors?.password}
@@ -168,7 +160,7 @@ const LoginForm = () => {
               to="/forgot-password"
               className="text-sm text-primary hover:text-primary/80 transition-micro"
             >
-              Forgot Password?
+              Forgot password?
             </Link>
           </div>
 
@@ -180,7 +172,7 @@ const LoginForm = () => {
             loading={isLoading}
             disabled={isLoading}
           >
-            {isLoading ? "Logging In..." : "Login"}
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
 
@@ -190,9 +182,7 @@ const LoginForm = () => {
             <div className="w-full border-t border-border"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-card text-muted-foreground">
-              Or
-            </span>
+            <span className="px-2 bg-card text-muted-foreground">Or</span>
           </div>
         </div>
 
@@ -206,7 +196,7 @@ const LoginForm = () => {
             iconName="Mail"
             iconPosition="left"
           >
-            Continue With Google
+            Continue with Google
           </Button>
 
           <Button
@@ -224,7 +214,7 @@ const LoginForm = () => {
         {/* Register Link */}
         <div className="mt-6 text-center">
           <p className="text-sm text-muted-foreground">
-            No Account?{" "}
+            Don't have an account?{" "}
             <Link
               to="/register"
               className="text-primary hover:text-primary/80 font-medium transition-micro"

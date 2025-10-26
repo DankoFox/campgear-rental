@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/ui/Header";
@@ -8,6 +9,9 @@ import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
+import { mockCartItems } from "./card-data";
+
+const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
@@ -26,82 +30,52 @@ const ShoppingCart = () => {
     email: "nguyen.van.an@email.com",
   });
 
-  // Mock cart data
+  // Load cart from localStorage or mock data
   useEffect(() => {
-    const mockCartItems = [
-      {
-        id: 1,
-        name: "Coleman Sundome 4-Person Tent",
-        category: "Tents",
-        image: "https://images.unsplash.com/photo-1687762035856-cab4f81f2b39",
-        imageAlt:
-          "Orange dome tent set up in a forest clearing with camping gear nearby",
-        pricePerDay: 150000,
-        quantity: 1,
-        startDate: "2025-10-25",
-        endDate: "2025-10-28",
-        totalPrice: 450000,
-      },
-      {
-        id: 2,
-        name: "The North Face Cat's Meow Sleeping Bag",
-        category: "Sleeping Gear",
-        image: "https://images.unsplash.com/photo-1623903441132-91d5ecc02b45",
-        imageAlt:
-          "Blue sleeping bag laid out on a wooden cabin floor with camping equipment",
-        pricePerDay: 80000,
-        quantity: 2,
-        startDate: "2025-10-25",
-        endDate: "2025-10-28",
-        totalPrice: 480000,
-      },
-      {
-        id: 3,
-        name: "Jetboil Flash Mini Camping Stove",
-        category: "Cooking Equipment",
-        image: "https://images.unsplash.com/photo-1722607731856-ff7d914b1be3",
-        imageAlt:
-          "Compact camping stove with an orange flame heating a pot outdoors on rocky ground",
-        pricePerDay: 60000,
-        quantity: 1,
-        startDate: "2025-10-25",
-        endDate: "2025-10-28",
-        totalPrice: 180000,
-      },
-    ];
-
-    setCartItems(mockCartItems);
+    const storedCart = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEY) || "[]"
+    );
+    if (storedCart.length > 0) {
+      setCartItems(storedCart);
+    } else {
+      setCartItems(mockCartItems);
+    }
   }, []);
+
+  // Persist cart in localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
     setCartItems((items) =>
-      items?.map((item) =>
-        item?.id === itemId
+      items.map((item) =>
+        item.id === itemId
           ? {
               ...item,
               quantity: newQuantity,
-              totalPrice: item?.pricePerDay * newQuantity * calculateDays(item),
+              totalPrice: item.pricePerDay * newQuantity * calculateDays(item),
             }
-          : item,
-      ),
+          : item
+      )
     );
   };
 
   const handleUpdateDates = (itemId, startDate, endDate) => {
     setCartItems((items) =>
-      items?.map((item) =>
-        item?.id === itemId
+      items.map((item) =>
+        item.id === itemId
           ? {
               ...item,
               startDate,
               endDate,
               totalPrice:
-                item?.pricePerDay *
-                item?.quantity *
+                item.pricePerDay *
+                item.quantity *
                 calculateDaysFromDates(startDate, endDate),
             }
-          : item,
-      ),
+          : item
+      )
     );
   };
 
@@ -110,7 +84,7 @@ const ShoppingCart = () => {
   };
 
   const confirmRemoveItem = () => {
-    setCartItems((items) => items?.filter((item) => item?.id !== deleteTarget));
+    setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
     setDeleteTarget(null);
   };
 
@@ -144,9 +118,9 @@ const ShoppingCart = () => {
   };
 
   const calculateTotal = () => {
-    const subtotal = cartItems?.reduce((total, item) => {
+    const subtotal = cartItems.reduce((total, item) => {
       const days = calculateDays(item);
-      return total + item?.pricePerDay * days * item?.quantity;
+      return total + item.pricePerDay * days * item.quantity;
     }, 0);
 
     const deliveryFee = subtotal > 1000000 ? 0 : 50000;
@@ -159,16 +133,14 @@ const ShoppingCart = () => {
   const handleProceedToCheckout = (checkoutData) => {
     setIsProcessing(true);
 
-    // Simulate processing
     setTimeout(() => {
       setIsProcessing(false);
-      // Navigate to payment page (would be implemented)
       console.log("Proceeding to checkout with:", checkoutData);
       alert("Chuyển đến trang thanh toán...");
     }, 2000);
   };
 
-  if (cartItems?.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-background">
         <Header user={user} cartCount={0} />
@@ -181,7 +153,7 @@ const ShoppingCart = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header user={user} cartCount={cartItems?.length} />
+      <Header user={user} cartCount={cartItems.length} />
       <main className="pt-16">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8">
           {/* Page Header */}
@@ -210,7 +182,7 @@ const ShoppingCart = () => {
               {/* Items Header */}
               <div className="flex items-center justify-between">
                 <h2 className="font-heading font-semibold text-xl text-foreground">
-                  Cart Items ({cartItems?.length})
+                  Cart Items ({cartItems.length})
                 </h2>
                 <Button
                   variant="ghost"
@@ -226,9 +198,9 @@ const ShoppingCart = () => {
 
               {/* Cart Items List */}
               <div className="space-y-4">
-                {cartItems?.map((item) => (
+                {cartItems.map((item) => (
                   <CartItem
-                    key={item?.id}
+                    key={item.id}
                     item={item}
                     onUpdateQuantity={handleUpdateQuantity}
                     onUpdateDates={handleUpdateDates}
@@ -252,7 +224,6 @@ const ShoppingCart = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* Order Summary */}
               <OrderSummary
                 cartItems={cartItems}
                 promoCode={promoCode}
@@ -260,7 +231,6 @@ const ShoppingCart = () => {
                 onRemovePromo={handleRemovePromo}
               />
 
-              {/* Checkout Section */}
               <CheckoutSection
                 cartItems={cartItems}
                 total={calculateTotal()}
@@ -278,7 +248,7 @@ const ShoppingCart = () => {
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
-                })?.format(calculateTotal())}
+                }).format(calculateTotal())}
               </span>
             </div>
             <Button
