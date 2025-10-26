@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import Icon from "../components/AppIcon";

@@ -4,8 +4,6 @@ import Header from "../../components/ui/Header";
 import BookingCard from "./components/BookingCard";
 import AccountSummary from "./components/AccountSummary";
 import ActivityFeed from "./components/ActivityFeed";
-import QuickActions from "./components/QuickActions";
-import RecommendedEquipment from "./components/RecommendedEquipment";
 import NotificationCenter from "./components/NotificationCenter";
 
 const UserDashboard = () => {
@@ -18,9 +16,6 @@ const UserDashboard = () => {
     email: "nguyen.van.an@email.com",
     phone: "+84 901 234 567",
     joinDate: "2023-03-15",
-    avatar: "https://images.unsplash.com/photo-1733054852918-5d5f32b0b604",
-    avatarAlt:
-      "Professional headshot of Vietnamese man with short black hair wearing white collared shirt",
   };
 
   // Mock account statistics
@@ -123,54 +118,6 @@ const UserDashboard = () => {
       description: "Hãy đánh giá trải nghiệm thuê Bếp gas mini Jetboil Flash",
       timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
       actionRequired: true,
-    },
-  ];
-
-  // Mock recommended equipment
-  const mockRecommendations = [
-    {
-      id: 1,
-      name: "Ba lô trekking Osprey Atmos AG 65L",
-      image: "https://images.unsplash.com/photo-1699688945310-e9289b69e5cf",
-      imageAlt:
-        "Large blue hiking backpack with multiple compartments displayed against white background",
-      category: "Ba lô",
-      rating: 4.9,
-      pricePerDay: 120000,
-      available: true,
-    },
-    {
-      id: 2,
-      name: "Đèn pin LED Petzl Actik Core",
-      image: "https://images.unsplash.com/photo-1731314811524-b7e3abe26357",
-      imageAlt:
-        "Compact LED headlamp with adjustable strap on rocky outdoor surface",
-      category: "Đèn pin",
-      rating: 4.8,
-      pricePerDay: 35000,
-      available: true,
-    },
-    {
-      id: 3,
-      name: "Giày trekking Merrell Moab 3",
-      image: "https://images.unsplash.com/photo-1559826884-dbcc4a21caed",
-      imageAlt:
-        "Brown leather hiking boots with rugged sole on wooden surface with mountain backdrop",
-      category: "Giày dép",
-      rating: 4.7,
-      pricePerDay: 80000,
-      available: false,
-    },
-    {
-      id: 4,
-      name: "Áo khoác chống nước Patagonia Torrentshell",
-      image: "https://images.unsplash.com/photo-1732294365458-91f5c3300532",
-      imageAlt:
-        "Blue waterproof jacket hanging on wooden hanger with forest background",
-      category: "Quần áo",
-      rating: 4.6,
-      pricePerDay: 90000,
-      available: true,
     },
   ];
 
@@ -293,14 +240,6 @@ const UserDashboard = () => {
               <div className="space-y-6">
                 {/* Account Summary */}
                 <AccountSummary user={mockUser} stats={mockStats} />
-
-                {/* Quick Actions */}
-                <QuickActions />
-
-                {/* Recommended Equipment */}
-                <RecommendedEquipment
-                  recommendations={mockRecommendations?.slice(0, 2)}
-                />
               </div>
             </div>
           )}
@@ -321,9 +260,6 @@ const UserDashboard = () => {
               </div>
               <div className="space-y-6">
                 <AccountSummary user={mockUser} stats={mockStats} />
-                <RecommendedEquipment
-                  recommendations={mockRecommendations?.slice(0, 2)}
-                />
               </div>
             </div>
           )}
@@ -335,7 +271,6 @@ const UserDashboard = () => {
               </div>
               <div className="space-y-6">
                 <AccountSummary user={mockUser} stats={mockStats} />
-                <QuickActions />
               </div>
             </div>
           )}

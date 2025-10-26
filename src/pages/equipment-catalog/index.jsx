@@ -1,11 +1,11 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import Header from "../../components/ui/Header";
 import FilterPanel from "./components/FilterPanel";
 import EquipmentGrid from "./components/EquipmentGrid";
 import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
-import Icon from "../../components/AppIcon";
-import { mockEquipment } from "./equipment-data";
+import { mockEquipment } from "../../data/equipment-data";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
 
@@ -34,51 +34,52 @@ const EquipmentCatalog = () => {
 
       // Filter by location
       // Filter by location
-if (filters.location) {
-  filtered = filtered.filter((item) =>
-    item.location.toLowerCase().includes(filters.location.toLowerCase())
-  );
-}
+      if (filters.location) {
+        filtered = filtered.filter((item) =>
+          item.location.toLowerCase().includes(filters.location.toLowerCase())
+        );
+      }
 
-// Filter by price range
-filtered = filtered.filter(
-  (item) =>
-    item.price >= filters.priceRange[0] &&
-    item.price <= filters.priceRange[1]
-);
+      // Filter by price range
+      filtered = filtered.filter(
+        (item) =>
+          item.price >= filters.priceRange[0] &&
+          item.price <= filters.priceRange[1]
+      );
 
-// ✅ Filter by category
-if (filters.categories?.length > 0) {
-  filtered = filtered.filter((item) =>
-    filters.categories.includes(item.type)
-  );
-}
+      // ✅ Filter by category
+      if (filters.categories?.length > 0) {
+        filtered = filtered.filter((item) =>
+          filters.categories.includes(item.type)
+        );
+      }
 
-// ✅ Filter by brand
-if (filters.brands?.length > 0) {
-  filtered = filtered.filter((item) =>
-    filters.brands.some((b) =>
-      item.brand?.toLowerCase().replace(/[^a-z0-9]/g, "").includes(b)
-    )
-  );
-}
+      // ✅ Filter by brand
+      if (filters.brands?.length > 0) {
+        filtered = filtered.filter((item) =>
+          filters.brands.some((b) =>
+            item.brand
+              ?.toLowerCase()
+              .replace(/[^a-z0-9]/g, "")
+              .includes(b)
+          )
+        );
+      }
 
-
-// ✅ Sort logic
-switch (filters.sortBy) {
-  case "price_low":
-    filtered.sort((a, b) => a.price - b.price);
-    break;
-  case "price_high":
-    filtered.sort((a, b) => b.price - a.price);
-    break;
-  case "rating":
-    filtered.sort((a, b) => b.rating - a.rating);
-    break;
-  default:
-    break; // relevance keeps original order
-}
-
+      // ✅ Sort logic
+      switch (filters.sortBy) {
+        case "price_low":
+          filtered.sort((a, b) => a.price - b.price);
+          break;
+        case "price_high":
+          filtered.sort((a, b) => b.price - a.price);
+          break;
+        case "rating":
+          filtered.sort((a, b) => b.rating - a.rating);
+          break;
+        default:
+          break; // relevance keeps original order
+      }
 
       setEquipment(filtered);
       setLoading(false);
@@ -123,12 +124,11 @@ switch (filters.sortBy) {
     setEquipment(filtered);
   };
 
-
   return (
     <div className="min-h-screen bg-background">
       <Header cartCount={cartCount} />
       <main className="pt-16">
-        <HeroSection 
+        <HeroSection
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           onSearch={handleSearch}
@@ -152,13 +152,13 @@ switch (filters.sortBy) {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <FilterPanel
-                        products={mockEquipment} // 👈 and this too
-                        filters={filters}
-                        onFiltersChange={handleFiltersChange}
-                        isOpen={isMobileFilterOpen}
-                        onToggle={toggleMobileFilter}
-                        isMobile={true}
-                      />
+                    products={mockEquipment} // 👈 and this too
+                    filters={filters}
+                    onFiltersChange={handleFiltersChange}
+                    isOpen={isMobileFilterOpen}
+                    onToggle={toggleMobileFilter}
+                    isMobile={true}
+                  />
                   <h2 className="font-heading font-semibold text-xl text-foreground">
                     Camping Equipment
                   </h2>

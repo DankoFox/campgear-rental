@@ -52,9 +52,6 @@ const TrustPanel = () => {
       role: "Người thuê thiết bị",
       content:
         "Dịch vụ tuyệt vời! Thiết bị chất lượng cao và quy trình thuê rất đơn giản.",
-      avatar: "https://images.unsplash.com/photo-1633058851383-689248101803",
-      avatarAlt:
-        "Professional headshot of Vietnamese woman with shoulder-length black hair smiling warmly",
       rating: 5,
     },
     {
@@ -62,9 +59,6 @@ const TrustPanel = () => {
       role: "Nhà cung cấp thiết bị",
       content:
         "Nền tảng giúp tôi quản lý kinh doanh hiệu quả và tiếp cận nhiều khách hàng hơn.",
-      avatar: "https://images.unsplash.com/photo-1708946697595-89931282824c",
-      avatarAlt:
-        "Professional headshot of Vietnamese man with short black hair in casual shirt",
       rating: 5,
     },
   ];

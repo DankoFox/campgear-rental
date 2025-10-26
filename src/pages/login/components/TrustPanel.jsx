@@ -26,9 +26,6 @@ const TrustPanel = () => {
       id: 1,
       name: "Trần Minh Hoàng",
       role: "Nhà tổ chức tour",
-      avatar: "https://images.unsplash.com/photo-1708946697661-5fc2d94a533a",
-      avatarAlt:
-        "Professional headshot of Vietnamese man with glasses and friendly smile in business attire",
       content:
         "CampGear đã giúp tôi tổ chức nhiều chuyến cắm trại thành công. Thiết bị chất lượng cao và dịch vụ tuyệt vời.",
       rating: 5,
@@ -37,9 +34,6 @@ const TrustPanel = () => {
       id: 2,
       name: "Lê Thị Mai",
       role: "Người đam mê cắm trại",
-      avatar: "https://images.unsplash.com/photo-1668049221564-862149a48e10",
-      avatarAlt:
-        "Professional headshot of Vietnamese woman with long black hair and warm smile",
       content:
         "Lần đầu cắm trại nhưng nhờ có CampGear mà tôi có trải nghiệm tuyệt vời. Thiết bị đầy đủ và hướng dẫn chi tiết.",
       rating: 5,
@@ -106,7 +100,6 @@ const TrustPanel = () => {
         </div>
 
         {/* Testimonials */}
-        
 
         {/* Certifications */}
         <div>
@@ -135,7 +128,9 @@ const TrustPanel = () => {
         <div className="bg-primary/5 rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-2">
             <Icon name="Headphones" size={16} className="text-primary" />
-            <h4 className="text-sm font-medium text-foreground">24/7 Support</h4>
+            <h4 className="text-sm font-medium text-foreground">
+              24/7 Support
+            </h4>
           </div>
           <p className="text-xs text-muted-foreground">
             We’re always here to help — anytime, anywhere!
