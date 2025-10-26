@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
@@ -16,10 +16,11 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const mockCredentials = {
-    email: "user@campgear.vn",
-    password: "CampGear2024!",
-  };
+  // ✅ Auto-redirect if user is already logged in
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) navigate("/equipment-catalog");
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e?.target;
@@ -57,34 +58,23 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
-
     if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // ✅ Simplified “login” logic (accept any valid email/password)
+      const user = {
+        id: Date.now(),
+        name: formData?.email?.split("@")[0] || "Người dùng",
+        email: formData?.email,
+      };
 
-      if (
-        formData?.email === mockCredentials?.email &&
-        formData?.password === mockCredentials?.password
-      ) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            id: 1,
-            name: "Nguyen Van An",
-            email: formData?.email,
-          })
-        );
+      localStorage.setItem("user", JSON.stringify(user));
 
-        navigate("/equipment-catalog");
-      } else {
-        setErrors({
-          general: `Invalid credentials. Try using: ${mockCredentials?.email} / ${mockCredentials?.password}`,
-        });
-      }
-    } catch {
+      navigate("/equipment-catalog");
+    } catch (err) {
+      console.error(err);
       setErrors({
         general: "Something went wrong. Please try again later.",
       });

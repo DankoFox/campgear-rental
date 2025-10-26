@@ -139,7 +139,7 @@ const EquipmentCatalog = () => {
           <div className="flex gap-8">
             {/* Desktop Filter Panel */}
             <FilterPanel
-              products={mockEquipment} // 👈 add this line
+              products={mockEquipment}
               filters={filters}
               onFiltersChange={handleFiltersChange}
               isOpen={isMobileFilterOpen}
