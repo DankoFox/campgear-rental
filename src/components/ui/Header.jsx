@@ -1,14 +1,24 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Icon from "../AppIcon";
 import Button from "./Button";
 
-const Header = ({ user = null, cartCount = 0 }) => {
+const Header = ({ cartCount = 0 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const location = useLocation();
+  const [user, setUser] = useState(null);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // ✅ Load user from localStorage whenever page loads
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    setUser(storedUser ? JSON.parse(storedUser) : null);
+  }, []);
+
+  // ✅ Close menus when navigating
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
@@ -38,10 +48,11 @@ const Header = ({ user = null, cartCount = 0 }) => {
     return location?.pathname === path;
   };
 
+  // ✅ Handle logout
   const handleLogout = () => {
-    // Logout logic would be implemented here
-    console.log("Logout clicked");
-    setIsUserMenuOpen(false);
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/login");
   };
 
   const toggleMobileMenu = () => {
@@ -67,21 +78,21 @@ const Header = ({ user = null, cartCount = 0 }) => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          {navigationItems?.map((item) => (
+          {navigationItems.map((item) => (
             <Link
-              key={item?.path}
-              to={item?.path}
+              key={item.path}
+              to={item.path}
               className={`relative flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-micro ${
-                isActivePath(item?.path)
+                isActivePath(item.path)
                   ? "text-primary bg-primary/10"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
-              <Icon name={item?.icon} size={18} />
-              <span>{item?.label}</span>
-              {item?.badge && (
+              <Icon name={item.icon} size={18} />
+              <span>{item.label}</span>
+              {item.badge && (
                 <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs font-medium rounded-full h-5 w-5 flex items-center justify-center">
-                  {item?.badge > 99 ? "99+" : item?.badge}
+                  {item.badge > 99 ? "99+" : item.badge}
                 </span>
               )}
             </Link>
@@ -104,14 +115,10 @@ const Header = ({ user = null, cartCount = 0 }) => {
                 <span className="hidden lg:block text-sm font-medium text-foreground">
                   {user?.name || "Người dùng"}
                 </span>
-                <Icon
-                  name="ChevronDown"
-                  size={16}
-                  className="hidden lg:block"
-                />
+                <Icon name="ChevronDown" size={16} className="hidden lg:block" />
               </button>
 
-              {/* User Dropdown Menu */}
+              {/* Dropdown */}
               {isUserMenuOpen && (
                 <div className="absolute right-0 top-full mt-2 w-48 bg-popover border border-border rounded-lg shadow-modal z-[1050]">
                   <div className="p-2">
@@ -157,69 +164,6 @@ const Header = ({ user = null, cartCount = 0 }) => {
           </button>
         </div>
       </nav>
-      {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-card border-t border-border">
-          <div className="px-4 py-3 space-y-2">
-            {navigationItems?.map((item) => (
-              <Link
-                key={item?.path}
-                to={item?.path}
-                className={`flex items-center justify-between px-3 py-3 rounded-md text-sm font-medium transition-micro ${
-                  isActivePath(item?.path)
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <Icon name={item?.icon} size={18} />
-                  <span>{item?.label}</span>
-                </div>
-                {item?.badge && (
-                  <span className="bg-accent text-accent-foreground text-xs font-medium rounded-full h-5 w-5 flex items-center justify-center">
-                    {item?.badge > 99 ? "99+" : item?.badge}
-                  </span>
-                )}
-              </Link>
-            ))}
-
-            {/* Mobile Account Section */}
-            {!user && (
-              <div className="pt-3 border-t border-border space-y-2">
-                <Link to="/login" className="block">
-                  <Button variant="ghost" size="sm" fullWidth>
-                    Đăng nhập
-                  </Button>
-                </Link>
-                <Link to="/register" className="block">
-                  <Button variant="default" size="sm" fullWidth>
-                    Đăng ký
-                  </Button>
-                </Link>
-              </div>
-            )}
-
-            {user && (
-              <div className="pt-3 border-t border-border space-y-2">
-                <Link
-                  to="/user-dashboard"
-                  className="flex items-center space-x-3 px-3 py-3 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-micro"
-                >
-                  <Icon name="User" size={18} />
-                  <span>Tài khoản của tôi</span>
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center space-x-3 w-full px-3 py-3 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-micro"
-                >
-                  <Icon name="LogOut" size={18} />
-                  <span>Đăng xuất</span>
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </header>
   );
 };
