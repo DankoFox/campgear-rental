@@ -9,7 +9,7 @@ import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
-import { mockCartItems } from "./card-data";
+// import { mockCartItems } from "./card-data";
 
 const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
@@ -31,16 +31,24 @@ const ShoppingCart = () => {
   });
 
   // Load cart from localStorage or mock data
+  // useEffect(() => {
+  //   const storedCart = JSON.parse(
+  //     localStorage.getItem(LOCAL_STORAGE_KEY) || "[]"
+  //   );
+  //   if (storedCart.length > 0) {
+  //     setCartItems(storedCart);
+  //   } else {
+  //     setCartItems(mockCartItems);
+  //   }
+  // }, []);
+
+  //Load cart using api
   useEffect(() => {
-    const storedCart = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEY) || "[]"
-    );
-    if (storedCart.length > 0) {
-      setCartItems(storedCart);
-    } else {
-      setCartItems(mockCartItems);
-    }
-  }, []);
+  fetch("http://localhost:5000/api/data")
+    .then((res) => res.json())
+    .then((data) => setCartItems(data))
+    .catch((err) => console.error("Failed to fetch cart:", err));
+}, []);
 
   // Persist cart in localStorage whenever it changes
   useEffect(() => {
@@ -83,8 +91,23 @@ const ShoppingCart = () => {
     setDeleteTarget(itemId); // open confirmation dialog
   };
 
-  const confirmRemoveItem = () => {
-    setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
+  const confirmRemoveItem = async () => {
+    // setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
+    try {
+    const response = await fetch(`http://localhost:5000/api/data/${deleteTarget}`, {
+      method: "DELETE",
+    });
+    const result = await response.json();
+
+    if (response.ok) {
+      console.log(result.message);
+      setCartItems(result.data); // update frontend after backend delete
+    } else {
+      console.error("Failed to delete item:", result.message);
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error);
+  }
     setDeleteTarget(null);
   };
 

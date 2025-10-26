@@ -41,6 +41,8 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays || 1;
   };
+  
+  
 
   return (
     <div className="bg-card border border-border rounded-lg p-4 lg:p-6">
