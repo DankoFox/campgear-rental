@@ -150,9 +150,9 @@ const EquipmentCatalog = () => {
             <div className="flex-1 space-y-6">
               {/* Mobile Header with Filter */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center">
                   <FilterPanel
-                    products={mockEquipment} // 👈 and this too
+                    products={mockEquipment}
                     filters={filters}
                     onFiltersChange={handleFiltersChange}
                     isOpen={isMobileFilterOpen}
