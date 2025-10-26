@@ -1,5 +1,5 @@
 // src/components/ui/Footer.jsx
-import Icon from "components/AppIcon";
+import Icon from "../../components/AppIcon";
 import React from "react";
 
 const Footer = () => {

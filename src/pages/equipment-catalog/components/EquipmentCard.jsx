@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "../../../components/AppImage";
@@ -124,33 +125,16 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
         </div>
 
         {/* Content */}
-        <div className="p-4 space-y-3">
-          {/* Provider Info */}
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-primary-foreground text-xs font-medium">
-                {equipment?.provider?.name?.charAt(0)}
-              </span>
-            </div>
-            <span className="text-sm text-muted-foreground">
-              {equipment?.provider?.name}
-            </span>
-            <div className="flex items-center space-x-1">
-              <Icon
-                name="Star"
-                size={12}
-                className="text-warning fill-current"
-              />
-              <span className="text-xs text-muted-foreground">
-                {equipment?.provider?.rating}
-              </span>
-            </div>
-          </div>
+        <div className="p-4 space-y-2">
+          {/* Brand Info */}
 
           {/* Equipment Name */}
-          <h3 className="font-heading font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="font-heading font-semibold text-lg text-foreground line-clamp-2 group-hover:text-primary transition-colors">
             {equipment?.name}
           </h3>
+          <p className="font-heading text-sm text-green-800 mt-1 line-clamp-1">
+            {equipment?.brand}
+          </p>
 
           {/* Features */}
           <div className="flex flex-wrap gap-1">

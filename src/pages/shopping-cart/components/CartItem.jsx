@@ -70,7 +70,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                 {formatPrice(item?.totalPrice)}
               </p>
               <p className="text-sm text-muted-foreground">
-                {formatPrice(item?.pricePerDay)}/ngày
+                {formatPrice(item?.pricePerDay)}/day
               </p>
             </div>
           </div>
@@ -80,29 +80,29 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-3 border-t border-border">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Ngày nhận
+                  Start Date
                 </p>
                 <p className="text-sm text-foreground">{item?.startDate}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Ngày trả
+                  End Date
                 </p>
                 <p className="text-sm text-foreground">{item?.endDate}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Số lượng
+                  Quantity
                 </p>
                 <p className="text-sm text-foreground">
-                  {item?.quantity} thiết bị
+                  {item?.quantity} item{item?.quantity > 1 ? "s" : ""}
                 </p>
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-3 border-t border-border">
               <Input
-                label="Ngày nhận"
+                label="Start Date"
                 type="date"
                 value={editData?.startDate}
                 onChange={(e) =>
@@ -110,7 +110,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                 }
               />
               <Input
-                label="Ngày trả"
+                label="End Date"
                 type="date"
                 value={editData?.endDate}
                 onChange={(e) =>
@@ -118,7 +118,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                 }
               />
               <Input
-                label="Số lượng"
+                label="Quantity"
                 type="number"
                 min="1"
                 value={editData?.quantity}
@@ -135,10 +135,11 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
           {/* Duration and Total */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2">
             <p className="text-sm text-muted-foreground">
-              Thời gian thuê: {calculateDays()} ngày
+              Rental Duration: {calculateDays()} day
+              {calculateDays() > 1 ? "s" : ""}
             </p>
             <p className="text-sm font-medium text-foreground">
-              Tổng:{" "}
+              Total:{" "}
               {formatPrice(
                 item?.pricePerDay * calculateDays() * item?.quantity,
               )}
@@ -156,7 +157,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                   iconPosition="left"
                   onClick={() => setIsEditing(true)}
                 >
-                  Chỉnh sửa
+                  Edit
                 </Button>
                 <Button
                   variant="ghost"
@@ -166,7 +167,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                   onClick={() => onRemove(item?.id)}
                   className="text-destructive hover:text-destructive"
                 >
-                  Xóa
+                  Delete
                 </Button>
               </>
             ) : (
@@ -178,7 +179,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                   iconPosition="left"
                   onClick={handleSaveChanges}
                 >
-                  Lưu
+                  Save
                 </Button>
                 <Button
                   variant="outline"
@@ -187,7 +188,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
                   iconPosition="left"
                   onClick={handleCancelEdit}
                 >
-                  Hủy
+                  Cancel
                 </Button>
               </>
             )}

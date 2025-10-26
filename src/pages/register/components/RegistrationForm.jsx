@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
@@ -14,27 +15,20 @@ const RegistrationForm = () => {
     phone: "",
     password: "",
     confirmPassword: "",
-    userType: "",
     location: "",
-    marketingConsent: false,
     termsAccepted: false,
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [formProgress, setFormProgress] = useState(0);
 
-  const userTypeOptions = [
-    { value: "renter", label: "Người thuê thiết bị" },
-    { value: "provider", label: "Nhà cung cấp thiết bị" },
-  ];
-
   const locationOptions = [
-    { value: "hanoi", label: "Hà Nội" },
-    { value: "hochiminh", label: "Thành phố Hồ Chí Minh" },
-    { value: "danang", label: "Đà Nẵng" },
-    { value: "haiphong", label: "Hải Phòng" },
-    { value: "cantho", label: "Cần Thơ" },
-    { value: "other", label: "Tỉnh thành khác" },
+    { value: "hanoi", label: "Hanoi" },
+    { value: "hochiminh", label: "Ho Chi Minh City" },
+    { value: "danang", label: "Da Nang" },
+    { value: "haiphong", label: "Hai Phong" },
+    { value: "cantho", label: "Can Tho" },
+    { value: "other", label: "Other Province/City" },
   ];
 
   const validateField = (name, value) => {
@@ -43,79 +37,72 @@ const RegistrationForm = () => {
     switch (name) {
       case "fullName":
         if (!value?.trim()) {
-          newErrors.fullName = "Vui lòng nhập họ và tên";
+          newErrors.fullName = "Please enter your full name";
         } else if (value?.trim()?.length < 2) {
-          newErrors.fullName = "Họ và tên phải có ít nhất 2 ký tự";
+          newErrors.fullName = "Full name must be at least 2 characters";
         } else {
-          delete newErrors?.fullName;
+          delete newErrors.fullName;
         }
         break;
 
       case "email":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!value) {
-          newErrors.email = "Vui lòng nhập địa chỉ email";
-        } else if (!emailRegex?.test(value)) {
-          newErrors.email = "Địa chỉ email không hợp lệ";
+          newErrors.email = "Please enter your email address";
+        } else if (!emailRegex.test(value)) {
+          newErrors.email = "Please enter a valid email address";
         } else {
-          delete newErrors?.email;
+          delete newErrors.email;
         }
         break;
 
       case "phone":
         const phoneRegex = /^[0-9]{10,11}$/;
         if (!value) {
-          newErrors.phone = "Vui lòng nhập số điện thoại";
-        } else if (!phoneRegex?.test(value?.replace(/\s/g, ""))) {
-          newErrors.phone = "Số điện thoại không hợp lệ (10-11 số)";
+          newErrors.phone = "Please enter your phone number";
+        } else if (!phoneRegex.test(value?.replace(/\s/g, ""))) {
+          newErrors.phone = "Phone number must be 10-11 digits";
         } else {
-          delete newErrors?.phone;
+          delete newErrors.phone;
         }
         break;
 
       case "password":
         if (!value) {
-          newErrors.password = "Vui lòng nhập mật khẩu";
-        } else if (value?.length < 8) {
-          newErrors.password = "Mật khẩu phải có ít nhất 8 ký tự";
-        } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/?.test(value)) {
-          newErrors.password = "Mật khẩu phải chứa chữ hoa, chữ thường và số";
+          newErrors.password = "Please enter a password";
+        } else if (value.length < 8) {
+          newErrors.password = "Password must be at least 8 characters";
+        } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+          newErrors.password =
+            "Password must include uppercase, lowercase, and a number";
         } else {
-          delete newErrors?.password;
+          delete newErrors.password;
         }
         break;
 
       case "confirmPassword":
         if (!value) {
-          newErrors.confirmPassword = "Vui lòng xác nhận mật khẩu";
-        } else if (value !== formData?.password) {
-          newErrors.confirmPassword = "Mật khẩu xác nhận không khớp";
+          newErrors.confirmPassword = "Please confirm your password";
+        } else if (value !== formData.password) {
+          newErrors.confirmPassword = "Passwords do not match";
         } else {
-          delete newErrors?.confirmPassword;
-        }
-        break;
-
-      case "userType":
-        if (!value) {
-          newErrors.userType = "Vui lòng chọn loại tài khoản";
-        } else {
-          delete newErrors?.userType;
+          delete newErrors.confirmPassword;
         }
         break;
 
       case "location":
         if (!value) {
-          newErrors.location = "Vui lòng chọn khu vực";
+          newErrors.location = "Please select your location";
         } else {
-          delete newErrors?.location;
+          delete newErrors.location;
         }
         break;
 
       case "termsAccepted":
         if (!value) {
-          newErrors.termsAccepted = "Vui lòng đồng ý với điều khoản sử dụng";
+          newErrors.termsAccepted = "You must agree to the Terms of Use";
         } else {
-          delete newErrors?.termsAccepted;
+          delete newErrors.termsAccepted;
         }
         break;
 
@@ -124,7 +111,7 @@ const RegistrationForm = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors)?.length === 0;
+    return Object.keys(newErrors).length === 0;
   };
 
   const calculateProgress = () => {
@@ -134,25 +121,24 @@ const RegistrationForm = () => {
       "phone",
       "password",
       "confirmPassword",
-      "userType",
       "location",
     ];
-    const filledFields = requiredFields?.filter(
-      (field) => formData?.[field] && formData?.[field]?.trim()
+    const filledFields = requiredFields.filter(
+      (field) => formData[field] && formData[field].trim()
     );
-    const termsProgress = formData?.termsAccepted ? 1 : 0;
+    const termsProgress = formData.termsAccepted ? 1 : 0;
     return Math.round(
-      ((filledFields?.length + termsProgress) / (requiredFields?.length + 1)) *
+      ((filledFields.length + termsProgress) / (requiredFields.length + 1)) *
         100
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFormProgress(calculateProgress());
   }, [formData]);
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e?.target;
+    const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
 
     setFormData((prev) => ({
@@ -160,7 +146,6 @@ const RegistrationForm = () => {
       [name]: newValue,
     }));
 
-    // Validate field on change
     validateField(name, newValue);
   };
 
@@ -173,52 +158,43 @@ const RegistrationForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e?.preventDefault();
+    e.preventDefault();
 
-    // Validate all fields
     const fieldsToValidate = [
       "fullName",
       "email",
       "phone",
       "password",
       "confirmPassword",
-      "userType",
       "location",
       "termsAccepted",
     ];
     let isValid = true;
 
-    fieldsToValidate?.forEach((field) => {
-      const fieldValue =
-        field === "termsAccepted" ? formData?.[field] : formData?.[field];
+    fieldsToValidate.forEach((field) => {
+      const fieldValue = formData[field];
       if (!validateField(field, fieldValue)) {
         isValid = false;
       }
     });
 
-    if (!isValid) {
-      return;
-    }
+    if (!isValid) return;
 
     setIsLoading(true);
-
     try {
-      // Mock registration API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Mock successful registration
       console.log("Registration successful:", formData);
 
-      // Navigate to email verification or login
       navigate("/login", {
         state: {
           message:
-            "Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.",
-          email: formData?.email,
+            "Registration successful! Please check your email to verify your account.",
+          email: formData.email,
         },
       });
-    } catch (error) {
-      setErrors({ submit: "Đã xảy ra lỗi. Vui lòng thử lại sau." });
+    } catch {
+      setErrors({ submit: "Something went wrong. Please try again later." });
     } finally {
       setIsLoading(false);
     }
@@ -228,64 +204,46 @@ const RegistrationForm = () => {
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-          Tạo tài khoản
+          Create Your Account
         </h1>
-        <p className="text-muted-foreground">
-          Tham gia cộng đồng cắm trại CampGear
+        <p className="text-sm text-muted-foreground">
+          Fill in the details below to get started
         </p>
       </div>
-      {/* Progress Indicator */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-foreground">
-            Tiến độ hoàn thành
-          </span>
-          <span className="text-sm text-muted-foreground">{formProgress}%</span>
-        </div>
-        <div className="w-full bg-muted rounded-full h-2">
-          <div
-            className="bg-primary h-2 rounded-full transition-all duration-300"
-            style={{ width: `${formProgress}%` }}
-          />
-        </div>
-      </div>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Information */}
         <div className="space-y-4">
-          <h3 className="text-lg font-heading font-semibold text-foreground">
-            Thông tin cá nhân
-          </h3>
-
           <Input
-            label="Họ và tên"
+            label="Full Name"
             type="text"
             name="fullName"
-            placeholder="Nhập họ và tên đầy đủ"
-            value={formData?.fullName}
+            placeholder="John Doe"
+            value={formData.fullName}
             onChange={handleInputChange}
-            error={errors?.fullName}
+            error={errors.fullName}
             required
           />
 
           <Input
-            label="Địa chỉ email"
+            label="Email Address"
             type="email"
             name="email"
-            placeholder="example@email.com"
-            value={formData?.email}
+            placeholder="john@example.com"
+            value={formData.email}
             onChange={handleInputChange}
-            error={errors?.email}
+            error={errors.email}
             required
           />
 
           <Input
-            label="Số điện thoại"
-            type="tel"
+            label="Phone Number"
+            type="text"
             name="phone"
-            placeholder="0123 456 789"
-            value={formData?.phone}
+            placeholder="0123456789"
+            value={formData.phone}
             onChange={handleInputChange}
-            error={errors?.phone}
+            error={errors.phone}
             required
           />
         </div>
@@ -293,57 +251,42 @@ const RegistrationForm = () => {
         {/* Account Credentials */}
         <div className="space-y-4">
           <h3 className="text-lg font-heading font-semibold text-foreground">
-            Thông tin tài khoản
+            Account Information
           </h3>
 
           <Input
-            label="Mật khẩu"
+            label="Password"
             type="password"
             name="password"
-            placeholder="Nhập mật khẩu"
-            value={formData?.password}
+            placeholder="Enter your password"
+            value={formData.password}
             onChange={handleInputChange}
-            error={errors?.password}
-            description="Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và số"
+            error={errors.password}
+            description="At least 8 characters, including uppercase, lowercase, and a number."
             required
           />
 
           <Input
-            label="Xác nhận mật khẩu"
+            label="Confirm Password"
             type="password"
             name="confirmPassword"
-            placeholder="Nhập lại mật khẩu"
-            value={formData?.confirmPassword}
+            placeholder="Re-enter your password"
+            value={formData.confirmPassword}
             onChange={handleInputChange}
-            error={errors?.confirmPassword}
+            error={errors.confirmPassword}
             required
           />
         </div>
 
         {/* User Type and Location */}
         <div className="space-y-4">
-          <h3 className="text-lg font-heading font-semibold text-foreground">
-            Thông tin bổ sung
-          </h3>
-
           <Select
-            label="Loại tài khoản"
-            placeholder="Chọn loại tài khoản"
-            options={userTypeOptions}
-            value={formData?.userType}
-            onChange={(value) => handleSelectChange("userType", value)}
-            error={errors?.userType}
-            required
-          />
-
-          <Select
-            label="Khu vực"
-            placeholder="Chọn khu vực của bạn"
+            label="Location"
+            placeholder="Select your location"
             options={locationOptions}
-            value={formData?.location}
+            value={formData.location}
             onChange={(value) => handleSelectChange("location", value)}
-            error={errors?.location}
-            description="Giúp chúng tôi gợi ý thiết bị phù hợp trong khu vực"
+            error={errors.location}
             required
           />
         </div>
@@ -351,38 +294,31 @@ const RegistrationForm = () => {
         {/* Consent and Terms */}
         <div className="space-y-4">
           <Checkbox
-            label="Tôi muốn nhận thông tin khuyến mãi và tin tức từ CampGear"
-            name="marketingConsent"
-            checked={formData?.marketingConsent}
-            onChange={handleInputChange}
-          />
-
-          <Checkbox
             label={
               <span>
-                Tôi đồng ý với{" "}
+                I agree to the{" "}
                 <Link to="/terms" className="text-primary hover:underline">
-                  Điều khoản sử dụng
+                  Terms of Use
                 </Link>{" "}
-                và{" "}
+                and{" "}
                 <Link to="/privacy" className="text-primary hover:underline">
-                  Chính sách bảo mật
+                  Privacy Policy
                 </Link>
               </span>
             }
             name="termsAccepted"
-            checked={formData?.termsAccepted}
+            checked={formData.termsAccepted}
             onChange={handleInputChange}
-            error={errors?.termsAccepted}
+            error={errors.termsAccepted}
             required
           />
         </div>
 
-        {errors?.submit && (
+        {errors.submit && (
           <div className="p-4 bg-error/10 border border-error/20 rounded-lg">
             <div className="flex items-center space-x-2">
               <Icon name="AlertCircle" size={16} className="text-error" />
-              <span className="text-sm text-error">{errors?.submit}</span>
+              <span className="text-sm text-error">{errors.submit}</span>
             </div>
           </div>
         )}
@@ -395,17 +331,17 @@ const RegistrationForm = () => {
           loading={isLoading}
           disabled={formProgress < 100}
         >
-          Tạo tài khoản
+          Create My Account
         </Button>
 
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            Đã có tài khoản?{" "}
+            Already have an account?{" "}
             <Link
               to="/login"
               className="text-primary hover:underline font-medium"
             >
-              Đăng nhập ngay
+              Log in
             </Link>
           </p>
         </div>

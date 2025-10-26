@@ -10,16 +10,15 @@ const RegisterPage = () => {
     <>
       <Helmet>
         <title>Đăng ký tài khoản - CampGear</title>
-        <meta
-          name="description"
-          content="Tạo tài khoản CampGear để thuê thiết bị cắm trại chất lượng cao. Tham gia cộng đồng cắm trại lớn nhất Việt Nam."
-        />
+        
         <meta
           name="keywords"
           content="đăng ký, tài khoản, cắm trại, thiết bị, CampGear, Việt Nam"
         />
       </Helmet>
-      <div className="min-h-screen bg-background">
+
+      <div className="flex flex-col min-h-screen bg-background">
+        {/* Header */}
         <Header />
 
         {/* Hero Background */}
@@ -35,54 +34,37 @@ const RegisterPage = () => {
         </div>
 
         {/* Main Content */}
-        <main className="relative z-10 pt-16">
-          <div className="container mx-auto px-4 py-8 lg:py-12">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto">
-              {/* Registration Form - Left Column */}
-              <div className="order-2 lg:order-1">
-                <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-modal p-6 lg:p-8 border border-border/50">
-                  <RegistrationForm />
-                </div>
+        <main className="relative z-10 flex-grow flex items-center justify-center px-50 py-12">
+          <div className="container mx-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
+              {/* Registration Form */}
+            <div className="w-2/4 bg-card/95 backdrop-blur-sm rounded-2xl shadow-modal p-12 border-4 border-border/80 mx-auto">
+                <RegistrationForm />
               </div>
 
-              {/* Trust Panel - Right Column */}
-              <div className="order-1 lg:order-2">
-                <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-modal p-6 lg:p-8 border border-border/50 lg:sticky lg:top-24">
-                  <TrustPanel />
-                </div>
-              </div>
+             
             </div>
           </div>
         </main>
 
         {/* Footer */}
-        <footer className="relative z-10 bg-card/95 backdrop-blur-sm border-t border-border/50 mt-12">
+        <footer className="relative z-10 bg-card/95 backdrop-blur-sm border-t border-border/50 mt-auto">
           <div className="container mx-auto px-4 py-6">
             <div className="text-center text-sm text-muted-foreground">
               <p>
-                © {new Date()?.getFullYear()} CampGear. Tất cả quyền được bảo
-                lưu.
+                © {new Date().getFullYear()} CampGear. Please Don't Steal
               </p>
               <div className="flex items-center justify-center space-x-4 mt-2">
-                <a
-                  href="/terms"
-                  className="hover:text-primary transition-micro"
-                >
-                  Điều khoản sử dụng
+                <a href="/terms" className="hover:text-primary transition-micro">
+                  Terms of Use
                 </a>
                 <span>•</span>
-                <a
-                  href="/privacy"
-                  className="hover:text-primary transition-micro"
-                >
-                  Chính sách bảo mật
+                <a href="/privacy" className="hover:text-primary transition-micro">
+                  Privacy Policy
                 </a>
                 <span>•</span>
-                <a
-                  href="/support"
-                  className="hover:text-primary transition-micro"
-                >
-                  Hỗ trợ
+                <a href="/support" className="hover:text-primary transition-micro">
+                  Support
                 </a>
               </div>
             </div>

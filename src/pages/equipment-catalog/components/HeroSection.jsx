@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../../components/ui/Button";
 import Icon from "../../../components/AppIcon";
 
-const HeroSection = () => {
+const HeroSection = ({ searchTerm, setSearchTerm, onSearch }) => {
   return (
     <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -27,6 +27,9 @@ const HeroSection = () => {
               <input
                 type="text"
                 placeholder="Search for camping gear..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && onSearch()}
                 className="w-full pl-10 pr-4 py-3 rounded-lg border border-border bg-card text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
@@ -35,6 +38,7 @@ const HeroSection = () => {
               size="lg"
               iconName="Search"
               iconPosition="left"
+              onClick={onSearch}
             >
               Search
             </Button>
