@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet";
 import Header from "../../components/ui/Header";
 import BookingCard from "./components/BookingCard";
 import AccountSummary from "./components/AccountSummary";
-import ActivityFeed from "./components/ActivityFeed";
 import NotificationCenter from "./components/NotificationCenter";
 
 const UserDashboard = () => {
@@ -231,9 +230,6 @@ const UserDashboard = () => {
                     ))}
                   </div>
                 </div>
-
-                {/* Activity Feed */}
-                <ActivityFeed activities={mockActivities} />
               </div>
 
               {/* Right Column */}

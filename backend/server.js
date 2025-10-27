@@ -4,14 +4,22 @@ import fs from "fs";
 import cors from "cors";
 
 const app = express();
-const PORT = 5000;
+const PORT = 5050;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:4028", "http://127.0.0.1:4028"],
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json());
 
 // Load data
 const DATA_FILE = "./data/card-data.json";
+const EQUIP_FILE = "./data/equipment-data.json";
 
 app.get("/api/data", (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
@@ -36,6 +44,16 @@ app.delete("/api/data/:id", (req, res) => {
   res.json({ message: "Item deleted", data });
 });
 
+// Get all equipment data
+app.get("/api/equipment", (req, res) => {
+  try {
+    const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
+    res.json(equipment);
+  } catch (error) {
+    console.error("Error reading equipment file:", error);
+    res.status(500).json({ error: "Failed to load equipment data" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

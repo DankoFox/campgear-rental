@@ -5,7 +5,6 @@ import FilterPanel from "./components/FilterPanel";
 import EquipmentGrid from "./components/EquipmentGrid";
 import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
-import { mockEquipment } from "../../data/equipment-data";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
 
@@ -19,24 +18,46 @@ const EquipmentCatalog = () => {
   });
 
   const [equipment, setEquipment] = useState([]);
+  const [allEquipment, setAllEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // ✅ Apply filters and sorting here
   useEffect(() => {
+    const fetchEquipment = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("http://localhost:5050/api/equipment");
+        if (!res.ok) throw new Error("Failed to fetch equipment");
+        const data = await res.json();
+        setEquipment(data);
+        setAllEquipment(data);
+      } catch (err) {
+        console.error("Error fetching equipment:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEquipment();
+  }, []);
+
+  // ✅ Apply filters and sorting
+  useEffect(() => {
+    if (!allEquipment.length) return;
+
     setLoading(true);
     const timer = setTimeout(() => {
-      let filtered = [...mockEquipment];
+      let filtered = [...allEquipment];
 
-      // Filter by location
       // Filter by location
       if (filters.location) {
         filtered = filtered.filter((item) =>
-          item.location.toLowerCase().includes(filters.location.toLowerCase())
+          item.location?.toLowerCase().includes(filters.location.toLowerCase())
         );
       }
 
@@ -47,14 +68,14 @@ const EquipmentCatalog = () => {
           item.price <= filters.priceRange[1]
       );
 
-      // ✅ Filter by category
+      // Filter by categories
       if (filters.categories?.length > 0) {
         filtered = filtered.filter((item) =>
           filters.categories.includes(item.type)
         );
       }
 
-      // ✅ Filter by brand
+      // Filter by brands
       if (filters.brands?.length > 0) {
         filtered = filtered.filter((item) =>
           filters.brands.some((b) =>
@@ -66,7 +87,7 @@ const EquipmentCatalog = () => {
         );
       }
 
-      // ✅ Sort logic
+      // Sort results
       switch (filters.sortBy) {
         case "price_low":
           filtered.sort((a, b) => a.price - b.price);
@@ -78,19 +99,17 @@ const EquipmentCatalog = () => {
           filtered.sort((a, b) => b.rating - a.rating);
           break;
         default:
-          break; // relevance keeps original order
+          break;
       }
 
       setEquipment(filtered);
       setLoading(false);
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(timer);
-  }, [filters]);
+  }, [filters, allEquipment]);
 
-  const handleFiltersChange = (newFilters) => {
-    setFilters(newFilters);
-  };
+  const handleFiltersChange = (newFilters) => setFilters(newFilters);
 
   const handleAddToCart = (item) => {
     setCartCount((prev) => prev + (item?.quantity || 1));
@@ -103,23 +122,17 @@ const EquipmentCatalog = () => {
   };
 
   const handleLoadMore = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setEquipment((prev) => [...prev, ...mockEquipment.slice(0, 4)]);
-      setLoading(false);
-      setHasMore(false);
-    }, 1000);
+    // You can later make this fetch more data from API
+    setHasMore(false);
   };
 
   const toggleMobileFilter = () => {
     setIsMobileFilterOpen(!isMobileFilterOpen);
   };
 
-  const [searchTerm, setSearchTerm] = useState("");
-
   const handleSearch = () => {
-    const filtered = mockEquipment.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filtered = allEquipment.filter((item) =>
+      item.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setEquipment(filtered);
   };
@@ -134,12 +147,11 @@ const EquipmentCatalog = () => {
           onSearch={handleSearch}
         />
 
-        {/* Main Content */}
         <section className="container mx-auto px-4 py-8">
           <div className="flex gap-8">
             {/* Desktop Filter Panel */}
             <FilterPanel
-              products={mockEquipment}
+              products={allEquipment}
               filters={filters}
               onFiltersChange={handleFiltersChange}
               isOpen={isMobileFilterOpen}
@@ -148,11 +160,10 @@ const EquipmentCatalog = () => {
 
             {/* Main Section */}
             <div className="flex-1 space-y-6">
-              {/* Mobile Header with Filter */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <FilterPanel
-                    products={mockEquipment}
+                    products={allEquipment}
                     filters={filters}
                     onFiltersChange={handleFiltersChange}
                     isOpen={isMobileFilterOpen}
@@ -164,7 +175,6 @@ const EquipmentCatalog = () => {
                   </h2>
                 </div>
 
-                {/* View Options */}
                 <div className="hidden sm:flex items-center space-x-2">
                   <Button variant="ghost" size="sm" iconName="Grid3X3">
                     Grid
@@ -175,7 +185,6 @@ const EquipmentCatalog = () => {
                 </div>
               </div>
 
-              {/* Equipment List */}
               <EquipmentGrid
                 equipment={equipment}
                 loading={loading}
@@ -189,7 +198,6 @@ const EquipmentCatalog = () => {
         </section>
       </main>
 
-      {/* Quick View Modal */}
       <QuickViewModal
         equipment={selectedEquipment}
         isOpen={isQuickViewOpen}
@@ -197,7 +205,6 @@ const EquipmentCatalog = () => {
         onAddToCart={handleAddToCart}
       />
 
-      {/* Footer */}
       <Footer />
     </div>
   );
