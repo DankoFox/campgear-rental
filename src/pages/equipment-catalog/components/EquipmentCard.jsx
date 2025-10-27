@@ -55,7 +55,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to="/equipment-details" className="block">
+      <Link to={`/equipment-details/${equipment.id}`} className="block">
         {/* Image Container */}
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
           {imageLoading && (
@@ -132,9 +132,18 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
           <h3 className="font-heading font-semibold text-lg text-foreground line-clamp-2 group-hover:text-primary transition-colors">
             {equipment?.name}
           </h3>
-          <p className="font-heading text-sm text-green-800 mt-1 line-clamp-1">
-            {equipment?.brand}
-          </p>
+          <div className="flex items-center justify-between text-sm mt-1">
+            <span className="font-heading text-green-800 line-clamp-1">
+              {equipment?.brand}
+            </span>
+
+            <div className="flex items-center space-x-1 text-muted-foreground flex-shrink-0 ml-2">
+              <Icon name="MapPin" size={14} />
+              <span className="truncate max-w-[100px]">
+                {equipment?.location}
+              </span>
+            </div>
+          </div>
 
           {/* Features */}
           <div className="flex flex-wrap gap-1">
@@ -153,12 +162,6 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
             )}
           </div>
 
-          {/* Location */}
-          <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-            <Icon name="MapPin" size={14} />
-            <span>{equipment?.location}</span>
-          </div>
-
           {/* Price */}
           <div className="flex items-center justify-between">
             <div className="space-y-1">
@@ -173,21 +176,6 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
                 )}
               </div>
               <span className="text-xs text-muted-foreground">/ day</span>
-            </div>
-
-            {/* Rating */}
-            <div className="flex items-center space-x-1">
-              <Icon
-                name="Star"
-                size={16}
-                className="text-warning fill-current"
-              />
-              <span className="font-medium text-foreground">
-                {equipment?.rating}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                ({equipment?.reviewCount})
-              </span>
             </div>
           </div>
         </div>

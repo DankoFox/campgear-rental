@@ -1,0 +1,313 @@
+[
+  {
+    "id": 1,
+    "name": "Bastion 4-Person Tent",
+    "brand": "The North Face",
+    "type": "Tent",
+    "image": "public/assets/imgs/id-1-a.png",
+    "images": [
+      "https://images.unsplash.com/photo-1722607731856-ff7d914b1be3",
+      "https://images.unsplash.com/photo-1611322470518-cce1805eb6b5",
+      "https://images.unsplash.com/photo-1707462273294-cca519279b7d"
+    ],
+    "price": 150000,
+    "originalPrice": 200000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["Waterproof", "Easy setup", "4-person", "Window included"],
+    "discount": 25
+  },
+  {
+    "id": 2,
+    "name": "The North Face Dolomite Sleeping Bag",
+    "brand": "The North Face",
+    "type": "Sleeping",
+    "image": "public/assets/imgs/id-2-a.png",
+    "price": 80000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": [
+      "Warm",
+      "Lightweight",
+      "Moisture resistant",
+      "Compression sack"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "MSR PocketRocket 2 Stove",
+    "brand": "MSR",
+    "type": "cooking",
+    "image": "public/assets/imgs/id-3-a.png",
+    "price": 45000,
+    "location": "Da Nang",
+    "availability": "limited",
+    "features": ["Compact", "Fuel efficient", "Fast boiling", "Durable"]
+  },
+  {
+    "id": 4,
+    "name": "Deuter Aircontact Trekking Backpack",
+    "brand": "Deuter",
+    "type": "Backpacks",
+    "image": "public/assets/imgs/id-4-a.png",
+    "price": 120000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": [
+      "75L capacity",
+      "Ventilated back",
+      "Water-resistant",
+      "Multi-compartment"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Core Lumens LED Headlamp",
+    "brand": "YETI",
+    "type": "Lighting",
+    "image": "public/assets/imgs/id-5-a.png",
+    "price": 35000,
+    "location": "Ha Long",
+    "availability": "available",
+    "features": [
+      "USB rechargeable",
+      "Water-resistant",
+      "450 lumens",
+      "Lightweight"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "BioLite CampStove Wood-Burning System",
+    "brand": "Deuter",
+    "type": "cooking",
+    "image": "public/assets/imgs/id-6-a.png",
+    "price": 95000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["Wood-burning", "USB charging", "Portable", "Eco-friendly"]
+  },
+  {
+    "id": 7,
+    "name": "Helinox Chair One Folding Chair",
+    "brand": "Helinox",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-7-a.png",
+    "price": 55000,
+    "location": "Hanoi",
+    "availability": "limited",
+    "features": ["Ultra-light", "Compact", "Comfortable", "Durable"]
+  },
+  {
+    "id": 8,
+    "name": "Trail Pro Trekking Poles",
+    "brand": "Coleman",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-8-a.png",
+    "price": 60000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": [
+      "Adjustable length",
+      "Shock absorption",
+      "Aluminum",
+      "Foam grip"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Osprey Atmos AG 65L Backpack",
+    "brand": "Helinox",
+    "type": "Backpacks",
+    "image": "public/assets/imgs/id-9-a.png",
+    "price": 120000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": [
+      "65L capacity",
+      "Ventilated back",
+      "Anti-gravity harness",
+      "Lightweight"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Torrentshell 3L Rain Jacket",
+    "brand": "Helinox",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-10-a.png",
+    "price": 90000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": ["Waterproof", "Breathable", "Lightweight", "Packable"]
+  },
+  {
+    "id": 12,
+    "name": "Coleman Mosquito Head Net",
+    "brand": "Coleman",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-12-a.png",
+    "price": 40000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": ["Ultra-light", "Fine mesh", "Easy setup", "Compact"]
+  },
+  {
+    "id": 13,
+    "name": "Deuter Dreamlite Sleeping Pad",
+    "brand": "Deuter",
+    "type": "Sleeping",
+    "image": "public/assets/imgs/id-13-a.png",
+    "price": 95000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": ["Ultralight", "Insulated", "Compact", "Durable material"]
+  },
+  {
+    "id": 14,
+    "name": "Helinox Flash Cooking System",
+    "brand": "Helinox",
+    "type": "cooking",
+    "image": "public/assets/imgs/id-14-a.png",
+    "price": 65000,
+    "location": "Nha Trang",
+    "availability": "available",
+    "features": ["Fast boiling", "Fuel efficient", "1L capacity", "Insulated"]
+  },
+  {
+    "id": 15,
+    "name": "MSR Hubba Hubba NX 2-Person Tent",
+    "brand": "MSR",
+    "type": "Tent",
+    "image": "public/assets/imgs/id-15-a.png",
+    "price": 130000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["2-person", "Ultralight", "Freestanding", "Compact"]
+  },
+  {
+    "id": 16,
+    "name": "Deuter Futura 44L SL Daypack",
+    "brand": "Deuter",
+    "type": "Backpacks",
+    "image": "public/assets/imgs/id-16-a.png",
+    "price": 70000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": [
+      "44L capacity",
+      "Women specific",
+      "Ventilated back",
+      "Adjustable harness"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Helinox Sunset Chair",
+    "brand": "Helinox",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-17-a.png",
+    "price": 60000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": [
+      "Compact pack size",
+      "Camping chair",
+      "Lightweight alloy",
+      "Comfort"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "MSR R1 Fleece Jacket",
+    "brand": "MSR",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-18-a.png",
+    "price": 110000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": ["Recycled material", "Warm", "Lightweight", "Hiking layer"]
+  },
+  {
+    "id": 19,
+    "name": "YETI Tundra 45 Cooler",
+    "brand": "YETI",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-19-a.png",
+    "price": 200000,
+    "location": "Nha Trang",
+    "availability": "available",
+    "features": ["Rotomolded", "Ice retention", "Durable", "Outdoor"]
+  },
+  {
+    "id": 20,
+    "name": "Spark UL Sleeping Bag",
+    "brand": "YETI",
+    "type": "Sleeping",
+    "image": "public/assets/imgs/id-20-a.png",
+    "price": 90000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["Ultralight", "Down fill", "Compact pack", "Season-4"]
+  },
+  {
+    "id": 21,
+    "name": "Lite Sol Sleeping Pad",
+    "brand": "Helinox",
+    "type": "Sleeping",
+    "image": "public/assets/imgs/id-21-a.png",
+    "price": 50000,
+    "location": "Da Nang",
+    "availability": "limited",
+    "features": ["Closed-cell foam", "Ultralight", "Backpacking", "Durable"]
+  },
+  {
+    "id": 22,
+    "name": "Coleman Event Shelter",
+    "brand": "Coleman",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-22-a.png",
+    "price": 70000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": ["Shelter", "10′ x 10′", "Easy setup", "Beach/park"]
+  },
+  {
+    "id": 23,
+    "name": "The North Face Base Camp Duffel M",
+    "brand": "The North Face",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-23-a.png",
+    "price": 135000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": ["Duffel bag", "Water-resistant", "50L", "Travel/outdoor"]
+  },
+  {
+    "id": 24,
+    "name": "MSR Guardian Purifier System",
+    "brand": "MSR",
+    "type": "Tools",
+    "image": "public/assets/imgs/id-24-a.png",
+    "price": 85000,
+    "location": "Nha Trang",
+    "availability": "available",
+    "features": ["Water purifier", "Fast flow", "Backpacking", "Hiking"]
+  },
+  {
+    "id": 25,
+    "name": "Spot 350 Headlamp",
+    "brand": "YETI",
+    "type": "Lighting",
+    "image": "public/assets/imgs/id-25-a.png",
+    "price": 45000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": [
+      "350 lumens",
+      "USB rechargeable",
+      "Water-resistant",
+      "Night hiking"
+    ]
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "type": "Tent",
+    "instructions": [
+      {
+        "title": "Prepare the campsite",
+        "description": "Choose a flat, dry area away from large tree branches. Clear any rocks or sticks that might damage the tent floor."
+      },
+      {
+        "title": "Set up the tent",
+        "description": "Lay down the groundsheet first, then assemble the poles according to color codes. Stretch and secure the ropes at a 45-degree angle."
+      },
+      {
+        "title": "Use safely",
+        "description": "Do not use open flames inside the tent. Ensure proper ventilation while sleeping. Regularly check and tighten the ropes."
+      },
+      {
+        "title": "Store after use",
+        "description": "Dry completely before packing. Fold neatly as instructed to avoid damaging zippers or fabric."
+      }
+    ]
+  },
+  {
+    "type": "Sleeping",
+    "instructions": [
+      {
+        "title": "Inflate or unroll",
+        "description": "Lay the pad flat and inflate it manually or automatically depending on the model. Make sure the valve is tightly closed afterward."
+      },
+      {
+        "title": "Adjust firmness",
+        "description": "Test the firmness and adjust air pressure for comfort. Avoid over-inflation which can damage the material."
+      },
+      {
+        "title": "Use properly",
+        "description": "Place it under your sleeping bag for insulation. Avoid sharp objects or rough surfaces underneath."
+      },
+      {
+        "title": "Clean and store",
+        "description": "Wipe clean with a damp cloth and mild soap. Let it dry completely before rolling and storing in a cool, dry place."
+      }
+    ]
+  },
+  {
+    "type": "Cooking",
+    "instructions": [
+      {
+        "title": "Prepare the area",
+        "description": "Set up your cooking station on a stable, flat surface. Keep flammable items away from the stove."
+      },
+      {
+        "title": "Use safely",
+        "description": "Always supervise the stove or fire while cooking. Use windshields when needed and handle hot cookware carefully."
+      },
+      {
+        "title": "Clean after cooking",
+        "description": "Wash utensils and cookware with biodegradable soap and dry completely to prevent rust or mold."
+      },
+      {
+        "title": "Store properly",
+        "description": "Pack cookware and utensils in clean bags or containers. Keep fuel canisters sealed and stored separately."
+      }
+    ]
+  },
+  {
+    "type": "Backpacks",
+    "instructions": [
+      {
+        "title": "Pack efficiently",
+        "description": "Place heavier items near your back and at the center of the pack. Keep frequently used items on top or in side pockets."
+      },
+      {
+        "title": "Adjust for comfort",
+        "description": "Tighten shoulder straps and hip belts so the weight is evenly distributed. Avoid overloading."
+      },
+      {
+        "title": "Use with care",
+        "description": "Avoid dragging the backpack on the ground. Protect it from excessive moisture and direct sunlight."
+      },
+      {
+        "title": "Clean and store",
+        "description": "Empty all pockets, brush off dirt, and hand wash with mild soap. Air dry completely before storing in a cool, dry place."
+      }
+    ]
+  },
+  {
+    "type": "lighting",
+    "instructions": [
+      {
+        "title": "Check power source",
+        "description": "Ensure batteries are charged or replaced before use. For rechargeable lights, charge fully before the trip."
+      },
+      {
+        "title": "Use safely",
+        "description": "Avoid pointing bright lights directly at eyes. Keep lanterns stable and away from flammable materials."
+      },
+      {
+        "title": "Maintain brightness",
+        "description": "Clean lenses regularly and check bulb connections. Carry spare batteries or backup lighting."
+      },
+      {
+        "title": "Store properly",
+        "description": "Turn off completely before storing. Keep in a dry, dust-free container to prevent corrosion."
+      }
+    ]
+  },
+  {
+    "type": "Tools",
+    "instructions": [
+      {
+        "title": "Check filter or cartridge",
+        "description": "Ensure the filter is clean and properly attached before use. Replace it according to the manufacturer’s schedule."
+      },
+      {
+        "title": "Use correctly",
+        "description": "Follow the purification steps as directed—whether pumping, squeezing, or using UV light. Treat clear water whenever possible."
+      },
+      {
+        "title": "Clean after use",
+        "description": "Flush clean water through the system after each use to prevent buildup or contamination."
+      },
+      {
+        "title": "Store properly",
+        "description": "Dry completely before storing. Keep filters in a clean, sealed bag away from direct sunlight and moisture."
+      }
+    ]
+  }
+]
