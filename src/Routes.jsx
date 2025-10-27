@@ -26,7 +26,7 @@ const Routes = () => {
           <Route path="/equipment-catalog" element={<EquipmentCatalog />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
-          <Route path="/equipment-details" element={<EquipmentDetails />} />
+          <Route path="/equipment-details/:id" element={<EquipmentDetails />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />
         </RouterRoutes>

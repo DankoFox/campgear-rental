@@ -55,7 +55,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to="/equipment-details" className="block">
+      <Link to={`/equipment-details/${equipment.id}`} className="block">
         {/* Image Container */}
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
           {imageLoading && (

@@ -1,9 +1,20 @@
-const ReviewHover = ({ equipmentName }) => {
+const ReviewHover = ({ search, option = "reddit" }) => {
   const handleClick = () => {
-    const query = encodeURIComponent(equipmentName);
-    const url = `https://www.reddit.com/search/?q=${query}`;
-    console.log(url);
+    const query = encodeURIComponent(search);
+    let url = "";
 
+    switch (option.toLowerCase()) {
+      case "reddit":
+        url = `https://www.reddit.com/search/?q=${query}`;
+        break;
+      case "tiktok":
+        url = `https://www.tiktok.com/search?q=${query}`;
+        break;
+      default:
+        url = `https://www.reddit.com/search/?q=${query}`; // fallback
+    }
+
+    console.log(url);
     window.open(url, "_blank");
   };
 
@@ -15,16 +26,17 @@ const ReviewHover = ({ equipmentName }) => {
       <div className="relative w-36 h-12 flex justify-center items-center overflow-hidden">
         {/* Logo (default visible) */}
         <img
-          src="../svg/reddit.svg"
-          alt="Reddit logo"
+          src={option === "tiktok" ? "../svg/tiktok.svg" : "../svg/reddit.svg"}
+          alt={`${option} logo`}
           className="absolute w-48 h-12 opacity-100 translate-y-0 transition-all duration-500 
           group-hover:opacity-0 group-hover:-translate-y-3"
         />
 
         {/* Text (shows on hover) */}
         <span
-          className="absolute font-semibold text-orange-500 opacity-0 translate-y-3 transition-all duration-500 
-          group-hover:opacity-100 group-hover:translate-y-0"
+          className={`absolute font-semibold opacity-0 translate-y-3 transition-all duration-500 
+            group-hover:opacity-100 group-hover:translate-y-0 
+            ${option === "tiktok" ? "text-black" : "text-orange-500"}`}
         >
           Find reviews
         </span>

@@ -54,6 +54,24 @@ app.get("/api/equipment", (req, res) => {
     res.status(500).json({ error: "Failed to load equipment data" });
   }
 });
+// Get equipment by ID
+app.get("/api/equipment/:id", (req, res) => {
+  try {
+    const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
+    const id = req.params.id;
+    console.log(id);
+    const item = equipment.find((eq) => eq.id.toString() === id.toString());
+
+    if (!item) {
+      return res.status(404).json({ error: "Equipment not found" });
+    }
+
+    res.json(item);
+  } catch (error) {
+    console.error("Error reading equipment file:", error);
+    res.status(500).json({ error: "Failed to load equipment data" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

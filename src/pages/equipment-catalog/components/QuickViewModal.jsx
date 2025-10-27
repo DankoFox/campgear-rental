@@ -96,7 +96,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
               </p>
             </div>
 
-            <ReviewHover equipmentName={equipment?.name} />
+            <ReviewHover search={equipment?.name} />
 
             {/* Price */}
             <div>

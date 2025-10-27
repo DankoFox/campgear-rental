@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "Coleman Sundome 4-Person Tent",
-    "brand": "Coleman",
-    "type": "tents",
+    "name": "Bastion 4-Person Tent",
+    "brand": "The North Face",
+    "type": "Tent",
     "image": "public/assets/imgs/id-1-a.png",
     "images": [
       "https://images.unsplash.com/photo-1722607731856-ff7d914b1be3",
@@ -63,7 +63,7 @@
   {
     "id": 5,
     "name": "Core Lumens LED Headlamp",
-    "brand": "Petzl",
+    "brand": "YETI",
     "type": "lighting",
     "image": "public/assets/imgs/id-5-a.png",
     "price": 35000,
@@ -79,7 +79,7 @@
   {
     "id": 6,
     "name": "BioLite CampStove Wood-Burning System",
-    "brand": "BioLite",
+    "brand": "Deuter",
     "type": "cooking",
     "image": "public/assets/imgs/id-6-a.png",
     "price": 95000,
@@ -100,8 +100,8 @@
   },
   {
     "id": 8,
-    "name": "Black Diamond Trail Pro Trekking Poles",
-    "brand": "Black Diamond",
+    "name": "Trail Pro Trekking Poles",
+    "brand": "Coleman",
     "type": "tools",
     "image": "public/assets/imgs/id-8-a.png",
     "price": 60000,
@@ -117,7 +117,7 @@
   {
     "id": 9,
     "name": "Osprey Atmos AG 65L Backpack",
-    "brand": "Osprey",
+    "brand": "Helinox",
     "type": "backpacks",
     "image": "public/assets/imgs/id-9-a.png",
     "price": 120000,
@@ -132,8 +132,8 @@
   },
   {
     "id": 10,
-    "name": "Patagonia Torrentshell 3L Rain Jacket",
-    "brand": "Patagonia",
+    "name": "Torrentshell 3L Rain Jacket",
+    "brand": "Helinox",
     "type": "tools",
     "image": "public/assets/imgs/id-10-a.png",
     "price": 90000,
@@ -143,8 +143,8 @@
   },
   {
     "id": 12,
-    "name": "Sea to Summit Nano Mosquito Net",
-    "brand": "Sea to Summit",
+    "name": "Coleman Mosquito Head Net",
+    "brand": "Coleman",
     "type": "tools",
     "image": "public/assets/imgs/id-12-a.png",
     "price": 40000,
@@ -154,8 +154,8 @@
   },
   {
     "id": 13,
-    "name": "Therm-a-Rest NeoAir Xlite Sleeping Pad",
-    "brand": "Therm-a-Rest",
+    "name": "Deuter Dreamlite Sleeping Pad",
+    "brand": "Deuter",
     "type": "sleeping",
     "image": "public/assets/imgs/id-13-a.png",
     "price": 95000,
@@ -165,8 +165,8 @@
   },
   {
     "id": 14,
-    "name": "Jetboil Flash 1L Cooking System",
-    "brand": "Jetboil",
+    "name": "Helinox Flash Cooking System",
+    "brand": "Helinox",
     "type": "cooking",
     "image": "public/assets/imgs/id-14-a.png",
     "price": 65000,
@@ -178,7 +178,7 @@
     "id": 15,
     "name": "MSR Hubba Hubba NX 2-Person Tent",
     "brand": "MSR",
-    "type": "tents",
+    "type": "Tent",
     "image": "public/assets/imgs/id-15-a.png",
     "price": 130000,
     "location": "Hanoi",
@@ -219,8 +219,8 @@
   },
   {
     "id": 18,
-    "name": "Patagonia R1 Fleece Jacket",
-    "brand": "Patagonia",
+    "name": "MSR R1 Fleece Jacket",
+    "brand": "MSR",
     "type": "tools",
     "image": "public/assets/imgs/id-18-a.png",
     "price": 110000,
@@ -241,8 +241,8 @@
   },
   {
     "id": 20,
-    "name": "Sea to Summit Spark UL Sleeping Bag",
-    "brand": "Sea to Summit",
+    "name": "Spark UL Sleeping Bag",
+    "brand": "YETI",
     "type": "sleeping",
     "image": "public/assets/imgs/id-20-a.png",
     "price": 90000,
@@ -252,8 +252,8 @@
   },
   {
     "id": 21,
-    "name": "Therm-a-Rest Z Lite Sol Sleeping Pad",
-    "brand": "Therm-a-Rest",
+    "name": "Lite Sol Sleeping Pad",
+    "brand": "Helinox",
     "type": "sleeping",
     "image": "public/assets/imgs/id-21-a.png",
     "price": 50000,
@@ -296,8 +296,8 @@
   },
   {
     "id": 25,
-    "name": "Black Diamond Spot 350 Headlamp",
-    "brand": "Black Diamond",
+    "name": "Spot 350 Headlamp",
+    "brand": "YETI",
     "type": "lighting",
     "image": "public/assets/imgs/id-25-a.png",
     "price": 45000,
