@@ -48,15 +48,15 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
           <div className="space-y-4">
             <div className="aspect-square bg-muted rounded-lg overflow-hidden">
               <Image
-                src={equipment?.images?.[selectedImage] || equipment?.image}
-                alt={equipment?.imageAlt}
+                src={equipment?.image[selectedImage]}
+                alt={equipment?.name}
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {equipment?.images && equipment?.images?.length > 1 && (
+            {equipment?.image && equipment?.image?.length > 1 && (
               <div className="flex space-x-2 overflow-x-auto">
-                {equipment?.images?.map((image, index) => (
+                {equipment?.image?.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
@@ -95,18 +95,19 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                 {equipment?.brand}
               </p>
             </div>
-
-            <ReviewHover search={equipment?.name} />
-
+            <div className="flex justify-items-stretch">
+              <ReviewHover search={equipment?.name} />
+              <ReviewHover search={equipment?.name} option="tiktok" />
+            </div>
             {/* Price */}
             <div>
               <div className="flex items-baseline space-x-2">
                 <span className="text-2xl font-bold text-foreground">
                   {formatPrice(equipment?.price)}₫
                 </span>
-                {equipment?.originalPrice && (
+                {equipment?.price && (
                   <span className="text-lg text-muted-foreground line-through">
-                    {formatPrice(equipment?.originalPrice)}₫
+                    {formatPrice(equipment?.price)}₫
                   </span>
                 )}
               </div>

@@ -65,8 +65,8 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
           )}
 
           <Image
-            src={equipment?.image}
-            alt={equipment?.imageAlt}
+            src={equipment?.image[0]}
+            alt={equipment?.name}
             className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${
               imageLoading ? "opacity-0" : "opacity-100"
             }`}

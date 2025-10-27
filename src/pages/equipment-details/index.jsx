@@ -201,7 +201,10 @@ const EquipmentDetails = () => {
             {/* Left Column - Product Images and Info */}
             <div className="lg:col-span-2 space-y-8">
               {/* Image Gallery */}
-              <ImageGallery images={mockImages} productName={equipment?.name} />
+              <ImageGallery
+                images={equipment?.image}
+                productName={equipment?.name}
+              />
 
               {/* Product Information */}
               {equipment && <ProductInfo product={equipment} />}
