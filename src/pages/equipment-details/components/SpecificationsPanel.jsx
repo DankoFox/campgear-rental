@@ -9,9 +9,9 @@ const SpecificationsPanel = ({
   const [activeTab, setActiveTab] = useState("specs");
 
   const tabs = [
-    { id: "specs", label: "Thông số kỹ thuật", icon: "Settings" },
-    { id: "included", label: "Phụ kiện đi kèm", icon: "Package" },
-    { id: "usage", label: "Hướng dẫn sử dụng", icon: "BookOpen" },
+    { id: "specs", label: "Specifications", icon: "Settings" },
+    { id: "included", label: "Included Items", icon: "Package" },
+    { id: "usage", label: "User Guide", icon: "BookOpen" },
   ];
 
   return (
@@ -35,11 +35,12 @@ const SpecificationsPanel = ({
           ))}
         </div>
       </div>
+
       {/* Tab Content */}
       <div className="p-4">
         {activeTab === "specs" && (
           <div className="space-y-4">
-            <h3 className="font-heading font-semibold">Thông số kỹ thuật</h3>
+            <h3 className="font-heading font-semibold">Specifications</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(specifications)?.map(([key, value]) => (
                 <div
@@ -58,7 +59,7 @@ const SpecificationsPanel = ({
 
         {activeTab === "included" && (
           <div className="space-y-4">
-            <h3 className="font-heading font-semibold">Phụ kiện đi kèm</h3>
+            <h3 className="font-heading font-semibold">Included Items</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {includedItems?.map((item, index) => (
                 <div
@@ -86,7 +87,7 @@ const SpecificationsPanel = ({
 
         {activeTab === "usage" && (
           <div className="space-y-4">
-            <h3 className="font-heading font-semibold">Hướng dẫn sử dụng</h3>
+            <h3 className="font-heading font-semibold">User Guide</h3>
             <div className="space-y-4">
               {usageGuidelines?.map((guideline, index) => (
                 <div key={index} className="border-l-4 border-primary pl-4">

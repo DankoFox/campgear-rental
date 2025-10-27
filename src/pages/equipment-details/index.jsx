@@ -10,6 +10,7 @@ import BookingWidget from "./components/BookingWidget";
 import ProviderContact from "./components/ProviderContact";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
+import { mockIncludedItems } from "./some-mock-data";
 
 const EquipmentDetails = () => {
   const navigate = useNavigate();
@@ -19,7 +20,10 @@ const EquipmentDetails = () => {
     end: null,
   });
   const [cartCount, setCartCount] = useState(2);
-  const [equipment, setEquipment] = useState(null);
+  const [equipment, setEquipment] = useState(false);
+  const [instruction, setInstruction] = useState(false);
+  const [specifications, setSpecifications] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams(); // Mock user data
   const mockUser = {
@@ -94,67 +98,6 @@ const EquipmentDetails = () => {
     },
   ];
 
-  // Mock specifications
-  const mockSpecifications = {
-    "Kích thước": "2.7m x 2.4m x 1.8m",
-    "Trọng lượng": "4.5 kg",
-    "Chất liệu": "Polyester 75D chống thấm",
-    "Sức chứa": "4 người",
-    "Thời gian lắp đặt": "10 phút",
-    "Chống thấm": "1500mm",
-    "Số cửa": "1 cửa chính",
-    "Số cửa sổ": "2 cửa sổ lưới",
-    "Màu sắc": "Cam/Xám",
-  };
-
-  // Mock included items
-  const mockIncludedItems = [
-    {
-      name: "Thân lều chính",
-      description: "Lều polyester chống thấm với lớp phủ PU",
-    },
-    {
-      name: "Bộ cọc và dây căng",
-      description: "8 cọc thép và 6 dây căng có thể điều chỉnh",
-    },
-    {
-      name: "Tấm lót đáy",
-      description: "Tấm lót chống thấm tích hợp",
-    },
-    {
-      name: "Túi đựng",
-      description: "Túi đựng gọn nhẹ với dây kéo",
-    },
-    {
-      name: "Hướng dẫn sử dụng",
-      description: "Sách hướng dẫn tiếng Việt chi tiết",
-    },
-  ];
-
-  // Mock usage guidelines
-  const mockUsageGuidelines = [
-    {
-      title: "Chuẩn bị địa điểm",
-      description:
-        "Chọn mặt đất bằng phẳng, khô ráo và tránh xa các cành cây lớn. Dọn sạch đá, cành cây nhỏ có thể làm thủng đáy lều.",
-    },
-    {
-      title: "Lắp đặt lều",
-      description:
-        "Trải tấm lót đáy trước, sau đó lắp khung cọc theo màu sắc tương ứng. Căng dây và cố định cọc theo góc 45 độ.",
-    },
-    {
-      title: "Sử dụng an toàn",
-      description:
-        "Không sử dụng lửa trần bên trong lều. Đảm bảo thông gió tốt khi ngủ. Kiểm tra dây căng thường xuyên.",
-    },
-    {
-      title: "Bảo quản sau sử dụng",
-      description:
-        "Làm khô hoàn toàn trước khi cất giữ. Gấp gọn theo hướng dẫn để tránh làm hỏng khóa kéo và vải.",
-    },
-  ];
-
   // Mock availability data
   const mockAvailabilityData = [
     { date: "2025-10-21", available: true, price: 150000, isPeak: false },
@@ -189,7 +132,6 @@ const EquipmentDetails = () => {
         const res = await fetch(`http://localhost:5050/api/equipment/${id}`);
         if (!res.ok) throw new Error("Equipment not found");
         const data = await res.json();
-        console.log("data", data);
         setEquipment(data);
       } catch (err) {
         console.error(err);
@@ -197,9 +139,36 @@ const EquipmentDetails = () => {
         setLoading(false);
       }
     };
-
     fetchEquipment();
   }, [id]);
+
+  useEffect(() => {
+    if (!equipment?.type) return;
+    const fetchDetails = async () => {
+      try {
+        setLoading(true);
+        const [instructionRes, specRes] = await Promise.all([
+          fetch(`http://localhost:5050/api/instructions/${equipment.type}`),
+          fetch(`http://localhost:5050/api/specifications/${equipment.type}`),
+        ]);
+
+        if (!instructionRes.ok || !specRes.ok)
+          throw new Error("Failed to fetch details");
+        const [instructionData, specData] = await Promise.all([
+          instructionRes.json(),
+          specRes.json(),
+        ]);
+        setInstruction(instructionData);
+        setSpecifications(specData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDetails();
+  }, [equipment?.type]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header user={mockUser} cartCount={cartCount} />
@@ -239,9 +208,9 @@ const EquipmentDetails = () => {
 
               {/* Specifications Panel */}
               <SpecificationsPanel
-                specifications={mockSpecifications}
+                specifications={specifications?.specifications || []}
                 includedItems={mockIncludedItems}
-                usageGuidelines={mockUsageGuidelines}
+                usageGuidelines={instruction?.instructions || []}
               />
 
               {/* Availability Calendar - Mobile */}

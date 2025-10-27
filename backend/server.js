@@ -59,7 +59,6 @@ app.get("/api/equipment/:id", (req, res) => {
   try {
     const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
     const id = req.params.id;
-    console.log(id);
     const item = equipment.find((eq) => eq.id.toString() === id.toString());
 
     if (!item) {
@@ -70,6 +69,47 @@ app.get("/api/equipment/:id", (req, res) => {
   } catch (error) {
     console.error("Error reading equipment file:", error);
     res.status(500).json({ error: "Failed to load equipment data" });
+  }
+});
+// Get instruction data by type
+app.get("/api/instructions/:type", (req, res) => {
+  try {
+    const instructions = JSON.parse(
+      fs.readFileSync("./data/instruction.json", "utf-8")
+    );
+
+    const { type } = req.params;
+    console.log(type);
+    const result = instructions.find(
+      (item) => item.type.toLowerCase() === type.toLowerCase()
+    );
+    if (!result) {
+      return res
+        .status(404)
+        .json({ error: `No instructions found for type: ${type}` });
+    }
+    res.json(result);
+  } catch (error) {
+    console.error("Error reading instructions file:", error);
+    res.status(500).json({ error: "Failed to load instruction data" });
+  }
+});
+
+app.get("/api/specifications/:type", (req, res) => {
+  try {
+    const specs = JSON.parse(
+      fs.readFileSync("./data/specification-data.json", "utf-8")
+    );
+    const item = specs.find((s) => s.type === req.params.type);
+
+    if (!item) {
+      return res.status(404).json({ error: "Specification type not found" });
+    }
+
+    res.json(item);
+  } catch (error) {
+    console.error("Error reading specifications file:", error);
+    res.status(500).json({ error: "Failed to load specifications data" });
   }
 });
 

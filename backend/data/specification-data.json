@@ -1,0 +1,86 @@
+[
+  {
+    "type": "Tent",
+    "specifications": {
+      "Dimensions": "2.7m x 2.4m x 1.8m",
+      "Weight": "4.5 kg",
+      "Material": "Waterproof 75D polyester",
+      "Capacity": "4 people",
+      "Setup Time": "10 minutes",
+      "Waterproof Rating": "1500mm",
+      "Doors": "1 main door",
+      "Windows": "2 mesh windows",
+      "Color": "Orange/Gray"
+    }
+  },
+  {
+    "type": "Sleeping",
+    "specifications": {
+      "Dimensions": "190cm x 60cm x 5cm",
+      "Weight": "850g",
+      "Material": "75D polyester with TPU coating",
+      "Type": "Self-inflating sleeping pad",
+      "R-Value": "3.2 (3-season use)",
+      "Inflation Time": "2–3 minutes",
+      "Valve Type": "Dual air valve system",
+      "Color": "Olive Green / Gray",
+      "Includes": "Elastic straps and repair kit"
+    }
+  },
+  {
+    "type": "Cooking",
+    "specifications": {
+      "Set Includes": "1 pot (1.5L), 1 pan (0.8L), 2 bowls, 1 folding ladle",
+      "Material": "Hard-anodized aluminum",
+      "Weight": "950g",
+      "Dimensions": "Stacked set: 18cm × 10cm",
+      "Compatibility": "Gas and portable stoves",
+      "Heat Resistance": "Up to 250°C",
+      "Handle Type": "Foldable heat-resistant silicone grips",
+      "Cleaning": "Non-stick coating for easy cleaning",
+      "Storage": "Mesh carrying bag included"
+    }
+  },
+  {
+    "type": "Backpacks",
+    "specifications": {
+      "Capacity": "45L",
+      "Weight": "1.3kg",
+      "Material": "Ripstop nylon 210D with waterproof coating",
+      "Dimensions": "65cm × 30cm × 20cm",
+      "Frame Type": "Internal aluminum frame support",
+      "Compartments": "Main + front + 2 side mesh pockets",
+      "Hip Belt": "Adjustable padded waist strap",
+      "Rain Cover": "Included",
+      "Color": "Navy Blue / Black"
+    }
+  },
+  {
+    "type": "Lighting",
+    "specifications": {
+      "Brightness": "1000 lumens (max)",
+      "Light Modes": "Low / Medium / High / SOS",
+      "Battery Type": "Rechargeable lithium-ion (5200mAh)",
+      "Runtime": "Up to 12 hours on medium mode",
+      "Charging Time": "3 hours (USB-C)",
+      "Material": "ABS plastic + aluminum alloy",
+      "Water Resistance": "IPX5 (splash-proof)",
+      "Mounting Options": "Hook, magnet, and stand base",
+      "Color Temperature": "3000K–6000K adjustable"
+    }
+  },
+  {
+    "type": "tools",
+    "specifications": {
+      "Filtration Capacity": "2000 liters",
+      "Filter Type": "Hollow fiber membrane + activated carbon",
+      "Flow Rate": "0.5L/min",
+      "Removes": "99.9999% bacteria, 99.9% protozoa",
+      "Weight": "120g",
+      "Dimensions": "20cm × 3.5cm",
+      "Material": "BPA-free ABS plastic",
+      "Usage": "Straw, bottle, or inline filter compatible",
+      "Lifespan": "Up to 2 years (depending on usage)"
+    }
+  }
+]
