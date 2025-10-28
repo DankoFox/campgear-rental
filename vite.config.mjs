@@ -18,4 +18,15 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: [".amazonaws.com", ".builtwithrocket.new"],
   },
+  fs: {
+      allow: [
+        ".",        
+        "../backend", 
+        "backend",    
+      ],
+    },
+  
+
+  publicDir: "backend",
+
 });
