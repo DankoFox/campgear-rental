@@ -41,7 +41,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays || 1;
   };
-
+  console.log("cart item", item);
   return (
     <div className="bg-card border border-border rounded-lg p-4 lg:p-6">
       <div className="flex flex-col lg:flex-row gap-4">
@@ -49,8 +49,8 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
         <div className="flex-shrink-0">
           <div className="w-full lg:w-32 h-32 rounded-lg overflow-hidden bg-muted">
             <Image
-              src={item?.image}
-              alt={item?.imageAlt}
+              src={item?.image[0]}
+              alt={item?.name}
               className="w-full h-full object-cover"
             />
           </div>
@@ -63,14 +63,15 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
               <h3 className="font-heading font-semibold text-lg text-foreground">
                 {item?.name}
               </h3>
-              <p className="text-sm text-muted-foreground">{item?.category}</p>
+              <p className="text-sm text-muted-foreground">{item?.type}</p>
             </div>
             <div className="text-right">
               <p className="font-semibold text-lg text-foreground">
-                {formatPrice(item?.totalPrice)}
+                {formatPrice(item?.price)}
+                {/* Not Work Here */}
               </p>
               <p className="text-sm text-muted-foreground">
-                {formatPrice(item?.pricePerDay)}/day
+                {formatPrice(item?.price)}/day
               </p>
             </div>
           </div>
@@ -141,7 +142,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
             <p className="text-sm font-medium text-foreground">
               Total:{" "}
               {formatPrice(
-                item?.pricePerDay * calculateDays() * item?.quantity,
+                item?.pricePerDay * calculateDays() * item?.quantity
               )}
             </p>
           </div>

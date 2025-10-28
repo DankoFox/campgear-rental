@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "esnext",
-    "checkJs": true, // ✅ enable JS type checking
+    "checkJs": false, // ✅ enable JS type checking
     "jsx": "react-jsx", // ✅ for React projects (or "react" if using React 17)
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",

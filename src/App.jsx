@@ -1,8 +1,18 @@
-import React from "react";
-import Routes from "./Routes";
+import React, { useState } from "react";
+import AppRoutes from "./Routes";
 
 function App() {
-  return <Routes />;
+  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+
+  return (
+    <AppRoutes
+      cartCount={cartCount}
+      setCartCount={setCartCount}
+      cartItems={cartItems}
+      setCartItems={setCartItems}
+    />
+  );
 }
 
 export default App;

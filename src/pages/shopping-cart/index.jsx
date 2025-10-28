@@ -9,15 +9,13 @@ import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
-import { mockCartItems } from "./card-data";
 
 const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
-const ShoppingCart = () => {
+const ShoppingCart = ({ cartItems, setCartItems }) => {
   const navigate = useNavigate();
-
+  console.log("cartItem", cartItems);
   // Core
-  const [cartItems, setCartItems] = useState([]);
   const [promoCode, setPromoCode] = useState("");
 
   // Pop-up Modal
@@ -29,18 +27,6 @@ const ShoppingCart = () => {
     name: "Nguyễn Văn An",
     email: "nguyen.van.an@email.com",
   });
-
-  // Load cart from localStorage or mock data
-  useEffect(() => {
-    const storedCart = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEY) || "[]"
-    );
-    if (storedCart.length > 0) {
-      setCartItems(storedCart);
-    } else {
-      setCartItems(mockCartItems);
-    }
-  }, []);
 
   // Persist cart in localStorage whenever it changes
   useEffect(() => {
@@ -83,8 +69,26 @@ const ShoppingCart = () => {
     setDeleteTarget(itemId); // open confirmation dialog
   };
 
-  const confirmRemoveItem = () => {
-    setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
+  const confirmRemoveItem = async () => {
+    // setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/data/${deleteTarget}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log(result.message);
+        setCartItems(result.data); // update frontend after backend delete
+      } else {
+        console.error("Failed to delete item:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
     setDeleteTarget(null);
   };
 
@@ -143,8 +147,8 @@ const ShoppingCart = () => {
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        <Header user={user} cartCount={0} />
-        <main className="pt-16">
+        {/* <Header user={user} cartCount={0} /> */}
+        <main>
           <EmptyCart />
         </main>
       </div>
@@ -154,7 +158,7 @@ const ShoppingCart = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header user={user} cartCount={cartItems.length} />
-      <main className="pt-16">
+      <main>
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8">
           {/* Page Header */}
           <div className="mb-8">
