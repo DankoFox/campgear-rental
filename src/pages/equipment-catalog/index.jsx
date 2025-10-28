@@ -118,13 +118,15 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
 
     const cartItem = {
       ...item,
+      productPrice: item.price,
       quantity: 1,
+      orderPrice: item?.price,
       startDate: today.toISOString().split("T")[0],
       endDate: tomorrow.toISOString().split("T")[0],
     };
     setCartCount((prev) => prev + cartItem.quantity);
     setCartItems((prev) => [...prev, cartItem]);
-    console.log("Added to cart:", cartItem);
+    console.log("Mỗi khi add một item vào cart sẽ có dạng", cartItem);
   };
 
   const handleQuickView = (item) => {

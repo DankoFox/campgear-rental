@@ -14,7 +14,6 @@ const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
 const ShoppingCart = ({ cartItems, setCartItems }) => {
   const navigate = useNavigate();
-  console.log("cartItem", cartItems);
   // Core
   const [promoCode, setPromoCode] = useState("");
 
@@ -28,41 +27,72 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
     email: "nguyen.van.an@email.com",
   });
 
-  // Persist cart in localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
-  }, [cartItems]);
+  const calculateOrderPrice = (startDate, endDate, quantity, pricePerDay) => {
+    console.log(startDate, endDate, quantity, pricePerDay);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const diffTime = end - start;
+    if (isNaN(diffTime) || diffTime < 0) return 0;
+
+    const totalDays = Math.max(
+      1,
+      Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
+    );
+
+    const chargeableDays = Math.floor(totalDays / 7) * 5 + (totalDays % 7);
+    return chargeableDays * pricePerDay * quantity;
+  };
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              quantity: newQuantity,
-              totalPrice: item.pricePerDay * newQuantity * calculateDays(item),
-            }
-          : item
-      )
-    );
+    setCartItems((items) => {
+      const newItems = items.map((item) => {
+        if (item.id !== itemId) return item;
+
+        const newOrderPrice = calculateOrderPrice(
+          item.startDate,
+          item.endDate,
+          newQuantity,
+          item.productPrice
+        );
+
+        console.log("Updated orderPrice:", newOrderPrice);
+
+        return {
+          ...item,
+          quantity: newQuantity,
+          orderPrice: newOrderPrice,
+        };
+      });
+
+      return newItems;
+    });
   };
 
   const handleUpdateDates = (itemId, startDate, endDate) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              startDate,
-              endDate,
-              totalPrice:
-                item.pricePerDay *
-                item.quantity *
-                calculateDaysFromDates(startDate, endDate),
-            }
-          : item
-      )
-    );
+    setCartItems((items) => {
+      const newItems = items.map((item) => {
+        if (item.id !== itemId) return item;
+
+        const newOrderPrice = calculateOrderPrice(
+          startDate,
+          endDate,
+          item.quantity,
+          item.productPrice
+        );
+
+        console.log("Updated orderPrice:", newOrderPrice);
+
+        return {
+          ...item,
+          startDate,
+          endDate,
+          orderPrice: newOrderPrice,
+        };
+      });
+
+      return newItems;
+    });
   };
 
   const handleRemoveItem = (itemId) => {
@@ -81,7 +111,6 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
       const result = await response.json();
 
       if (response.ok) {
-        console.log(result.message);
         setCartItems(result.data); // update frontend after backend delete
       } else {
         console.error("Failed to delete item:", result.message);
@@ -139,7 +168,6 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
 
     setTimeout(() => {
       setIsProcessing(false);
-      console.log("Proceeding to checkout with:", checkoutData);
       alert("Chuyển đến trang thanh toán...");
     }, 2000);
   };
@@ -154,7 +182,10 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
       </div>
     );
   }
-
+  // Persist cart in localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
   return (
     <div className="min-h-screen bg-background">
       <Header user={user} cartCount={cartItems.length} />

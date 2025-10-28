@@ -83,9 +83,7 @@ const LoginForm = () => {
     }
   };
 
-  const handleSocialLogin = (provider) => {
-    console.log(`Social login with ${provider}`);
-  };
+  const handleSocialLogin = (provider) => {};
 
   return (
     <div className="w-full max-w-md mx-auto">

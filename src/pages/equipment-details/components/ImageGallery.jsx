@@ -4,7 +4,6 @@ import Image from "../../../components/AppImage";
 import Icon from "../../../components/AppIcon";
 
 const ImageGallery = ({ images = [], productName }) => {
-  console.log(images);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -25,7 +24,6 @@ const ImageGallery = ({ images = [], productName }) => {
   };
 
   const currentImage = images[selectedImageIndex];
-  console.log(currentImage);
 
   return (
     <div className="space-y-4">

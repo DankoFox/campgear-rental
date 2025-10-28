@@ -9,7 +9,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   const [rentalDays, setRentalDays] = useState(0);
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN")?.format(price) + "₫";
+    return new Intl.NumberFormat("en-US")?.format(price) + "₫";
   };
 
   const calculateRentalDetails = () => {
@@ -20,24 +20,19 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
     }
 
     const timeDiff =
-      selectedDates?.end?.getTime() - selectedDates?.start?.getTime();
+      selectedDates.end.getTime() - selectedDates.start.getTime();
     const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
     setRentalDays(days);
 
-    let pricePerDay = product?.dailyPrice;
-    let total = 0;
+    const pricePerDay = product?.dailyPrice || product?.price || 0;
 
-    // Apply weekly discount if rental is 7+ days
-    if (days >= 7) {
-      const weeks = Math.floor(days / 7);
-      const remainingDays = days % 7;
-      total =
-        weeks * product?.weeklyPrice + remainingDays * product?.dailyPrice;
-    } else {
-      total = days * pricePerDay;
-    }
+    const weeks = Math.floor(days / 7);
+    const remainingDays = days % 7;
+    const effectivePaidDays = weeks * 5 + remainingDays;
+    const total = effectivePaidDays * pricePerDay * quantity;
 
-    setTotalPrice(total * quantity);
+    setTotalPrice(total);
+    console.log("Price calculation here:", totalPrice);
   };
 
   useEffect(() => {
@@ -54,19 +49,24 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
 
   const handleAddToCart = () => {
     if (!selectedDates?.start || !selectedDates?.end) {
-      alert("Vui lòng chọn ngày thuê");
+      alert("Please select your rental dates");
       return;
     }
 
     const bookingData = {
-      productId: product?.id,
-      productName: product?.name,
+      id: product?.id,
+      name: product?.name,
+      brand: product?.brand,
+      type: product?.type,
+      image: product?.image,
+      productPrice: product?.price,
+      orderPrice: totalPrice,
+      location: product?.location,
+      availability: product?.availability,
+      features: product?.features,
       quantity,
-      startDate: selectedDates?.start,
-      endDate: selectedDates?.end,
-      rentalDays,
-      totalPrice,
-      dailyPrice: product?.dailyPrice,
+      startDate: selectedDates?.start?.toISOString().split("T")[0],
+      endDate: selectedDates?.end?.toISOString().split("T")[0],
     };
 
     onAddToCart(bookingData);
@@ -80,41 +80,41 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   return (
     <div className="sticky top-20 bg-card border border-border rounded-lg p-6 space-y-6">
       <div className="text-center">
-        <h3 className="font-heading font-semibold text-lg mb-2">
-          Đặt thuê ngay
-        </h3>
+        <h3 className="font-heading font-semibold text-lg mb-2">Rent Now</h3>
         <p className="text-sm text-muted-foreground">
-          Chọn ngày và số lượng để thuê thiết bị
+          Choose your dates and quantity to rent this equipment
         </p>
       </div>
+
       {/* Date Selection Summary */}
       <div className="space-y-3">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Ngày nhận:</span>
+          <span className="text-muted-foreground">Start date:</span>
           <span className="font-medium">
             {selectedDates?.start
-              ? selectedDates?.start?.toLocaleDateString("vi-VN")
-              : "Chưa chọn"}
+              ? selectedDates?.start?.toLocaleDateString("en-US")
+              : "Not selected"}
           </span>
         </div>
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Ngày trả:</span>
+          <span className="text-muted-foreground">End date:</span>
           <span className="font-medium">
             {selectedDates?.end
-              ? selectedDates?.end?.toLocaleDateString("vi-VN")
-              : "Chưa chọn"}
+              ? selectedDates?.end?.toLocaleDateString("en-US")
+              : "Not selected"}
           </span>
         </div>
         {rentalDays > 0 && (
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Số ngày thuê:</span>
-            <span className="font-medium">{rentalDays} ngày</span>
+            <span className="text-muted-foreground">Rental duration:</span>
+            <span className="font-medium">{rentalDays} days</span>
           </div>
         )}
       </div>
+
       {/* Quantity Selector */}
       <div>
-        <label className="block text-sm font-medium mb-2">Số lượng</label>
+        <label className="block text-sm font-medium mb-2">Quantity</label>
         <div className="flex items-center space-x-3">
           <button
             onClick={() => handleQuantityChange(quantity - 1)}
@@ -142,37 +142,39 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           </button>
         </div>
         <p className="text-xs text-muted-foreground mt-1">
-          Có sẵn: {product?.availableQuantity || 10} sản phẩm
+          Available: {product?.availableQuantity || 10} units
         </p>
       </div>
+
       {/* Price Breakdown */}
       {rentalDays > 0 && (
         <div className="space-y-2 p-4 bg-muted/30 rounded-md">
           <div className="flex justify-between text-sm">
             <span>
-              Giá thuê ({rentalDays} ngày × {quantity} sản phẩm):
+              Rental price ({rentalDays} days × {quantity} items):
             </span>
             <span>{formatPrice(totalPrice)}</span>
           </div>
           {rentalDays >= 7 && (
             <div className="flex justify-between text-sm text-success">
-              <span>Giảm giá thuê tuần:</span>
+              <span>Weekly discount applied:</span>
               <span>
                 -
                 {formatPrice(
-                  rentalDays * product?.dailyPrice * quantity - totalPrice
+                  rentalDays * product?.price * quantity - totalPrice
                 )}
               </span>
             </div>
           )}
           <div className="border-t border-border pt-2">
             <div className="flex justify-between font-semibold">
-              <span>Tổng cộng:</span>
+              <span>Total:</span>
               <span className="text-primary">{formatPrice(totalPrice)}</span>
             </div>
           </div>
         </div>
       )}
+
       {/* Action Buttons */}
       <div className="space-y-3">
         <Button
@@ -183,7 +185,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           iconName="ShoppingCart"
           iconPosition="left"
         >
-          Thêm vào giỏ hàng
+          Add to Cart
         </Button>
 
         <Button
@@ -193,22 +195,23 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           iconName="MessageCircle"
           iconPosition="left"
         >
-          Liên hệ nhà cung cấp
+          Contact Supplier
         </Button>
       </div>
+
       {/* Additional Info */}
       <div className="text-xs text-muted-foreground space-y-1">
         <div className="flex items-center space-x-1">
           <Icon name="Shield" size={12} />
-          <span>Bảo hiểm thiết bị có sẵn</span>
+          <span>Equipment insurance available</span>
         </div>
         <div className="flex items-center space-x-1">
           <Icon name="Truck" size={12} />
-          <span>Hỗ trợ giao hàng tận nơi</span>
+          <span>Home delivery supported</span>
         </div>
         <div className="flex items-center space-x-1">
           <Icon name="RotateCcw" size={12} />
-          <span>Hoàn tiền 100% nếu hủy trước 24h</span>
+          <span>100% refund if canceled 24h before</span>
         </div>
       </div>
     </div>
