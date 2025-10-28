@@ -16,7 +16,7 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Header */}
-      <Header />
+      {/* <Header /> */}
 
       {/* Main Content */}
       <main className="flex-grow flex flex-col justify-center">
@@ -45,7 +45,6 @@ const LoginPage = () => {
             </div>
 
             {/* Trust Panel (optional, if exists) */}
-            
           </div>
         </div>
       </main>

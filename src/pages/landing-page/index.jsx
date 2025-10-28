@@ -12,10 +12,10 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
-      <Header cartCount={cartCount} />
+      {/* <Header cartCount={cartCount} /> */}
 
       {/* Hero Section */}
-      <main className="pt-16 flex flex-col gap-8">
+      <main className="flex flex-col gap-8">
         <HeroSection />
         <div>
           <h2 className="text-xl font-bold mb-4 text-center">

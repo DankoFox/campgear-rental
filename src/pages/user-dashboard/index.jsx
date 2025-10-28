@@ -175,8 +175,8 @@ const UserDashboard = () => {
           content="Quản lý tài khoản và theo dõi đơn hàng thuê thiết bị cắm trại của bạn"
         />
       </Helmet>
-      <Header user={mockUser} cartCount={2} />
-      <main className="pt-16">
+      {/* <Header user={mockUser} cartCount={2} /> */}
+      <main>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Page Header */}
           <div className="mb-6 sm:mb-8">
