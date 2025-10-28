@@ -7,8 +7,11 @@ import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
+import { useOutlet } from "react-router-dom";
 
-const EquipmentCatalog = () => {
+const EquipmentCatalog = ({ cartCount, setCartCount }) => {
+  // const { cartCount, setCartCount } = useOutlet();
+
   const [filters, setFilters] = useState({
     categories: [],
     brands: [],
@@ -24,7 +27,7 @@ const EquipmentCatalog = () => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -139,8 +142,8 @@ const EquipmentCatalog = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header cartCount={cartCount} />
-      <main className="pt-16">
+      {/* <Header cartCount={cartCount} /> */}
+      <main>
         <HeroSection
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

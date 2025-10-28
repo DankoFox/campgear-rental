@@ -44,11 +44,11 @@ const ShoppingCart = () => {
 
   //Load cart using api
   useEffect(() => {
-  fetch("http://localhost:5000/api/data")
-    .then((res) => res.json())
-    .then((data) => setCartItems(data))
-    .catch((err) => console.error("Failed to fetch cart:", err));
-}, []);
+    fetch("http://localhost:5000/api/data")
+      .then((res) => res.json())
+      .then((data) => setCartItems(data))
+      .catch((err) => console.error("Failed to fetch cart:", err));
+  }, []);
 
   // Persist cart in localStorage whenever it changes
   useEffect(() => {
@@ -94,20 +94,23 @@ const ShoppingCart = () => {
   const confirmRemoveItem = async () => {
     // setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
     try {
-    const response = await fetch(`http://localhost:5000/api/data/${deleteTarget}`, {
-      method: "DELETE",
-    });
-    const result = await response.json();
+      const response = await fetch(
+        `http://localhost:5000/api/data/${deleteTarget}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const result = await response.json();
 
-    if (response.ok) {
-      console.log(result.message);
-      setCartItems(result.data); // update frontend after backend delete
-    } else {
-      console.error("Failed to delete item:", result.message);
+      if (response.ok) {
+        console.log(result.message);
+        setCartItems(result.data); // update frontend after backend delete
+      } else {
+        console.error("Failed to delete item:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
     }
-  } catch (error) {
-    console.error("Error deleting item:", error);
-  }
     setDeleteTarget(null);
   };
 
@@ -166,8 +169,8 @@ const ShoppingCart = () => {
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        <Header user={user} cartCount={0} />
-        <main className="pt-16">
+        {/* <Header user={user} cartCount={0} /> */}
+        <main>
           <EmptyCart />
         </main>
       </div>
@@ -177,7 +180,7 @@ const ShoppingCart = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header user={user} cartCount={cartItems.length} />
-      <main className="pt-16">
+      <main>
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8">
           {/* Page Header */}
           <div className="mb-8">

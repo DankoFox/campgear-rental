@@ -1,8 +1,9 @@
-import React from "react";
-import Routes from "./Routes";
+import React, { useState } from "react";
+import AppRoutes from "./Routes";
 
 function App() {
-  return <Routes />;
+  const [cartCount, setCartCount] = useState(0);
+  return <AppRoutes cartCount={cartCount} setCartCount={setCartCount} />;
 }
 
 export default App;

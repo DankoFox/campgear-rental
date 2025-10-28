@@ -171,8 +171,8 @@ const EquipmentDetails = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header user={mockUser} cartCount={cartCount} />
-      <main className="pt-16">
+      {/* <Header user={mockUser} cartCount={cartCount} /> */}
+      <main>
         {/* Breadcrumb */}
         <div className="bg-muted/30 border-b border-border">
           <div className="max-w-7xl mx-auto px-4 lg:px-6 py-4">

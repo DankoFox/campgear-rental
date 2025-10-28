@@ -1,5 +1,6 @@
+// src/Routes.jsx
 import React from "react";
-import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./pages/NotFound";
@@ -11,28 +12,71 @@ import UserDashboard from "./pages/user-dashboard";
 import EquipmentDetails from "./pages/equipment-details";
 import RegisterPage from "./pages/register";
 import LandingPage from "./pages/landing-page";
+import MainLayout from "./MainLayout";
 
-const Routes = () => {
+const AppRoutes = ({ cartCount, setCartCount }) => {
   return (
     <BrowserRouter>
       <ErrorBoundary>
         <ScrollToTop />
-        <RouterRoutes>
-          {/* Define your route here */}
-          <Route path="/" element={<EquipmentCatalog />} />
-          <Route path="/main" element={<LandingPage />} />
+        <Routes>
+          {/* Routes WITH layout */}
+          <Route
+            path="/"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <EquipmentCatalog
+                  cartCount={cartCount}
+                  setCartCount={setCartCount}
+                />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/main"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <LandingPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/shopping-cart"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <ShoppingCart
+                  cartCount={cartCount}
+                  setCartCount={setCartCount}
+                />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/equipment-catalog"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <EquipmentCatalog />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/equipment-details/:id"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <EquipmentDetails />
+              </MainLayout>
+            }
+          />
 
-          <Route path="/shopping-cart" element={<ShoppingCart />} />
-          <Route path="/equipment-catalog" element={<EquipmentCatalog />} />
+          {/* Routes WITHOUT layout */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/user-dashboard" element={<UserDashboard />} />
-          <Route path="/equipment-details/:id" element={<EquipmentDetails />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="*" element={<NotFound />} />
-        </RouterRoutes>
+        </Routes>
       </ErrorBoundary>
     </BrowserRouter>
   );
 };
 
-export default Routes;
+export default AppRoutes;
