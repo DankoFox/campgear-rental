@@ -5,7 +5,7 @@ const ProductInfo = ({ product }) => {
   const weeklyPrice = product.price * 5;
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US")?.format(price) + "$";
+    return new Intl.NumberFormat("en-US")?.format(price) + "₫";
   };
 
   return (
