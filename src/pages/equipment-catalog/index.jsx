@@ -216,7 +216,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
         onAddToCart={handleAddToCart}
       />
 
-      <Footer />
     </div>
   );
 };
