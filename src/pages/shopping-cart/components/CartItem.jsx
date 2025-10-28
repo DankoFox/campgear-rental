@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "../../../components/AppImage";
 
 import Button from "../../../components/ui/Button";
@@ -41,7 +41,11 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays || 1;
   };
-  console.log("cart item", item);
+
+  useEffect(() => {
+    console.log("change", item);
+  }, [item]);
+
   return (
     <div className="bg-card border border-border rounded-lg p-4 lg:p-6">
       <div className="flex flex-col lg:flex-row gap-4">
@@ -67,11 +71,8 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
             </div>
             <div className="text-right">
               <p className="font-semibold text-lg text-foreground">
-                {formatPrice(item?.price)}
+                {formatPrice(item?.productPrice)}/day
                 {/* Not Work Here */}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {formatPrice(item?.price)}/day
               </p>
             </div>
           </div>
@@ -140,10 +141,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
               {calculateDays() > 1 ? "s" : ""}
             </p>
             <p className="text-sm font-medium text-foreground">
-              Total:{" "}
-              {formatPrice(
-                item?.pricePerDay * calculateDays() * item?.quantity
-              )}
+              Total: {formatPrice(item?.orderPrice)}
             </p>
           </div>
 

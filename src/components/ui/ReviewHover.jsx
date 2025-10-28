@@ -14,7 +14,6 @@ const ReviewHover = ({ search, option = "reddit" }) => {
         url = `https://www.reddit.com/search/?q=${query}`; // fallback
     }
 
-    console.log(url);
     window.open(url, "_blank");
   };
 

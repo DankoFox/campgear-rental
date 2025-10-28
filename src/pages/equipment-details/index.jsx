@@ -77,26 +77,6 @@ const EquipmentDetails = ({ setCartCount, setCartItems }) => {
     },
   };
 
-  // Mock product images
-  const mockImages = [
-    {
-      url: "https://images.unsplash.com/photo-1687762035856-cab4f81f2b39",
-      alt: "Orange Coleman Sundome tent set up in green forest clearing with four-person capacity",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1502943615053-d8bd8c74eb1b",
-      alt: "Interior view of spacious camping tent showing sleeping area with sleeping bags and gear storage",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1633005619430-3ae90a73d56f",
-      alt: "Close-up of tent entrance with zippered door and mesh ventilation panels",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1532555283690-cbf89e69cec7",
-      alt: "Camping tent setup process showing easy assembly with color-coded poles and clips",
-    },
-  ];
-
   // Mock availability data
   const mockAvailabilityData = [
     { date: "2025-10-21", available: true, price: 150000, isPeak: false },
@@ -115,9 +95,10 @@ const EquipmentDetails = ({ setCartCount, setCartItems }) => {
     setSelectedDates(dates);
   };
 
-  const handleAddToCart = (bookingData) => {
-    console.log("Adding to cart:", bookingData);
+  const handleAddToCart = (cartItem) => {
     setCartCount((prev) => prev + 1);
+    setCartItems((prev) => [...prev, cartItem]);
+    console.log("dạng của 1 booking trong trang detial", cartItem);
     alert("Đã thêm vào giỏ hàng thành công!");
   };
 
@@ -132,6 +113,7 @@ const EquipmentDetails = ({ setCartCount, setCartItems }) => {
         if (!res.ok) throw new Error("Equipment not found");
         const data = await res.json();
         setEquipment(data);
+        console.log("Product detail được set ở ngay đây nha", equipment);
       } catch (err) {
         console.error(err);
       } finally {
@@ -238,7 +220,7 @@ const EquipmentDetails = ({ setCartCount, setCartItems }) => {
 
               {/* Booking Widget */}
               <BookingWidget
-                product={mockProduct}
+                product={equipment}
                 selectedDates={selectedDates}
                 onAddToCart={handleAddToCart}
               />
