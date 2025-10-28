@@ -26,7 +26,7 @@ const OrderSummary = ({
           (new Date(item.endDate) - new Date(item.startDate)) /
             (1000 * 60 * 60 * 24),
         ) || 1;
-      return total + item?.pricePerDay * days * item?.quantity;
+      return total + item?.price * days * item?.quantity;
     }, 0);
   };
 
@@ -66,7 +66,7 @@ const OrderSummary = ({
         </div>
 
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Shopping fee</span>
+          <span className="text-muted-foreground">Shipping fee</span>
           <span className="text-foreground">
             {deliveryFee === 0 ? "Free of Charge" : formatPrice(deliveryFee)}
           </span>
