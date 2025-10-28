@@ -7,9 +7,11 @@ import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
-import { useOutlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
+  const navigate = useNavigate();
+
   const [filters, setFilters] = useState({
     categories: [],
     brands: [],
@@ -26,6 +28,14 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // ✅ Role-based access check
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || user.role !== "user") {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchEquipment = async () => {
@@ -79,10 +89,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
       if (filters.brands?.length > 0) {
         filtered = filtered.filter((item) =>
           filters.brands.some((b) =>
-            item.brand
-              ?.toLowerCase()
-              .replace(/[^a-z0-9]/g, "")
-              .includes(b)
+            item.brand?.toLowerCase().replace(/[^a-z0-9]/g, "").includes(b)
           )
         );
       }
@@ -150,7 +157,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* <Header cartCount={cartCount} /> */}
       <main>
         <HeroSection
           searchTerm={searchTerm}
@@ -215,7 +221,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
         onClose={() => setIsQuickViewOpen(false)}
         onAddToCart={handleAddToCart}
       />
-
     </div>
   );
 };

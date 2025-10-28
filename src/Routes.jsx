@@ -5,6 +5,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./pages/NotFound";
 
+import AdminDashboard from "./pages/AdminDashboard";
 import ShoppingCart from "./pages/shopping-cart";
 import EquipmentCatalog from "./pages/equipment-catalog";
 import LoginPage from "./pages/login";
@@ -40,6 +41,8 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
               </MainLayout>
             }
           />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
           <Route
             path="/shopping-cart"
             element={
