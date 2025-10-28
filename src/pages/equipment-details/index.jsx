@@ -11,10 +11,13 @@ import ProviderContact from "./components/ProviderContact";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { mockIncludedItems } from "./some-mock-data";
+import { useCart } from "../../context/CartContext";
+
 
 const EquipmentDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { addToCart } = useCart();
   const [selectedDates, setSelectedDates] = useState({
     start: null,
     end: null,
@@ -117,8 +120,17 @@ const EquipmentDetails = () => {
   };
 
   const handleAddToCart = (bookingData) => {
-    console.log("Adding to cart:", bookingData);
-    setCartCount((prev) => prev + 1);
+    // console.log("Adding to cart:", bookingData);
+    // setCartCount((prev) => prev + 1);
+    // alert("Đã thêm vào giỏ hàng thành công!");
+    addToCart({
+      productId: mockProduct.id,
+      name: mockProduct.name,
+      quantity: 1,
+      startDate: selectedDates.start,
+      endDate: selectedDates.end,
+      price: mockProduct.dailyPrice,
+    });
     alert("Đã thêm vào giỏ hàng thành công!");
   };
 
