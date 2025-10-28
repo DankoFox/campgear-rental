@@ -215,8 +215,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
         onClose={() => setIsQuickViewOpen(false)}
         onAddToCart={handleAddToCart}
       />
-
-      <Footer />
     </div>
   );
 };

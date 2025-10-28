@@ -24,9 +24,6 @@ const LandingPage = () => {
           <EquipmentList equipmentData={mockEquipment} />
         </div>
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };

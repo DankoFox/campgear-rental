@@ -12,14 +12,13 @@ import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { mockIncludedItems } from "./some-mock-data";
 
-const EquipmentDetails = () => {
+const EquipmentDetails = ({ setCartCount, setCartItems }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [selectedDates, setSelectedDates] = useState({
     start: null,
     end: null,
   });
-  const [cartCount, setCartCount] = useState(2);
   const [equipment, setEquipment] = useState(false);
   const [instruction, setInstruction] = useState(false);
   const [specifications, setSpecifications] = useState(false);
@@ -171,7 +170,6 @@ const EquipmentDetails = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* <Header user={mockUser} cartCount={cartCount} /> */}
       <main>
         {/* Breadcrumb */}
         <div className="bg-muted/30 border-b border-border">

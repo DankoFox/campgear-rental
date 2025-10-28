@@ -69,7 +69,11 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
             path="/equipment-details/:id"
             element={
               <MainLayout cartCount={cartCount}>
-                <EquipmentDetails />
+                <EquipmentDetails
+                  cartCount={cartCount}
+                  setCartCount={setCartCount}
+                  setCartItems={setCartItems}
+                />
               </MainLayout>
             }
           />
