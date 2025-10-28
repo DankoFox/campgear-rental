@@ -81,16 +81,16 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
     <div className="sticky top-20 bg-card border border-border rounded-lg p-6 space-y-6">
       <div className="text-center">
         <h3 className="font-heading font-semibold text-lg mb-2">
-          Đặt thuê ngay
+          Rent now
         </h3>
         <p className="text-sm text-muted-foreground">
-          Chọn ngày và số lượng để thuê thiết bị
+          Rental information
         </p>
       </div>
       {/* Date Selection Summary */}
       <div className="space-y-3">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Ngày nhận:</span>
+          <span className="text-muted-foreground">Received date:</span>
           <span className="font-medium">
             {selectedDates?.start
               ? selectedDates?.start?.toLocaleDateString("vi-VN")
@@ -98,7 +98,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           </span>
         </div>
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Ngày trả:</span>
+          <span className="text-muted-foreground">Return date:</span>
           <span className="font-medium">
             {selectedDates?.end
               ? selectedDates?.end?.toLocaleDateString("vi-VN")
@@ -107,14 +107,14 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
         </div>
         {rentalDays > 0 && (
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Số ngày thuê:</span>
-            <span className="font-medium">{rentalDays} ngày</span>
+            <span className="text-muted-foreground">Rent for:</span>
+            <span className="font-medium">{rentalDays} day(s)</span>
           </div>
         )}
       </div>
       {/* Quantity Selector */}
       <div>
-        <label className="block text-sm font-medium mb-2">Số lượng</label>
+        <label className="block text-sm font-medium mb-2">Amount</label>
         <div className="flex items-center space-x-3">
           <button
             onClick={() => handleQuantityChange(quantity - 1)}
@@ -142,7 +142,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           </button>
         </div>
         <p className="text-xs text-muted-foreground mt-1">
-          Có sẵn: {product?.availableQuantity || 10} sản phẩm
+          Available: {product?.availableQuantity || 10} product(s)
         </p>
       </div>
       {/* Price Breakdown */}
@@ -150,13 +150,13 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
         <div className="space-y-2 p-4 bg-muted/30 rounded-md">
           <div className="flex justify-between text-sm">
             <span>
-              Giá thuê ({rentalDays} ngày × {quantity} sản phẩm):
+              Rental price ({rentalDays} day(s) × {quantity} product(s)):
             </span>
             <span>{formatPrice(totalPrice)}</span>
           </div>
           {rentalDays >= 7 && (
             <div className="flex justify-between text-sm text-success">
-              <span>Giảm giá thuê tuần:</span>
+              <span>Weekly rental discount</span>
               <span>
                 -
                 {formatPrice(
@@ -167,7 +167,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           )}
           <div className="border-t border-border pt-2">
             <div className="flex justify-between font-semibold">
-              <span>Tổng cộng:</span>
+              <span>Total:</span>
               <span className="text-primary">{formatPrice(totalPrice)}</span>
             </div>
           </div>
@@ -183,7 +183,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           iconName="ShoppingCart"
           iconPosition="left"
         >
-          Thêm vào giỏ hàng
+          Add to cart
         </Button>
 
         <Button
@@ -193,22 +193,22 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           iconName="MessageCircle"
           iconPosition="left"
         >
-          Liên hệ nhà cung cấp
+          Contact provider
         </Button>
       </div>
       {/* Additional Info */}
       <div className="text-xs text-muted-foreground space-y-1">
         <div className="flex items-center space-x-1">
           <Icon name="Shield" size={12} />
-          <span>Bảo hiểm thiết bị có sẵn</span>
+          <span>Equipment insurance available</span>
         </div>
         <div className="flex items-center space-x-1">
           <Icon name="Truck" size={12} />
-          <span>Hỗ trợ giao hàng tận nơi</span>
+          <span>Home delivery available</span>
         </div>
         <div className="flex items-center space-x-1">
           <Icon name="RotateCcw" size={12} />
-          <span>Hoàn tiền 100% nếu hủy trước 24h</span>
+          <span>100% refund if canceled at least 24 hours in advance</span>
         </div>
       </div>
     </div>
