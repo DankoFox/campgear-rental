@@ -16,20 +16,24 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // ✅ Auto-redirect if user is already logged in
+  // ✅ Auto-redirect if already logged in
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) navigate("/equipment-catalog");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      if (user.role === "admin") navigate("/admin-dashboard");
+      else navigate("/equipment-catalog");
+    }
   }, [navigate]);
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e?.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
 
-    if (errors?.[name]) {
+    if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",
@@ -40,39 +44,39 @@ const LoginForm = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData?.email) {
+    if (!formData.email) {
       newErrors.email = "Please enter your email address";
-    } else if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData?.password) {
+    if (!formData.password) {
       newErrors.password = "Please enter your password";
-    } else if (formData?.password?.length < 6) {
+    } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors)?.length === 0;
+    return Object.keys(newErrors).length === 0;
   };
 
+  // ✅ Normal user login
   const handleSubmit = async (e) => {
-    e?.preventDefault();
+    e.preventDefault();
     if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      // ✅ Simplified “login” logic (accept any valid email/password)
       const user = {
         id: Date.now(),
-        name: formData?.email?.split("@")[0] || "Người dùng",
-        email: formData?.email,
+        name: formData.email.split("@")[0] || "User",
+        email: formData.email,
+        role: "user",
       };
 
       localStorage.setItem("user", JSON.stringify(user));
-
-      navigate("/equipment-catalog");
+      navigate("/equipment-catalog", { replace: true });
     } catch (err) {
       console.error(err);
       setErrors({
@@ -83,7 +87,21 @@ const LoginForm = () => {
     }
   };
 
-  const handleSocialLogin = (provider) => {};
+  // ✅ Admin login
+  const handleLoginAsAdmin = () => {
+    const adminUser = {
+      id: 1,
+      name: "Admin",
+      email: "admin@example.com",
+      role: "admin",
+    };
+    localStorage.setItem("user", JSON.stringify(adminUser));
+    navigate("/admin-dashboard", { replace: true });
+  };
+
+  const handleSocialLogin = (provider) => {
+    console.log(`Social login with ${provider}`);
+  };
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -99,7 +117,7 @@ const LoginForm = () => {
         </div>
 
         {/* Error Message */}
-        {errors?.general && (
+        {errors.general && (
           <div className="mb-4 p-3 bg-error/10 border border-error/20 rounded-md">
             <div className="flex items-start space-x-2">
               <Icon
@@ -107,7 +125,7 @@ const LoginForm = () => {
                 size={16}
                 className="text-error mt-0.5 flex-shrink-0"
               />
-              <p className="text-sm text-error">{errors?.general}</p>
+              <p className="text-sm text-error">{errors.general}</p>
             </div>
           </div>
         )}
@@ -119,9 +137,9 @@ const LoginForm = () => {
             type="email"
             name="email"
             placeholder="Enter your email"
-            value={formData?.email}
+            value={formData.email}
             onChange={handleInputChange}
-            error={errors?.email}
+            error={errors.email}
             required
           />
 
@@ -130,9 +148,9 @@ const LoginForm = () => {
             type="password"
             name="password"
             placeholder="Enter your password"
-            value={formData?.password}
+            value={formData.password}
             onChange={handleInputChange}
-            error={errors?.password}
+            error={errors.password}
             required
           />
 
@@ -140,7 +158,7 @@ const LoginForm = () => {
             <Checkbox
               label="Remember me"
               name="rememberMe"
-              checked={formData?.rememberMe}
+              checked={formData.rememberMe}
               onChange={handleInputChange}
             />
 
@@ -174,11 +192,10 @@ const LoginForm = () => {
           </div>
         </div>
 
-        {/* Social Login */}
+        {/* Social + Admin Login */}
         <div className="space-y-3">
           <Button
             variant="outline"
-            size="default"
             fullWidth
             onClick={() => handleSocialLogin("google")}
             iconName="Mail"
@@ -189,13 +206,22 @@ const LoginForm = () => {
 
           <Button
             variant="outline"
-            size="default"
             fullWidth
             onClick={() => handleSocialLogin("facebook")}
             iconName="Facebook"
             iconPosition="left"
           >
             Continue with Facebook
+          </Button>
+
+          <Button
+            variant="outline"
+            fullWidth
+            onClick={handleLoginAsAdmin}
+            iconName="Shield"
+            iconPosition="left"
+          >
+            Login as Admin
           </Button>
         </div>
 

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1730094000001,
+    "date": "2025-10-20T10:00:00Z",
+    "total": 450000,
+    "items": ["Coleman Sundome 4-Person Tent"]
+  },
+  {
+    "id": 1730094000002,
+    "date": "2025-10-22T13:45:00Z",
+    "total": 320000,
+    "items": ["Sleeping Bag", "Camping Stove"]
+  },
+  {
+    "id": 1730094000003,
+    "date": "2025-10-23T09:15:00Z",
+    "total": 670000,
+    "items": ["Tent", "Backpack", "Headlamp"]
+  },
+  {
+    "id": 1730094000004,
+    "date": "2025-10-26T18:30:00Z",
+    "total": 150000,
+    "items": ["Lighting Lamp"]
+  }
+]
