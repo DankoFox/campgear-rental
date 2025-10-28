@@ -12,7 +12,7 @@ import { ConfirmDialog } from "../../components/ConfirmDialog";
 
 const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
-const ShoppingCart = ({ cartItems, setCartItems }) => {
+const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const navigate = useNavigate();
   console.log("cartItem", cartItems);
   // Core
@@ -69,31 +69,16 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
     setDeleteTarget(itemId); // open confirmation dialog
   };
 
-  const confirmRemoveItem = async () => {
-    // setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/data/${deleteTarget}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const result = await response.json();
-
-      if (response.ok) {
-        console.log(result.message);
-        setCartItems(result.data); // update frontend after backend delete
-      } else {
-        console.error("Failed to delete item:", result.message);
-      }
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
+  const confirmRemoveItem = () => {
+    const updated = cartItems.filter((item) => item.id !== deleteTarget);
+    setCartItems(updated);
+    setCartCount(updated.length);
     setDeleteTarget(null);
   };
 
   const confirmRemoveAll = () => {
     setCartItems([]);
+    setCartCount(0);
     setConfirmClearAll(false);
   };
 

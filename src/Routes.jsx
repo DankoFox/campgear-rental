@@ -45,8 +45,8 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
             element={
               <MainLayout cartCount={cartCount}>
                 <ShoppingCart
-                  // cartCount={cartCount}
-                  // setCartCount={setCartCount}
+                  cartCount={cartCount}
+                  setCartCount={setCartCount}
                   cartItems={cartItems}
                   setCartItems={setCartItems}
                 />
