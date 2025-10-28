@@ -14,7 +14,7 @@ import RegisterPage from "./pages/register";
 import LandingPage from "./pages/landing-page";
 import MainLayout from "./MainLayout";
 
-const AppRoutes = ({ cartCount, setCartCount }) => {
+const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
   return (
     <BrowserRouter>
       <ErrorBoundary>
@@ -25,7 +25,7 @@ const AppRoutes = ({ cartCount, setCartCount }) => {
             path="/"
             element={
               <MainLayout cartCount={cartCount}>
-                <EquipmentCatalog
+                <LandingPage
                   cartCount={cartCount}
                   setCartCount={setCartCount}
                 />
@@ -45,8 +45,10 @@ const AppRoutes = ({ cartCount, setCartCount }) => {
             element={
               <MainLayout cartCount={cartCount}>
                 <ShoppingCart
-                  cartCount={cartCount}
-                  setCartCount={setCartCount}
+                  // cartCount={cartCount}
+                  // setCartCount={setCartCount}
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
                 />
               </MainLayout>
             }
@@ -55,7 +57,11 @@ const AppRoutes = ({ cartCount, setCartCount }) => {
             path="/equipment-catalog"
             element={
               <MainLayout cartCount={cartCount}>
-                <EquipmentCatalog />
+                <EquipmentCatalog
+                  cartCount={cartCount}
+                  setCartCount={setCartCount}
+                  setCartItems={setCartItems}
+                />
               </MainLayout>
             }
           />

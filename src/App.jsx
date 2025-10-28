@@ -3,7 +3,16 @@ import AppRoutes from "./Routes";
 
 function App() {
   const [cartCount, setCartCount] = useState(0);
-  return <AppRoutes cartCount={cartCount} setCartCount={setCartCount} />;
+  const [cartItems, setCartItems] = useState([]);
+
+  return (
+    <AppRoutes
+      cartCount={cartCount}
+      setCartCount={setCartCount}
+      cartItems={cartItems}
+      setCartItems={setCartItems}
+    />
+  );
 }
 
 export default App;

@@ -9,9 +9,7 @@ import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
 import { useOutlet } from "react-router-dom";
 
-const EquipmentCatalog = ({ cartCount, setCartCount }) => {
-  // const { cartCount, setCartCount } = useOutlet();
-
+const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const [filters, setFilters] = useState({
     categories: [],
     brands: [],
@@ -27,7 +25,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount }) => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  // const [cartCount, setCartCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -115,8 +112,19 @@ const EquipmentCatalog = ({ cartCount, setCartCount }) => {
   const handleFiltersChange = (newFilters) => setFilters(newFilters);
 
   const handleAddToCart = (item) => {
-    setCartCount((prev) => prev + (item?.quantity || 1));
-    console.log("Added to cart:", item);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    const cartItem = {
+      ...item,
+      quantity: 1,
+      startDate: today.toISOString().split("T")[0],
+      endDate: tomorrow.toISOString().split("T")[0],
+    };
+    setCartCount((prev) => prev + cartItem.quantity);
+    setCartItems((prev) => [...prev, cartItem]);
+    console.log("Added to cart:", cartItem);
   };
 
   const handleQuickView = (item) => {
