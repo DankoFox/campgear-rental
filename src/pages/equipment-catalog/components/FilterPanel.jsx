@@ -12,7 +12,7 @@ const FilterPanel = ({
   onToggle,
   isMobile = false,
 }) => {
-  const [priceRange, setPriceRange] = useState([0, 2000000]);
+  const [priceRange, setPriceRange] = useState([0, 200000]);
 
   // --- Dynamic min & max prices ---
   const minPrice = useMemo(
@@ -21,7 +21,7 @@ const FilterPanel = ({
   );
   const maxPrice = useMemo(
     () =>
-      products.length ? Math.max(...products.map((p) => p.price || 0)) : 2000000,
+      products.length ? Math.max(...products.map((p) => p.price || 0)) : 200000,
     [products]
   );
 
@@ -74,18 +74,8 @@ const FilterPanel = ({
   { id: "jetboil", label: "Jetboil" },
   { id: "helinox", label: "Helinox" },
   { id: "seatosummit", label: "Sea to Summit" },
-  { id: "garmin", label: "Garmin" },
-  { id: "thermarest", label: "Therm-a-Rest" },
-  { id: "blackdiamond", label: "Black Diamond" },
-  { id: "osprey", label: "Osprey" },
   { id: "yeti", label: "YETI" },
-  { id: "eno", label: "ENO" },
-  { id: "biolite", label: "BioLite" },
-  { id: "columbia", label: "Columbia" },
-  { id: "naturehike", label: "Naturehike" },
   { id: "platypus", label: "Platypus" },
-  { id: "gsioutdoors", label: "GSI Outdoors" },
-  { id: "reicoop", label: "REI Co-op" },
 ];
 
   const locations = [

@@ -6,175 +6,267 @@ function delay(ms) {
 
 // Mock purchase data (matching your real products)
 let mockPurchaseLogs = [
- {
-      id: 1,
-      total: 520000,
-      date: "2025-10-21",
-      items: [
-        { name: "Tent Alpha", brand: "NaturePro", category: "Camping" },
-        { name: "Sleeping Bag Lite", brand: "MountainEdge", category: "Camping" },
-      ],
-    },
-    {
-      id: 2,
-      total: 310000,
-      date: "2025-10-10",
-      items: [
-        { name: "Trail Boots", brand: "TrekStar", category: "Footwear" },
-      ],
-    },
-    {
-      id: 3,
-      total: 460000,
-      date: "2025-09-28",
-      items: [
-        { name: "Camping Lantern", brand: "LightMax", category: "Lighting" },
-        { name: "Cooking Set", brand: "FirePeak", category: "Kitchen" },
-      ],
-    },
-    {
-      id: 4,
-      total: 280000,
-      date: "2025-09-14",
-      items: [
-        { name: "Water Bottle", brand: "AquaTrail", category: "Accessories" },
-      ],
-    },
-    {
-      id: 5,
-      total: 720000,
-      date: "2025-09-01",
-      items: [
-        { name: "Backpack 50L", brand: "HikeMate", category: "Backpacks" },
-        { name: "Hiking Socks", brand: "TrekStar", category: "Footwear" },
-      ],
-    },
-    {
-      id: 6,
-      total: 640000,
-      date: "2025-08-27",
-      items: [
-        { name: "Headlamp X2", brand: "LightMax", category: "Lighting" },
-        { name: "Camping Chair", brand: "NaturePro", category: "Camping" },
-      ],
-    },
-    {
-      id: 7,
-      total: 250000,
-      date: "2025-08-12",
-      items: [
-        { name: "Cooking Pot", brand: "FirePeak", category: "Kitchen" },
-      ],
-    },
-    {
-      id: 8,
-      total: 810000,
-      date: "2025-08-05",
-      items: [
-        { name: "Tent Omega", brand: "MountainEdge", category: "Camping" },
-        { name: "Lantern Mini", brand: "LightMax", category: "Lighting" },
-      ],
-    },
-    {
-      id: 9,
-      total: 360000,
-      date: "2025-07-25",
-      items: [
-        { name: "Rain Jacket", brand: "SkyGuard", category: "Clothing" },
-      ],
-    },
-    {
-      id: 10,
-      total: 470000,
-      date: "2025-07-12",
-      items: [
-        { name: "Cooking Stove", brand: "FirePeak", category: "Kitchen" },
-        { name: "Fuel Canister", brand: "FirePeak", category: "Kitchen" },
-      ],
-    },
-    {
-      id: 11,
-      total: 540000,
-      date: "2025-07-01",
-      items: [
-        { name: "Trekking Poles", brand: "TrekStar", category: "Accessories" },
-      ],
-    },
-    {
-      id: 12,
-      total: 680000,
-      date: "2025-06-28",
-      items: [
-        { name: "Hiking Backpack", brand: "HikeMate", category: "Backpacks" },
-      ],
-    },
-    {
-      id: 13,
-      total: 380000,
-      date: "2025-06-14",
-      items: [
-        { name: "Thermal Mug", brand: "AquaTrail", category: "Accessories" },
-      ],
-    },
-    {
-      id: 14,
-      total: 290000,
-      date: "2025-06-05",
-      items: [
-        { name: "Camping Rope", brand: "NaturePro", category: "Camping" },
-      ],
-    },
-    {
-      id: 15,
-      total: 430000,
-      date: "2025-05-30",
-      items: [
-        { name: "Portable Grill", brand: "FirePeak", category: "Kitchen" },
-      ],
-    },
-    {
-      id: 16,
-      total: 610000,
-      date: "2025-05-18",
-      items: [
-        { name: "Sleeping Pad", brand: "MountainEdge", category: "Camping" },
-        { name: "Lantern Max", brand: "LightMax", category: "Lighting" },
-      ],
-    },
-    {
-      id: 17,
-      total: 390000,
-      date: "2025-05-04",
-      items: [
-        { name: "Rain Pants", brand: "SkyGuard", category: "Clothing" },
-      ],
-    },
-    {
-      id: 18,
-      total: 740000,
-      date: "2025-04-20",
-      items: [
-        { name: "Backpack 70L", brand: "HikeMate", category: "Backpacks" },
-        { name: "Boots Pro", brand: "TrekStar", category: "Footwear" },
-      ],
-    },
-    {
-      id: 19,
-      total: 280000,
-      date: "2025-04-05",
-      items: [
-        { name: "Beanie Hat", brand: "SkyGuard", category: "Clothing" },
-      ],
-    },
-    {
-      id: 20,
-      total: 450000,
-      date: "2025-03-22",
-      items: [
-        { name: "Water Filter", brand: "AquaTrail", category: "Accessories" },
-        { name: "Thermal Socks", brand: "TrekStar", category: "Footwear" },
-      ],
-    },
+  {
+    id: 1,
+    total: 820000,
+    date: "2025-10-25",
+    items: [
+      { name: "Instant Tent 4P", brand: "coleman", category: "tents" },
+      { name: "Lantern X100", brand: "yeti", category: "lighting" },
+    ],
+  },
+  {
+    id: 2,
+    total: 540000,
+    date: "2025-10-20",
+    items: [
+      { name: "Sleeping Bag Reactor", brand: "seatosummit", category: "sleeping" },
+    ],
+  },
+  {
+    id: 3,
+    total: 690000,
+    date: "2025-10-15",
+    items: [
+      { name: "Backpack 65L Trail", brand: "deuter", category: "backpacks" },
+      { name: "Cook Stove Mini", brand: "jetboil", category: "cooking" },
+    ],
+  },
+  {
+    id: 4,
+    total: 580000,
+    date: "2025-10-10",
+    items: [
+      { name: "Titan Kettle", brand: "msr", category: "cooking" },
+      { name: "Compact Chair", brand: "helinox", category: "tools" },
+    ],
+  },
+  {
+    id: 5,
+    total: 910000,
+    date: "2025-10-05",
+    items: [
+      { name: "Mountain Tent Ultra", brand: "thenorthface", category: "tents" },
+      { name: "LED Headlamp Actik", brand: "petzl", category: "lighting" },
+    ],
+  },
+  {
+    id: 6,
+    total: 760000,
+    date: "2025-09-30",
+    items: [
+      { name: "Sleeping Pad Comfort", brand: "seatosummit", category: "sleeping" },
+      { name: "Cooking Jet Kit", brand: "jetboil", category: "cooking" },
+    ],
+  },
+  {
+    id: 7,
+    total: 650000,
+    date: "2025-09-25",
+    items: [
+      { name: "Family Tent 6P", brand: "coleman", category: "tents" },
+    ],
+  },
+  {
+    id: 8,
+    total: 720000,
+    date: "2025-09-22",
+    items: [
+      { name: "Hiking Backpack 70L", brand: "deuter", category: "backpacks" },
+      { name: "Hydration Tube", brand: "platypus", category: "tools" },
+    ],
+  },
+  {
+    id: 9,
+    total: 430000,
+    date: "2025-09-20",
+    items: [
+      { name: "Headlamp Core", brand: "petzl", category: "lighting" },
+    ],
+  },
+  {
+    id: 10,
+    total: 590000,
+    date: "2025-09-17",
+    items: [
+      { name: "Cook Pot Duo", brand: "msr", category: "cooking" },
+      { name: "Tent Light Pro", brand: "yeti", category: "lighting" },
+    ],
+  },
+  {
+    id: 11,
+    total: 880000,
+    date: "2025-09-10",
+    items: [
+      { name: "Ultralight Tent 2P", brand: "thenorthface", category: "tents" },
+      { name: "Sleeping Liner Silk", brand: "seatosummit", category: "sleeping" },
+    ],
+  },
+  {
+    id: 12,
+    total: 470000,
+    date: "2025-09-05",
+    items: [
+      { name: "Camping Mug Steel", brand: "helinox", category: "tools" },
+    ],
+  },
+  {
+    id: 13,
+    total: 640000,
+    date: "2025-08-30",
+    items: [
+      { name: "Cooking Skillet", brand: "msr", category: "cooking" },
+    ],
+  },
+  {
+    id: 14,
+    total: 530000,
+    date: "2025-08-27",
+    items: [
+      { name: "LED Lantern Max", brand: "yeti", category: "lighting" },
+      { name: "Camp Knife", brand: "helinox", category: "tools" },
+    ],
+  },
+  {
+    id: 15,
+    total: 720000,
+    date: "2025-08-20",
+    items: [
+      { name: "Sleeping Bag Pro", brand: "seatosummit", category: "sleeping" },
+      { name: "Camping Stove MiniMo", brand: "jetboil", category: "cooking" },
+    ],
+  },
+  {
+    id: 16,
+    total: 910000,
+    date: "2025-08-10",
+    items: [
+      { name: "Expedition Tent 3P", brand: "thenorthface", category: "tents" },
+      { name: "Headlamp Swift", brand: "petzl", category: "lighting" },
+      { name: "Hydration Reservoir", brand: "platypus", category: "tools" },
+    ],
+  },
+  {
+    id: 17,
+    total: 590000,
+    date: "2025-08-01",
+    items: [
+      { name: "Backpack Trail 55L", brand: "deuter", category: "backpacks" },
+    ],
+  },
+  {
+    id: 18,
+    total: 480000,
+    date: "2025-07-25",
+    items: [
+      { name: "Camp Light Mini", brand: "yeti", category: "lighting" },
+    ],
+  },
+  {
+    id: 19,
+    total: 740000,
+    date: "2025-07-15",
+    items: [
+      { name: "Cooking System Flash", brand: "jetboil", category: "cooking" },
+      { name: "Camp Knife Set", brand: "helinox", category: "tools" },
+    ],
+  },
+  {
+    id: 20,
+    total: 870000,
+    date: "2025-07-08",
+    items: [
+      { name: "Tent 2P Adventure", brand: "coleman", category: "tents" },
+      { name: "Sleeping Mat Comfort", brand: "seatosummit", category: "sleeping" },
+    ],
+  },
+  {
+    id: 21,
+    total: 410000,
+    date: "2025-07-02",
+    items: [
+      { name: "LED Headlamp Basic", brand: "petzl", category: "lighting" },
+    ],
+  },
+  {
+    id: 22,
+    total: 560000,
+    date: "2025-06-28",
+    items: [
+      { name: "Camping Stove Duo", brand: "msr", category: "cooking" },
+      { name: "Cup Titanium", brand: "jetboil", category: "cooking" },
+    ],
+  },
+  {
+    id: 23,
+    total: 630000,
+    date: "2025-06-22",
+    items: [
+      { name: "Backpack 70L Pro", brand: "deuter", category: "backpacks" },
+      { name: "Tool Kit Camp", brand: "helinox", category: "tools" },
+    ],
+  },
+  {
+    id: 24,
+    total: 900000,
+    date: "2025-06-18",
+    items: [
+      { name: "Alpine Tent Ultra", brand: "thenorthface", category: "tents" },
+      { name: "Camping Lamp", brand: "yeti", category: "lighting" },
+    ],
+  },
+  {
+    id: 25,
+    total: 490000,
+    date: "2025-06-05",
+    items: [
+      { name: "Sleeping Pillow Air", brand: "seatosummit", category: "sleeping" },
+    ],
+  },
+  {
+    id: 26,
+    total: 750000,
+    date: "2025-05-25",
+    items: [
+      { name: "Cook Set Trail Lite", brand: "msr", category: "cooking" },
+      { name: "Tent Footprint", brand: "coleman", category: "tents" },
+    ],
+  },
+  {
+    id: 27,
+    total: 690000,
+    date: "2025-05-14",
+    items: [
+      { name: "Trail Backpack 60L", brand: "deuter", category: "backpacks" },
+    ],
+  },
+  {
+    id: 28,
+    total: 570000,
+    date: "2025-05-01",
+    items: [
+      { name: "Mini Stove", brand: "jetboil", category: "cooking" },
+      { name: "Headlamp Duo", brand: "petzl", category: "lighting" },
+    ],
+  },
+  {
+    id: 29,
+    total: 600000,
+    date: "2025-04-25",
+    items: [
+      { name: "Compact Chair", brand: "helinox", category: "tools" },
+    ],
+  },
+  {
+    id: 30,
+    total: 850000,
+    date: "2025-04-10",
+    items: [
+      { name: "Tent 3P Explorer", brand: "thenorthface", category: "tents" },
+      { name: "Sleeping Bag Thermal", brand: "seatosummit", category: "sleeping" },
+    ],
+  },
+
 ];
 
 /** ✅ Add a new mock purchase */

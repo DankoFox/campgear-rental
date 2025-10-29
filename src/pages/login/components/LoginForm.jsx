@@ -213,6 +213,21 @@ const LoginForm = () => {
           </Button>
         </div>
 
+        {/* Admin Login Button */}
+<div className="mt-4">
+  <Button
+    variant="secondary"
+    size="lg"
+    fullWidth
+    onClick={handleLoginAsAdmin}
+    iconName="Shield"
+    iconPosition="left"
+  >
+    Login as Admin
+  </Button>
+</div>
+
+
         {/* Register Link */}
         <div className="mt-6 text-center">
           <p className="text-sm text-muted-foreground">

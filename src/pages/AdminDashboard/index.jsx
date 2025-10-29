@@ -15,19 +15,24 @@ import { useNavigate } from "react-router-dom";
 import { getPurchaseLogs } from "./purchaseLogs.js"; 
 
 const COLORS = [
-  "#22c55e",
-  "#3b82f6",
-  "#f59e0b",
-  "#ef4444",
-  "#a855f7",
-  "#14b8a6",
+  "#4F46E5", 
+  "#10B981", 
+  "#F59E0B", 
+  "#EF4444", 
+  "#3B82F6", 
+  "#8B5CF6",
+  "#EC4899", 
+  "#22C55E", 
+  "#F97316", 
+  "#0EA5E9",
 ];
+
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [purchaseLogs, setPurchaseLogs] = useState([]);
   const [viewBy, setViewBy] = useState("revenue");
-  const [groupBy, setGroupBy] = useState("brand"); // ✅ new toggle between brand/category
+  const [groupBy, setGroupBy] = useState("brand"); 
   const [timeRange, setTimeRange] = useState("3m");
   const [loading, setLoading] = useState(true);
 
