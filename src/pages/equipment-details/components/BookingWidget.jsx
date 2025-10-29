@@ -2,36 +2,23 @@ import React, { useState, useEffect } from "react";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
+import { calculateRentalPrice, formatPrice } from "@/utils/pricing";
 
 const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [rentalDays, setRentalDays] = useState(0);
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US")?.format(price) + "₫";
-  };
-
   const calculateRentalDetails = () => {
-    if (!selectedDates?.start || !selectedDates?.end) {
-      setRentalDays(0);
-      setTotalPrice(0);
-      return;
-    }
+    const { rentalDays, totalPrice } = calculateRentalPrice(
+      selectedDates?.start,
+      selectedDates?.end,
+      product?.dailyPrice || product?.price,
+      quantity
+    );
 
-    const timeDiff =
-      selectedDates.end.getTime() - selectedDates.start.getTime();
-    const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-    setRentalDays(days);
-
-    const pricePerDay = product?.dailyPrice || product?.price || 0;
-
-    const weeks = Math.floor(days / 7);
-    const remainingDays = days % 7;
-    const effectivePaidDays = weeks * 5 + remainingDays;
-    const total = effectivePaidDays * pricePerDay * quantity;
-
-    setTotalPrice(total);
+    setRentalDays(rentalDays);
+    setTotalPrice(totalPrice);
     console.log("Price calculation here:", totalPrice);
   };
 

@@ -4,6 +4,7 @@ import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import Select from "../../../components/ui/Select";
 import { ConfirmDialog } from "../../../components/ConfirmDialog";
+import { formatPrice } from "@/utils/pricing";
 
 const CheckoutSection = ({
   cartItems,
@@ -16,13 +17,6 @@ const CheckoutSection = ({
   const [timeSlot, setTimeSlot] = useState("");
 
   const [showTimeSlotAlert, setShowTimeSlotAlert] = useState(false);
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    })?.format(price);
-  };
 
   const deliveryOptions = [
     { value: "delivery", label: "Home Delivery" },

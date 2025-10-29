@@ -18,7 +18,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
     priceRange: [0, 2000000],
     sortBy: "relevance",
   });
-
   const [equipment, setEquipment] = useState([]);
   const [allEquipment, setAllEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +26,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -37,7 +37,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
     } else {
       navigate("/login", { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // ✅ only run once on mount
 
   useEffect(() => {
@@ -125,21 +124,39 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const handleFiltersChange = (newFilters) => setFilters(newFilters);
 
   const handleAddToCart = (item) => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
+    setCartItems((prevCart) => {
+      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
 
-    const cartItem = {
-      ...item,
-      productPrice: item.price,
-      quantity: 1,
-      orderPrice: item?.price,
-      startDate: today.toISOString().split("T")[0],
-      endDate: tomorrow.toISOString().split("T")[0],
-    };
-    setCartCount((prev) => prev + cartItem.quantity);
-    setCartItems((prev) => [...prev, cartItem]);
-    console.log("Mỗi khi add một item vào cart sẽ có dạng", cartItem);
+      if (existingItem) {
+        const updatedCart = prevCart.map((cartItem) =>
+          cartItem.id === item.id
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity + 1,
+                orderPrice: (cartItem.quantity + 1) * cartItem.productPrice,
+              }
+            : cartItem
+        );
+        return updatedCart;
+      } else {
+        // If new item → add to cart
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        const newCartItem = {
+          ...item,
+          productPrice: item.price,
+          quantity: 1,
+          orderPrice: item.price,
+          startDate: today.toISOString().split("T")[0],
+          endDate: tomorrow.toISOString().split("T")[0],
+        };
+
+        setCartCount((prevCount) => prevCount + 1);
+        return [...prevCart, newCartItem];
+      }
+    });
   };
 
   const handleQuickView = (item) => {
@@ -148,7 +165,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   };
 
   const handleLoadMore = () => {
-    // You can later make this fetch more data from API
     setHasMore(false);
   };
 

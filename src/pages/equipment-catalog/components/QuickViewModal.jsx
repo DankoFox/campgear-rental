@@ -5,16 +5,13 @@ import Image from "../../../components/AppImage";
 import Button from "../../../components/ui/Button";
 import Icon from "../../../components/AppIcon";
 import ReviewHover from "@/components/ui/ReviewHover";
+import { formatPrice } from "@/utils/pricing";
 
 const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
   if (!isOpen || !equipment) return null;
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US")?.format(price);
-  };
 
   const handleAddToCart = () => {
     onAddToCart({ ...equipment, quantity });

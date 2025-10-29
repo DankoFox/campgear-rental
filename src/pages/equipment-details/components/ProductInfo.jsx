@@ -1,12 +1,9 @@
 import ReviewHover from "@/components/ui/ReviewHover";
 import Icon from "../../../components/AppIcon";
+import { formatPrice } from "@/utils/pricing";
 
 const ProductInfo = ({ product }) => {
   const weeklyPrice = product.price * 5;
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US")?.format(price) + "₫";
-  };
 
   return (
     <div className="space-y-6">
