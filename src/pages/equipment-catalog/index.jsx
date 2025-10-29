@@ -1,15 +1,16 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import Header from "../../components/ui/Header";
 import FilterPanel from "./components/FilterPanel";
 import EquipmentGrid from "./components/EquipmentGrid";
 import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
-import { useOutlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
+  const navigate = useNavigate();
+
   const [filters, setFilters] = useState({
     categories: [],
     brands: [],
@@ -26,6 +27,18 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      if (parsedUser.role !== "user") {
+        navigate("/login", { replace: true });
+      }
+    } else {
+      navigate("/login", { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // ✅ only run once on mount
 
   useEffect(() => {
     const fetchEquipment = async () => {
@@ -152,7 +165,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* <Header cartCount={cartCount} /> */}
       <main>
         <HeroSection
           searchTerm={searchTerm}

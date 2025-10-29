@@ -5,18 +5,18 @@ import Button from "../../../components/ui/Button";
 const ProviderContact = ({ provider }) => {
   const handleContactProvider = () => {
     // Mock contact functionality
-    alert(`Đang kết nối với ${provider?.name}...`);
+    alert(`Connecting to ${provider?.name}...`);
   };
 
   const handleViewLocation = () => {
     // Mock location view functionality
-    alert(`Xem vị trí của ${provider?.name}`);
+    alert(`Location of ${provider?.name}`);
   };
-
+  
   return (
     <div className="bg-card border border-border rounded-lg p-6">
       <h3 className="font-heading font-semibold text-lg mb-4">
-        Thông tin nhà cung cấp
+        Provider information
       </h3>
       <div className="space-y-4">
         {/* Provider Profile */}
@@ -38,13 +38,13 @@ const ProviderContact = ({ provider }) => {
                 />
                 <span className="text-sm font-medium">{provider?.rating}</span>
                 <span className="text-sm text-muted-foreground">
-                  ({provider?.reviewCount} đánh giá)
+                  ({provider?.reviewCount} rating)
                 </span>
               </div>
               <div className="flex items-center space-x-1">
                 <Icon name="Calendar" size={14} />
                 <span className="text-sm text-muted-foreground">
-                  Hoạt động từ {provider?.memberSince}
+                  Since {provider?.memberSince}
                 </span>
               </div>
             </div>
@@ -57,7 +57,7 @@ const ProviderContact = ({ provider }) => {
             <div className="flex items-center space-x-3">
               <Icon name="MapPin" size={16} className="text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium">Địa chỉ</p>
+                <p className="text-sm font-medium">Address</p>
                 <p className="text-sm text-muted-foreground">
                   {provider?.address}
                 </p>
@@ -67,7 +67,7 @@ const ProviderContact = ({ provider }) => {
             <div className="flex items-center space-x-3">
               <Icon name="Phone" size={16} className="text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium">Điện thoại</p>
+                <p className="text-sm font-medium">Call</p>
                 <p className="text-sm text-muted-foreground">
                   {provider?.phone}
                 </p>
@@ -79,7 +79,7 @@ const ProviderContact = ({ provider }) => {
             <div className="flex items-center space-x-3">
               <Icon name="Clock" size={16} className="text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium">Thời gian phản hồi</p>
+                <p className="text-sm font-medium">Usually response in</p>
                 <p className="text-sm text-muted-foreground">
                   {provider?.responseTime}
                 </p>
@@ -89,11 +89,11 @@ const ProviderContact = ({ provider }) => {
             <div className="flex items-center space-x-3">
               <Icon name="Truck" size={16} className="text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium">Giao hàng</p>
+                <p className="text-sm font-medium">Delivery</p>
                 <p className="text-sm text-muted-foreground">
                   {provider?.deliveryAvailable
-                    ? "Có hỗ trợ giao hàng"
-                    : "Chỉ nhận tại cửa hàng"}
+                    ? "Home delivery"
+                    : "Receive at store"}
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@ const ProviderContact = ({ provider }) => {
 
         {/* Business Hours */}
         <div>
-          <p className="text-sm font-medium mb-2">Giờ làm việc</p>
+          <p className="text-sm font-medium mb-2">Working date</p>
           <div className="grid grid-cols-2 gap-2 text-sm">
             {Object.entries(provider?.businessHours)?.map(([day, hours]) => (
               <div key={day} className="flex justify-between">
@@ -116,7 +116,7 @@ const ProviderContact = ({ provider }) => {
         {/* Certifications */}
         {provider?.certifications && provider?.certifications?.length > 0 && (
           <div>
-            <p className="text-sm font-medium mb-2">Chứng nhận</p>
+            <p className="text-sm font-medium mb-2">Certifications</p>
             <div className="flex flex-wrap gap-2">
               {provider?.certifications?.map((cert, index) => (
                 <div
@@ -140,7 +140,7 @@ const ProviderContact = ({ provider }) => {
             iconPosition="left"
             fullWidth
           >
-            Liên hệ ngay
+            Contact us
           </Button>
 
           <Button
@@ -150,7 +150,7 @@ const ProviderContact = ({ provider }) => {
             iconPosition="left"
             fullWidth
           >
-            Xem vị trí
+            Location
           </Button>
         </div>
 

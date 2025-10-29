@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import Header from "../../components/ui/Header";
 import BookingCard from "./components/BookingCard";
 import AccountSummary from "./components/AccountSummary";
 import NotificationCenter from "./components/NotificationCenter";

@@ -80,16 +80,14 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   return (
     <div className="sticky top-20 bg-card border border-border rounded-lg p-6 space-y-6">
       <div className="text-center">
-        <h3 className="font-heading font-semibold text-lg mb-2">Rent Now</h3>
-        <p className="text-sm text-muted-foreground">
-          Choose your dates and quantity to rent this equipment
-        </p>
+        <h3 className="font-heading font-semibold text-lg mb-2">Rent now</h3>
+        <p className="text-sm text-muted-foreground">Rental information</p>
       </div>
 
       {/* Date Selection Summary */}
       <div className="space-y-3">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Start date:</span>
+          <span className="text-muted-foreground">Received date:</span>
           <span className="font-medium">
             {selectedDates?.start
               ? selectedDates?.start?.toLocaleDateString("en-US")
@@ -97,7 +95,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           </span>
         </div>
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">End date:</span>
+          <span className="text-muted-foreground">Return date:</span>
           <span className="font-medium">
             {selectedDates?.end
               ? selectedDates?.end?.toLocaleDateString("en-US")
@@ -106,15 +104,15 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
         </div>
         {rentalDays > 0 && (
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Rental duration:</span>
-            <span className="font-medium">{rentalDays} days</span>
+            <span className="text-muted-foreground">Rent for:</span>
+            <span className="font-medium">{rentalDays} day(s)</span>
           </div>
         )}
       </div>
 
       {/* Quantity Selector */}
       <div>
-        <label className="block text-sm font-medium mb-2">Quantity</label>
+        <label className="block text-sm font-medium mb-2">Amount</label>
         <div className="flex items-center space-x-3">
           <button
             onClick={() => handleQuantityChange(quantity - 1)}
@@ -142,7 +140,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           </button>
         </div>
         <p className="text-xs text-muted-foreground mt-1">
-          Available: {product?.availableQuantity || 10} units
+          Available: {product?.availableQuantity || 10} product(s)
         </p>
       </div>
 
@@ -151,13 +149,13 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
         <div className="space-y-2 p-4 bg-muted/30 rounded-md">
           <div className="flex justify-between text-sm">
             <span>
-              Rental price ({rentalDays} days × {quantity} items):
+              Rental price ({rentalDays} day(s) × {quantity} product(s)):
             </span>
             <span>{formatPrice(totalPrice)}</span>
           </div>
           {rentalDays >= 7 && (
             <div className="flex justify-between text-sm text-success">
-              <span>Weekly discount applied:</span>
+              <span>Weekly rental discount</span>
               <span>
                 -
                 {formatPrice(
@@ -185,7 +183,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           iconName="ShoppingCart"
           iconPosition="left"
         >
-          Add to Cart
+          Add to cart
         </Button>
 
         <Button
@@ -195,7 +193,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
           iconName="MessageCircle"
           iconPosition="left"
         >
-          Contact Supplier
+          Contact provider
         </Button>
       </div>
 
@@ -207,11 +205,11 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
         </div>
         <div className="flex items-center space-x-1">
           <Icon name="Truck" size={12} />
-          <span>Home delivery supported</span>
+          <span>Home delivery available</span>
         </div>
         <div className="flex items-center space-x-1">
           <Icon name="RotateCcw" size={12} />
-          <span>100% refund if canceled 24h before</span>
+          <span>100% refund if canceled at least 24 hours in advance</span>
         </div>
       </div>
     </div>

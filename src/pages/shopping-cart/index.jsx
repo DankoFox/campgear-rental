@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/ui/Header";
 import CartItem from "./components/CartItem";
 import OrderSummary from "./components/OrderSummary";
 import EmptyCart from "./components/EmptyCart";
@@ -12,8 +11,9 @@ import { ConfirmDialog } from "../../components/ConfirmDialog";
 
 const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
-const ShoppingCart = ({ cartItems, setCartItems }) => {
+const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const navigate = useNavigate();
+  console.log("cartItem", cartItems);
   // Core
   const [promoCode, setPromoCode] = useState("");
 
@@ -99,30 +99,16 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
     setDeleteTarget(itemId); // open confirmation dialog
   };
 
-  const confirmRemoveItem = async () => {
-    // setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/data/${deleteTarget}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const result = await response.json();
-
-      if (response.ok) {
-        setCartItems(result.data); // update frontend after backend delete
-      } else {
-        console.error("Failed to delete item:", result.message);
-      }
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
+  const confirmRemoveItem = () => {
+    const updated = cartItems.filter((item) => item.id !== deleteTarget);
+    setCartItems(updated);
+    setCartCount(updated.length);
     setDeleteTarget(null);
   };
 
   const confirmRemoveAll = () => {
     setCartItems([]);
+    setCartCount(0);
     setConfirmClearAll(false);
   };
 
@@ -188,7 +174,6 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
   }, [cartItems]);
   return (
     <div className="min-h-screen bg-background">
-      <Header user={user} cartCount={cartItems.length} />
       <main>
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8">
           {/* Page Header */}

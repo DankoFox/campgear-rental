@@ -16,7 +16,6 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // ✅ Auto-redirect if user is already logged in
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) navigate("/equipment-catalog");
@@ -56,23 +55,23 @@ const LoginForm = () => {
     return Object.keys(newErrors)?.length === 0;
   };
 
+  // ✅ Normal user login
   const handleSubmit = async (e) => {
-    e?.preventDefault();
+    e.preventDefault();
     if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      // ✅ Simplified “login” logic (accept any valid email/password)
       const user = {
         id: Date.now(),
-        name: formData?.email?.split("@")[0] || "Người dùng",
-        email: formData?.email,
+        name: formData.email.split("@")[0] || "User",
+        email: formData.email,
+        role: "user",
       };
 
       localStorage.setItem("user", JSON.stringify(user));
-
-      navigate("/equipment-catalog");
+      navigate("/equipment-catalog", { replace: true });
     } catch (err) {
       console.error(err);
       setErrors({
@@ -83,7 +82,21 @@ const LoginForm = () => {
     }
   };
 
-  const handleSocialLogin = (provider) => {};
+  // ✅ Admin login
+  const handleLoginAsAdmin = () => {
+    const adminUser = {
+      id: 1,
+      name: "Admin",
+      email: "admin@example.com",
+      role: "admin",
+    };
+    localStorage.setItem("user", JSON.stringify(adminUser));
+    navigate("/admin-dashboard", { replace: true });
+  };
+
+  const handleSocialLogin = (provider) => {
+    console.log(`Social login with ${provider}`);
+  };
 
   return (
     <div className="w-full max-w-md mx-auto">

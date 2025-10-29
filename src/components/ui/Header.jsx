@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Icon from "../AppIcon";
 import Button from "./Button";
 
-const Header = ({ cartCount = 0 }) => {
+const Header = ({ cartCount }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -115,7 +115,11 @@ const Header = ({ cartCount = 0 }) => {
                 <span className="hidden lg:block text-sm font-medium text-foreground">
                   {user?.name || "Người dùng"}
                 </span>
-                <Icon name="ChevronDown" size={16} className="hidden lg:block" />
+                <Icon
+                  name="ChevronDown"
+                  size={16}
+                  className="hidden lg:block"
+                />
               </button>
 
               {/* Dropdown */}

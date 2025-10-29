@@ -112,6 +112,35 @@ app.get("/api/specifications/:type", (req, res) => {
     res.status(500).json({ error: "Failed to load specifications data" });
   }
 });
+//Get the purchase logs
+app.get("/api/purchase-logs", (req, res) => {
+  try {
+    const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
+    res.json(logs);
+  } catch (error) {
+    console.error("Error reading purchase logs:", error);
+    res.status(500).json({ error: "Failed to load purchase logs" });
+  }
+});
+
+app.post("/api/purchase-logs", (req, res) => {
+  try {
+    const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
+    const { total, items } = req.body;
+    const newLog = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      total,
+      items,
+    };
+    logs.push(newLog);
+    fs.writeFileSync(PURCHASE_LOG_FILE, JSON.stringify(logs, null, 2));
+    res.json({ message: "Purchase logged successfully", data: newLog });
+  } catch (error) {
+    console.error("Error writing purchase logs:", error);
+    res.status(500).json({ error: "Failed to save purchase log" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

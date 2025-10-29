@@ -5,6 +5,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./pages/NotFound";
 
+import AdminDashboard from "./pages/AdminDashboard";
 import ShoppingCart from "./pages/shopping-cart";
 import EquipmentCatalog from "./pages/equipment-catalog";
 import LoginPage from "./pages/login";
@@ -25,30 +26,20 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
             path="/"
             element={
               <MainLayout cartCount={cartCount}>
-                <LandingPage
-                  cartCount={cartCount}
-                  setCartCount={setCartCount}
-                />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/main"
-            element={
-              <MainLayout cartCount={cartCount}>
                 <LandingPage />
               </MainLayout>
             }
           />
+
           <Route
             path="/shopping-cart"
             element={
               <MainLayout cartCount={cartCount}>
                 <ShoppingCart
                   // cartCount={cartCount}
-                  // setCartCount={setCartCount}
                   cartItems={cartItems}
                   setCartItems={setCartItems}
+                  setCartCount={setCartCount}
                 />
               </MainLayout>
             }
@@ -70,7 +61,6 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
             element={
               <MainLayout cartCount={cartCount}>
                 <EquipmentDetails
-                  cartCount={cartCount}
                   setCartCount={setCartCount}
                   setCartItems={setCartItems}
                 />

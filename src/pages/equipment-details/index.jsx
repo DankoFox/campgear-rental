@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import Header from "../../components/ui/Header";
 import ImageGallery from "./components/ImageGallery";
 import ProductInfo from "./components/ProductInfo";
 import SpecificationsPanel from "./components/SpecificationsPanel";
@@ -49,27 +48,24 @@ const EquipmentDetails = ({ setCartCount, setCartItems }) => {
     ],
 
     provider: {
-      name: "CampGear Việt Nam",
-      location: "Quận 1, TP.HCM",
-      responseTime: "2 giờ",
-      businessType: "Cửa hàng thiết bị cắm trại",
+      name: "CampGear Viet Nam",
+      location: "District 1, TP.HCM",
+      responseTime: "2 hours",
+      businessType: "Camping gear store",
       memberSince: "2020",
-      address: "123 Đường Nguyễn Huệ, Quận 1, TP.HCM",
+      address: "123 Nguyen Hue, District 1, TP.HCM",
       phone: "0901 234 567",
       deliveryAvailable: true,
       businessHours: {
-        "thứ 2": "8:00 - 18:00",
-        "thứ 3": "8:00 - 18:00",
-        "thứ 4": "8:00 - 18:00",
-        "thứ 5": "8:00 - 18:00",
-        "thứ 6": "8:00 - 18:00",
-        "thứ 7": "9:00 - 17:00",
-        "chủ nhật": "9:00 - 17:00",
+        Monday: "8:00 - 18:00",
+        Tuesday: "8:00 - 18:00",
+        Wednesday: "8:00 - 18:00",
+        Thursay: "8:00 - 18:00",
+        Friday: "8:00 - 18:00",
+        Saturday: "9:00 - 17:00",
+        Sunday: "9:00 - 17:00",
       },
-      certifications: [
-        "Đại lý chính thức Coleman",
-        "Chứng nhận chất lượng ISO",
-      ],
+      certifications: ["Official Coleman dealer", "ISO quality certification"],
       coordinates: {
         lat: 10.7769,
         lng: 106.7009,

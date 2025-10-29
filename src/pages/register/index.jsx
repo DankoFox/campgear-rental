@@ -1,6 +1,5 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Header from "../../components/ui/Header";
 import RegistrationForm from "./components/RegistrationForm";
 import TrustPanel from "./components/TrustPanel";
 import Image from "../../components/AppImage";
@@ -10,7 +9,7 @@ const RegisterPage = () => {
     <>
       <Helmet>
         <title>Đăng ký tài khoản - CampGear</title>
-        
+
         <meta
           name="keywords"
           content="đăng ký, tài khoản, cắm trại, thiết bị, CampGear, Việt Nam"
@@ -38,11 +37,9 @@ const RegisterPage = () => {
           <div className="container mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
               {/* Registration Form */}
-            <div className="w-2/4 bg-card/95 backdrop-blur-sm rounded-2xl shadow-modal p-12 border-4 border-border/80 mx-auto">
+              <div className="w-2/4 bg-card/95 backdrop-blur-sm rounded-2xl shadow-modal p-12 border-4 border-border/80 mx-auto">
                 <RegistrationForm />
               </div>
-
-             
             </div>
           </div>
         </main>
@@ -51,19 +48,26 @@ const RegisterPage = () => {
         <footer className="relative z-10 bg-card/95 backdrop-blur-sm border-t border-border/50 mt-auto">
           <div className="container mx-auto px-4 py-6">
             <div className="text-center text-sm text-muted-foreground">
-              <p>
-                © {new Date().getFullYear()} CampGear. Please Don't Steal
-              </p>
+              <p>© {new Date().getFullYear()} CampGear. Please Don't Steal</p>
               <div className="flex items-center justify-center space-x-4 mt-2">
-                <a href="/terms" className="hover:text-primary transition-micro">
+                <a
+                  href="/terms"
+                  className="hover:text-primary transition-micro"
+                >
                   Terms of Use
                 </a>
                 <span>•</span>
-                <a href="/privacy" className="hover:text-primary transition-micro">
+                <a
+                  href="/privacy"
+                  className="hover:text-primary transition-micro"
+                >
                   Privacy Policy
                 </a>
                 <span>•</span>
-                <a href="/support" className="hover:text-primary transition-micro">
+                <a
+                  href="/support"
+                  className="hover:text-primary transition-micro"
+                >
                   Support
                 </a>
               </div>

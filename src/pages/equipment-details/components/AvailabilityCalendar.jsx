@@ -77,7 +77,7 @@ const AvailabilityCalendar = ({ onDateSelect }) => {
     <div className="bg-card border border-border rounded-lg p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-heading font-semibold">Calendar</h3>
+        <h3 className="font-heading font-semibold">Available at</h3>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => navigateMonth(-1)}
@@ -85,7 +85,7 @@ const AvailabilityCalendar = ({ onDateSelect }) => {
           >
             <Icon name="ChevronLeft" size={16} />
           </button>
-          <span className="font-medium min-w-[120px] text-center capitalize">
+          <span className="font-medium min-w-[120px] text-center">
             {currentMonth?.toLocaleDateString("en-US", {
               month: "long",
               year: "numeric",
@@ -150,8 +150,12 @@ const AvailabilityCalendar = ({ onDateSelect }) => {
           <span>Selected</span>
         </div>
         <div className="flex items-center space-x-1">
-          <div className="w-3 h-3 bg-accent rounded" />
-          <span>Today</span>
+          <div className="w-3 h-3 bg-warning/20 rounded" />
+          <span>High season</span>
+        </div>
+        <div className="flex items-center space-x-1">
+          <div className="w-3 h-3 bg-muted rounded" />
+          <span>Not available</span>
         </div>
       </div>
 
@@ -165,15 +169,9 @@ const AvailabilityCalendar = ({ onDateSelect }) => {
           }`}
         >
           <p className="text-sm font-medium">
-            Selected date: {selectedDates.start.toLocaleDateString("en-US")}
-            {" - "}
-            {selectedDates.end ? (
-              selectedDates.end.toLocaleDateString("en-US")
-            ) : (
-              <span className="text-yellow-700 italic">
-                __/__/____ (please select an end date)
-              </span>
-            )}
+            Selected date: {selectedDates?.start?.toLocaleDateString("vi-VN")}
+            {selectedDates?.end &&
+              ` - ${selectedDates?.end?.toLocaleDateString("vi-VN")}`}
           </p>
         </div>
       )}
