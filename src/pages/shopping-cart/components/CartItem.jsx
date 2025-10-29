@@ -3,7 +3,7 @@ import Image from "../../../components/AppImage";
 
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
-import { formatPrice } from "@/utils/pricing";
+import { calculateDays, formatPrice } from "@/utils/pricing";
 
 const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -26,14 +26,6 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
       quantity: item?.quantity,
     });
     setIsEditing(false);
-  };
-
-  const calculateDays = () => {
-    const start = new Date(item.startDate);
-    const end = new Date(item.endDate);
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays || 1;
   };
 
   return (
@@ -130,9 +122,10 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
           {/* Duration and Total */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2">
             <p className="text-sm text-muted-foreground">
-              Rental Duration: {calculateDays()} day
-              {calculateDays() > 1 ? "s" : ""}
+              Rental Duration: {calculateDays(item.startDate, item.endDate)} day
+              {calculateDays(item.startDate, item.endDate) > 1 ? "s" : ""}
             </p>
+
             <p className="text-sm font-medium text-foreground">
               Total: {formatPrice(item.orderPrice)}
             </p>

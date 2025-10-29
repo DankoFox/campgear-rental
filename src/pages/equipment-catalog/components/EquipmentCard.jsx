@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Image from "../../../components/AppImage";
 import Button from "../../../components/ui/Button";
 import Icon from "../../../components/AppIcon";
+import { formatPrice } from "@/utils/pricing";
 
 const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -19,10 +20,6 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
     e?.preventDefault();
     e?.stopPropagation();
     onQuickView(equipment);
-  };
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US")?.format(price);
   };
 
   const getAvailabilityStatus = () => {

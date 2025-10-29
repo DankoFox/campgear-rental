@@ -1,14 +1,8 @@
 import React from "react";
 import Icon from "../../../components/AppIcon";
+import { formatPrice } from "@/utils/pricing";
 
 const AccountSummary = ({ user, stats }) => {
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    })?.format(price);
-  };
-
   const getLoyaltyLevel = (points) => {
     if (points >= 1000)
       return { level: "Vàng", color: "text-warning", bgColor: "bg-warning/10" };

@@ -4,6 +4,13 @@ export const formatPrice = (price) => {
   return new Intl.NumberFormat("en-US").format(price) + "₫";
 };
 
+export const formatDate = (dateString) => {
+  return new Date(dateString)?.toLocaleDateString("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};
 /**
  * Calculate rental price and rental days
  * @param {Date} startDate - rental start date
@@ -41,4 +48,18 @@ export const calculateRentalPrice = (
   const totalPrice = effectivePaidDays * pricePerDay * quantity;
 
   return { rentalDays: days, totalPrice };
+};
+
+/**
+ * Calculate total days between two dates, inclusive
+ * @param {Date|string} startDate
+ * @param {Date|string} endDate
+ * @returns {number} total days
+ */
+export const calculateDays = (startDate, endDate) => {
+  const start = startDate instanceof Date ? startDate : new Date(startDate);
+  const end = endDate instanceof Date ? endDate : new Date(endDate);
+  const diffTime = end.getTime() - start.getTime();
+  if (isNaN(diffTime) || diffTime < 0) return 0;
+  return Math.floor(diffTime / (1000 * 3600 * 24)) + 1;
 };

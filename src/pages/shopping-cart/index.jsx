@@ -8,6 +8,7 @@ import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
+import { calculateRentalPrice } from "@/utils/pricing";
 
 const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
@@ -27,72 +28,47 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
     email: "nguyen.van.an@email.com",
   });
 
-  const calculateOrderPrice = (startDate, endDate, quantity, pricePerDay) => {
-    console.log(startDate, endDate, quantity, pricePerDay);
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    const diffTime = end - start;
-    if (isNaN(diffTime) || diffTime < 0) return 0;
-
-    const totalDays = Math.max(
-      1,
-      Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
-    );
-
-    const chargeableDays = Math.floor(totalDays / 7) * 5 + (totalDays % 7);
-    return chargeableDays * pricePerDay * quantity;
-  };
-
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    setCartItems((items) => {
-      const newItems = items.map((item) => {
+    setCartItems((items) =>
+      items.map((item) => {
         if (item.id !== itemId) return item;
 
-        const newOrderPrice = calculateOrderPrice(
-          item.startDate,
-          item.endDate,
-          newQuantity,
-          item.productPrice
+        const { totalPrice } = calculateRentalPrice(
+          new Date(item.startDate),
+          new Date(item.endDate),
+          item.productPrice,
+          newQuantity
         );
-
-        console.log("Updated orderPrice:", newOrderPrice);
 
         return {
           ...item,
           quantity: newQuantity,
-          orderPrice: newOrderPrice,
+          orderPrice: totalPrice,
         };
-      });
-
-      return newItems;
-    });
+      })
+    );
   };
 
   const handleUpdateDates = (itemId, startDate, endDate) => {
-    setCartItems((items) => {
-      const newItems = items.map((item) => {
+    setCartItems((items) =>
+      items.map((item) => {
         if (item.id !== itemId) return item;
 
-        const newOrderPrice = calculateOrderPrice(
-          startDate,
-          endDate,
-          item.quantity,
-          item.productPrice
+        const { totalPrice } = calculateRentalPrice(
+          new Date(startDate),
+          new Date(endDate),
+          item.productPrice,
+          item.quantity
         );
-
-        console.log("Updated orderPrice:", newOrderPrice);
 
         return {
           ...item,
           startDate,
           endDate,
-          orderPrice: newOrderPrice,
+          orderPrice: totalPrice,
         };
-      });
-
-      return newItems;
-    });
+      })
+    );
   };
 
   const handleRemoveItem = (itemId) => {
@@ -120,27 +96,11 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
     setPromoCode("");
   };
 
-  const calculateDays = (item) => {
-    const start = new Date(item.startDate);
-    const end = new Date(item.endDate);
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays || 1;
-  };
-
-  const calculateDaysFromDates = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays || 1;
-  };
-
   const calculateTotal = () => {
-    const subtotal = cartItems.reduce((total, item) => {
-      const days = calculateDays(item);
-      return total + item.pricePerDay * days * item.quantity;
-    }, 0);
+    const subtotal = cartItems.reduce(
+      (total, item) => total + (item.orderPrice || 0),
+      0
+    );
 
     const deliveryFee = subtotal > 1000000 ? 0 : 50000;
     const tax = subtotal * 0.1;

@@ -10,7 +10,6 @@
       "public/assets/imgs/tent-b.png"
     ],
     "price": 150000,
-    "originalPrice": 200000,
     "location": "Hanoi",
     "availability": "available",
     "features": ["Waterproof", "Easy setup", "4-person", "Window included"],
