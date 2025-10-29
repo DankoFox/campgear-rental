@@ -3,6 +3,7 @@ import Image from "../../../components/AppImage";
 
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
+import { formatPrice } from "@/utils/pricing";
 
 const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,13 +28,6 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
     setIsEditing(false);
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    })?.format(price);
-  };
-
   const calculateDays = () => {
     const start = new Date(item.startDate);
     const end = new Date(item.endDate);
@@ -41,7 +35,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays || 1;
   };
-  console.log("cart item", item);
+
   return (
     <div className="bg-card border border-border rounded-lg p-4 lg:p-6">
       <div className="flex flex-col lg:flex-row gap-4">
@@ -67,11 +61,11 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
             </div>
             <div className="text-right">
               <p className="font-semibold text-lg text-foreground">
-                {formatPrice(item?.price)}
+                {formatPrice(item?.productPrice)}
                 {/* Not Work Here */}
               </p>
               <p className="text-sm text-muted-foreground">
-                {formatPrice(item?.price)}/day
+                {formatPrice(item?.productPrice)}/day
               </p>
             </div>
           </div>
@@ -140,10 +134,7 @@ const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
               {calculateDays() > 1 ? "s" : ""}
             </p>
             <p className="text-sm font-medium text-foreground">
-              Total:{" "}
-              {formatPrice(
-                item?.pricePerDay * calculateDays() * item?.quantity
-              )}
+              Total: {formatPrice(item.orderPrice)}
             </p>
           </div>
 
