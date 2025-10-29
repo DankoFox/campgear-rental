@@ -15,7 +15,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
     categories: [],
     brands: [],
     location: "",
-    priceRange: [0, 2000000],
+    priceRange: [0, 200000],
     sortBy: "relevance",
   });
   const [equipment, setEquipment] = useState([]);
