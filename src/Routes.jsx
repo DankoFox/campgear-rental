@@ -14,6 +14,7 @@ import EquipmentDetails from "./pages/equipment-details";
 import RegisterPage from "./pages/register";
 import LandingPage from "./pages/landing-page";
 import MainLayout from "./MainLayout";
+import ThankYouPage from "./pages/purchase-status";
 
 const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
   return (
@@ -67,7 +68,14 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
               </MainLayout>
             }
           />
-
+          <Route
+            path="thank-you"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <ThankYouPage />
+              </MainLayout>
+            }
+          />
           {/* Routes WITHOUT layout */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

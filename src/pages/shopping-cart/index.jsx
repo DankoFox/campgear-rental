@@ -10,7 +10,7 @@ import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { calculateRentalPrice } from "@/utils/pricing";
 
-const LOCAL_STORAGE_KEY = "shoppingCartItems";
+// const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
 const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const navigate = useNavigate();
@@ -109,19 +109,53 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
     return subtotal + deliveryFee + tax - discount;
   };
 
-  const handleProceedToCheckout = (checkoutData) => {
+  const handleProceedToCheckout = async (checkoutData) => {
     setIsProcessing(true);
 
-    setTimeout(() => {
+    const purchaseData = {
+      total: calculateTotal(),
+      deliveryOption: checkoutData.deliveryOption,
+      timeSlot: checkoutData.timeSlot,
+      items: cartItems.map((item) => ({
+        id: item.id,
+        name: item.productName || item.name,
+        brand: item.brand || "Unknown",
+        category: item.type || "Equipment",
+        quantity: item.quantity,
+        price: item.productPrice,
+        orderPrice: item.orderPrice,
+      })),
+    };
+
+    try {
+      const res = await fetch("http://localhost:5050/api/purchase-logs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(purchaseData),
+      });
+
+      if (!res.ok) throw new Error("Failed to save purchase log");
+
+      const result = await res.json();
+      console.log("Purchase logged:", result);
+
+      localStorage.setItem("latest_purchase", JSON.stringify(purchaseData));
+
+      setCartItems([]);
+      setCartCount(0);
+
+      navigate("/thank-you");
+    } catch (err) {
+      console.error("Purchase failed:", err);
+      alert("Purchase failed. Please try again.");
+    } finally {
       setIsProcessing(false);
-      alert("Chuyển đến trang thanh toán...");
-    }, 2000);
+    }
   };
 
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        {/* <Header user={user} cartCount={0} /> */}
         <main>
           <EmptyCart />
         </main>
@@ -129,9 +163,9 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
     );
   }
   // Persist cart in localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
-  }, [cartItems]);
+  // useEffect(() => {
+  //   // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
+  // }, [cartItems]);
   return (
     <div className="min-h-screen bg-background">
       <main>

@@ -20,6 +20,7 @@ app.use(express.json());
 // Load data
 const DATA_FILE = "./data/card-data.json";
 const EQUIP_FILE = "./data/equipment-data.json";
+const PURCHASE_LOG_FILE = "./data/purchaseLogs.json";
 
 app.get("/api/data", (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
@@ -127,18 +128,21 @@ app.post("/api/purchase-logs", (req, res) => {
   try {
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
     const { total, items } = req.body;
+
     const newLog = {
       id: Date.now(),
       date: new Date().toISOString(),
       total,
       items,
     };
+
     logs.push(newLog);
     fs.writeFileSync(PURCHASE_LOG_FILE, JSON.stringify(logs, null, 2));
-    res.json({ message: "Purchase logged successfully", data: newLog });
+
+    res.sendStatus(200); // or res.status(200).end();
   } catch (error) {
     console.error("Error writing purchase logs:", error);
-    res.status(500).json({ error: "Failed to save purchase log" });
+    res.sendStatus(500);
   }
 });
 
