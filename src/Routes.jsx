@@ -57,6 +57,8 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
               </MainLayout>
             }
           />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
           <Route
             path="/equipment-details/:id"
             element={

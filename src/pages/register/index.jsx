@@ -1,82 +1,106 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import RegistrationForm from "./components/RegistrationForm";
-import TrustPanel from "./components/TrustPanel";
-import Image from "../../components/AppImage";
+import React, { useState } from "react";
 
-const RegisterPage = () => {
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [status, setStatus] = useState({ message: "", error: false });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus({ message: "Submitting...", error: false });
+
+    try {
+      const response = await fetch("http://localhost:5050/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setStatus({ message: result.message || "Registration failed.", error: true });
+      } else {
+        setStatus({ message: "Account created successfully!", error: false });
+        setFormData({ username: "", email: "", password: "" });
+      }
+    } catch (error) {
+      setStatus({ message: "Network error, please try again.", error: true });
+    }
+  };
+
   return (
-    <>
-      <Helmet>
-        <title>Đăng ký tài khoản - CampGear</title>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4"
+    >
+      <h2 className="text-2xl font-semibold text-center mb-4">Create an Account</h2>
 
-        <meta
-          name="keywords"
-          content="đăng ký, tài khoản, cắm trại, thiết bị, CampGear, Việt Nam"
+      <label className="flex flex-col">
+        <span className="text-sm mb-1">Username</span>
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+          className="border rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
         />
-      </Helmet>
+      </label>
 
-      <div className="flex flex-col min-h-screen bg-background">
-        {/* Header */}
-        <Header />
+      <label className="flex flex-col">
+        <span className="text-sm mb-1">Email</span>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="border rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </label>
 
-        {/* Hero Background */}
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
-          <div className="absolute inset-0 opacity-10">
-            <Image
-              src="https://images.unsplash.com/photo-1648806626183-2308a89eb8ef"
-              alt="Scenic mountain landscape with camping tents under starry night sky and pine trees"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
+      <label className="flex flex-col">
+        <span className="text-sm mb-1">Password</span>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          className="border rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </label>
 
-        {/* Main Content */}
-        <main className="relative z-10 flex-grow flex items-center justify-center px-50 py-12">
-          <div className="container mx-auto">
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
-              {/* Registration Form */}
-              <div className="w-2/4 bg-card/95 backdrop-blur-sm rounded-2xl shadow-modal p-12 border-4 border-border/80 mx-auto">
-                <RegistrationForm />
-              </div>
-            </div>
-          </div>
-        </main>
+      <button
+        type="submit"
+        className="mt-4 bg-primary text-white py-2 rounded-md hover:bg-primary/80 transition-all"
+      >
+        Register
+      </button>
 
-        {/* Footer */}
-        <footer className="relative z-10 bg-card/95 backdrop-blur-sm border-t border-border/50 mt-auto">
-          <div className="container mx-auto px-4 py-6">
-            <div className="text-center text-sm text-muted-foreground">
-              <p>© {new Date().getFullYear()} CampGear. Please Don't Steal</p>
-              <div className="flex items-center justify-center space-x-4 mt-2">
-                <a
-                  href="/terms"
-                  className="hover:text-primary transition-micro"
-                >
-                  Terms of Use
-                </a>
-                <span>•</span>
-                <a
-                  href="/privacy"
-                  className="hover:text-primary transition-micro"
-                >
-                  Privacy Policy
-                </a>
-                <span>•</span>
-                <a
-                  href="/support"
-                  className="hover:text-primary transition-micro"
-                >
-                  Support
-                </a>
-              </div>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </>
+      {status.message && (
+        <p
+          className={`text-center mt-3 ${
+            status.error ? "text-red-500" : "text-green-600"
+          }`}
+        >
+          {status.message}
+        </p>
+      )}
+    </form>
   );
 };
 
-export default RegisterPage;
+export default RegistrationForm;

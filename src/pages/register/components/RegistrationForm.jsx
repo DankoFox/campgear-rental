@@ -158,44 +158,61 @@ const RegistrationForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const fieldsToValidate = [
-      "fullName",
-      "email",
-      "phone",
-      "password",
-      "confirmPassword",
-      "location",
-      "termsAccepted",
-    ];
-    let isValid = true;
+  const fieldsToValidate = [
+    "fullName",
+    "email",
+    "phone",
+    "password",
+    "confirmPassword",
+    "location",
+    "termsAccepted",
+  ];
+  let isValid = true;
 
-    fieldsToValidate.forEach((field) => {
-      const fieldValue = formData[field];
-      if (!validateField(field, fieldValue)) {
-        isValid = false;
-      }
+  fieldsToValidate.forEach((field) => {
+    const fieldValue = formData[field];
+    if (!validateField(field, fieldValue)) {
+      isValid = false;
+    }
+  });
+
+  if (!isValid) return;
+
+  setIsLoading(true);
+  setErrors({});
+
+  try {
+    const response = await fetch("http://localhost:5050/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      }),
     });
 
-    if (!isValid) return;
+    const result = await response.json();
 
-    setIsLoading(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    if (!response.ok) {
+      setErrors({ submit: result.error || "Registration failed." });
+    } else {
       navigate("/login", {
         state: {
-          message:
-            "Registration successful! Please check your email to verify your account.",
+          message: "Registration successful! You can now log in.",
           email: formData.email,
         },
       });
-    } catch {
-      setErrors({ submit: "Something went wrong. Please try again later." });
-    } finally {
-      setIsLoading(false);
     }
-  };
+  } catch (err) {
+    console.error("Error sending registration:", err);
+    setErrors({ submit: "Network error. Please try again." });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="w-full max-w-md mx-auto">
