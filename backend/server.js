@@ -2,14 +2,35 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
+// import mysql from "mysql2"; 
 
 const app = express();
 const PORT = 5050;
+//If use DB instead of json use the comment code
+// const db = mysql.createConnection({
+//   host: "127.0.0.1",
+//   user: "root",
+//   password: "", 
+//   database: "campgear_db", 
+//   port: 3307, 
+// });
 
-// Middleware
+// db.connect((err) => {
+//   if (err) {
+//     console.error("❌ MySQL connection failed:", err);
+//   } else {
+//     console.log("✅ Connected to MySQL database");
+//   }
+// });
+
 app.use(
   cors({
-    origin: ["http://localhost:4028", "http://127.0.0.1:4028"],
+    origin: [
+      "http://localhost:4028",
+      "http://127.0.0.1:4028",
+      "http://localhost:5173", 
+      "http://127.0.0.1:5173",
+    ],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -17,16 +38,16 @@ app.use(
 
 app.use(express.json());
 
-// Load data
 const DATA_FILE = "./data/card-data.json";
 const EQUIP_FILE = "./data/equipment-data.json";
+const USER_FILE = "./data/user-list.json";
+const PURCHASE_LOG_FILE = "./data/purchaseLogs.json";
 
 app.get("/api/data", (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
   res.json(data);
 });
 
-// Add new item
 app.post("/api/data", (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
   data.push(req.body);
@@ -34,7 +55,6 @@ app.post("/api/data", (req, res) => {
   res.json({ message: "Item added", data });
 });
 
-// Delete item by id
 app.delete("/api/data/:id", (req, res) => {
   let data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
   const id = req.params.id;
@@ -44,7 +64,6 @@ app.delete("/api/data/:id", (req, res) => {
   res.json({ message: "Item deleted", data });
 });
 
-// Get all equipment data
 app.get("/api/equipment", (req, res) => {
   try {
     const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
@@ -54,7 +73,7 @@ app.get("/api/equipment", (req, res) => {
     res.status(500).json({ error: "Failed to load equipment data" });
   }
 });
-// Get equipment by ID
+
 app.get("/api/equipment/:id", (req, res) => {
   try {
     const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
@@ -71,7 +90,7 @@ app.get("/api/equipment/:id", (req, res) => {
     res.status(500).json({ error: "Failed to load equipment data" });
   }
 });
-// Get instruction data by type
+
 app.get("/api/instructions/:type", (req, res) => {
   try {
     const instructions = JSON.parse(
@@ -79,7 +98,6 @@ app.get("/api/instructions/:type", (req, res) => {
     );
 
     const { type } = req.params;
-    console.log(type);
     const result = instructions.find(
       (item) => item.type.toLowerCase() === type.toLowerCase()
     );
@@ -112,7 +130,7 @@ app.get("/api/specifications/:type", (req, res) => {
     res.status(500).json({ error: "Failed to load specifications data" });
   }
 });
-//Get the purchase logs
+
 app.get("/api/purchase-logs", (req, res) => {
   try {
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
@@ -142,6 +160,77 @@ app.post("/api/purchase-logs", (req, res) => {
   }
 });
 
+// // === Register user using MySQL ===
+// app.post("/api/register", (req, res) => {
+//   const { username, email, password } = req.body;
+
+//   if (!username || !email || !password) {
+//     return res.status(400).json({ error: "Missing required fields" });
+//   }
+
+//   // Check if user already exists
+//   db.query("SELECT id FROM users WHERE email = ?", [email], (err, results) => {
+//     if (err) {
+//       console.error(" Database error:", err);
+//       return res.status(500).json({ error: "Database error" });
+//     }
+
+//     if (results.length > 0) {
+//       return res.status(400).json({ error: "Email already exists" });
+//     }
+
+//     // Insert new user
+//     const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+//     db.query(sql, [username, email, password], (err2, result) => {
+//       if (err2) {
+//         console.error(" Insert error:", err2);
+//         return res.status(500).json({ error: "Failed to register user" });
+//       }
+
+//       console.log(" New user added:", { id: result.insertId, username, email });
+//       res.status(201).json({
+//         message: "User registered successfully",
+//         user: { id: result.insertId, username, email },
+//       });
+//     });
+//   });
+// });
+
+//for json file
+app.post("/api/register", (req, res) => {
+  try {
+    const users = JSON.parse(fs.readFileSync(USER_FILE, "utf-8"));
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const exists = users.find(
+      (u) => u.username === username || u.email === email
+    );
+    if (exists) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    const newUser = {
+      id: Date.now(),
+      username,
+      email,
+      password,
+      createdAt: new Date().toISOString(),
+    };
+
+    users.push(newUser);
+    fs.writeFileSync(USER_FILE, JSON.stringify(users, null, 2));
+
+    res.json({ message: "User registered successfully", user: newUser });
+  } catch (error) {
+    console.error("Error saving new user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
