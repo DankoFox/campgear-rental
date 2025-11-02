@@ -24,8 +24,8 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [user] = useState({
-    name: "Nguyễn Văn An",
-    email: "nguyen.van.an@email.com",
+     name: JSON.parse(localStorage.getItem("user"))?.name || "Guest",
+  email: JSON.parse(localStorage.getItem("user"))?.email || "guest@gmail.com",
   });
 
   const handleUpdateQuantity = (itemId, newQuantity) => {

@@ -11,31 +11,29 @@ import {
 import Footer from "../../components/ui/Footer";
 import Button from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
-import { getPurchaseLogs } from "./purchaseLogs.js";
 
 const COLORS = [
-  "#4F46E5", 
-  "#10B981", 
-  "#F59E0B", 
-  "#EF4444", 
-  "#3B82F6", 
+  "#4F46E5",
+  "#10B981",
+  "#F59E0B",
+  "#EF4444",
+  "#3B82F6",
   "#8B5CF6",
-  "#EC4899", 
-  "#22C55E", 
-  "#F97316", 
+  "#EC4899",
+  "#22C55E",
+  "#F97316",
   "#0EA5E9",
 ];
-
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [purchaseLogs, setPurchaseLogs] = useState([]);
   const [viewBy, setViewBy] = useState("revenue");
-  const [groupBy, setGroupBy] = useState("brand"); 
+  const [groupBy, setGroupBy] = useState("brand");
   const [timeRange, setTimeRange] = useState("3m");
   const [loading, setLoading] = useState(true);
 
-  // ✅ Protect route
+  // ✅ Protect route (only admin can view)
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (!storedUser) {
@@ -53,38 +51,45 @@ const AdminDashboard = () => {
     }
   }, [navigate]);
 
-  // ✅ Load mock data
+  // ✅ Load real data from backend
   useEffect(() => {
     async function loadData() {
-      const logs = await getPurchaseLogs();
-      setPurchaseLogs(logs);
-      setLoading(false);
+      try {
+        const response = await fetch("http://localhost:5050/api/purchase-logs");
+        const data = await response.json();
+        setPurchaseLogs(data);
+      } catch (error) {
+        console.error("❌ Failed to fetch purchase logs:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
 
-  // ✅ Apply time range filter
+  // ✅ Apply time range filter (simplified version)
   const filteredData = useMemo(() => {
     if (!purchaseLogs.length) return [];
-    const cutoff = timeRange === "3m" ? 0.6 : timeRange === "6m" ? 0.8 : 1.0;
+    const cutoff =
+      timeRange === "3m" ? 0.6 : timeRange === "6m" ? 0.8 : 1.0;
     return purchaseLogs.slice(0, Math.floor(purchaseLogs.length * cutoff));
   }, [purchaseLogs, timeRange]);
 
-  // ✅ Compute grouped stats by brand or category
+  // ✅ Compute grouped stats
   const groupedStats = useMemo(() => {
     const stats = {};
     filteredData.forEach((log) => {
       log.items.forEach((item) => {
         const key = groupBy === "brand" ? item.brand : item.category;
         if (!stats[key]) stats[key] = { count: 0, revenue: 0 };
-        stats[key].count += 1;
+        stats[key].count += item.quantity || 1;
         stats[key].revenue += log.total / log.items.length;
       });
     });
     return stats;
   }, [filteredData, groupBy]);
 
-  // ✅ Prepare data for chart
+  // ✅ Prepare chart data
   const chartData = useMemo(() => {
     return Object.entries(groupedStats).map(([name, stats]) => ({
       name,
@@ -239,6 +244,8 @@ const AdminDashboard = () => {
           </p>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 };

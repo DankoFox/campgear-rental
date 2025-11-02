@@ -8,13 +8,14 @@ const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   // Mock user data
-  const mockUser = {
-    id: 1,
-    name: "Nguyễn Văn An",
-    email: "nguyen.van.an@email.com",
-    phone: "+84 901 234 567",
-    joinDate: "2023-03-15",
-  };
+ const mockUser = {
+  id: 1,
+  name: JSON.parse(localStorage.getItem("user"))?.name || "Guest",
+  email: JSON.parse(localStorage.getItem("user"))?.email || "guest@gmail.com",
+  phone: "+84 901 234 567",
+  joinDate: "2023-03-15",
+};
+
 
   // Mock account statistics
   const mockStats = {

@@ -24,10 +24,9 @@ const EquipmentDetails = ({ setCartCount, setCartItems }) => {
 
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams(); // Mock user data
-  const mockUser = {
-    name: "Nguyễn Văn An",
-    email: "nguyen.van.an@email.com",
-  };
+  // Get user from localStorage instead of hardcoded mock data
+const mockUser = JSON.parse(localStorage.getItem("user"));
+
 
   // Mock product data
   const mockProduct = {
