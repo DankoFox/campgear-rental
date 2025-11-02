@@ -2,14 +2,35 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
+// import mysql from "mysql2"; 
 
 const app = express();
 const PORT = 5050;
+//If use DB instead of json use the comment code
+// const db = mysql.createConnection({
+//   host: "127.0.0.1",
+//   user: "root",
+//   password: "", 
+//   database: "campgear_db", 
+//   port: 3307, 
+// });
 
-// Middleware
+// db.connect((err) => {
+//   if (err) {
+//     console.error("❌ MySQL connection failed:", err);
+//   } else {
+//     console.log("✅ Connected to MySQL database");
+//   }
+// });
+
 app.use(
   cors({
-    origin: ["http://localhost:4028", "http://127.0.0.1:4028"],
+    origin: [
+      "http://localhost:4028",
+      "http://127.0.0.1:4028",
+      "http://localhost:5173", 
+      "http://127.0.0.1:5173",
+    ],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -17,7 +38,6 @@ app.use(
 
 app.use(express.json());
 
-// Load data
 const DATA_FILE = "./data/card-data.json";
 const EQUIP_FILE = "./data/equipment-data.json";
 const PURCHASE_LOG_FILE = "./data/purchaseLogs.json";
@@ -27,7 +47,6 @@ app.get("/api/data", (req, res) => {
   res.json(data);
 });
 
-// Add new item
 app.post("/api/data", (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
   data.push(req.body);
@@ -35,7 +54,6 @@ app.post("/api/data", (req, res) => {
   res.json({ message: "Item added", data });
 });
 
-// Delete item by id
 app.delete("/api/data/:id", (req, res) => {
   let data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
   const id = req.params.id;
@@ -45,7 +63,6 @@ app.delete("/api/data/:id", (req, res) => {
   res.json({ message: "Item deleted", data });
 });
 
-// Get all equipment data
 app.get("/api/equipment", (req, res) => {
   try {
     const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
@@ -55,7 +72,7 @@ app.get("/api/equipment", (req, res) => {
     res.status(500).json({ error: "Failed to load equipment data" });
   }
 });
-// Get equipment by ID
+
 app.get("/api/equipment/:id", (req, res) => {
   try {
     const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
@@ -72,7 +89,7 @@ app.get("/api/equipment/:id", (req, res) => {
     res.status(500).json({ error: "Failed to load equipment data" });
   }
 });
-// Get instruction data by type
+
 app.get("/api/instructions/:type", (req, res) => {
   try {
     const instructions = JSON.parse(
@@ -80,7 +97,6 @@ app.get("/api/instructions/:type", (req, res) => {
     );
 
     const { type } = req.params;
-    console.log(type);
     const result = instructions.find(
       (item) => item.type.toLowerCase() === type.toLowerCase()
     );
@@ -113,7 +129,7 @@ app.get("/api/specifications/:type", (req, res) => {
     res.status(500).json({ error: "Failed to load specifications data" });
   }
 });
-//Get the purchase logs
+
 app.get("/api/purchase-logs", (req, res) => {
   try {
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
@@ -147,5 +163,5 @@ app.post("/api/purchase-logs", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
