@@ -15,6 +15,7 @@ import RegisterPage from "./pages/register";
 import LandingPage from "./pages/landing-page";
 import MainLayout from "./MainLayout";
 import ThankYouPage from "./pages/purchase-status";
+import CreateItem from "./pages/ItemManagement/createItem";
 
 const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
   return (
@@ -75,6 +76,14 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
             element={
               <MainLayout cartCount={cartCount}>
                 <ThankYouPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="create-item"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <CreateItem />
               </MainLayout>
             }
           />
