@@ -2,7 +2,7 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
-// import mysql from "mysql2"; 
+// import mysql from "mysql2";
 
 const app = express();
 const PORT = 5050;
@@ -10,9 +10,9 @@ const PORT = 5050;
 // const db = mysql.createConnection({
 //   host: "127.0.0.1",
 //   user: "root",
-//   password: "", 
-//   database: "campgear_db", 
-//   port: 3307, 
+//   password: "",
+//   database: "campgear_db",
+//   port: 3307,
 // });
 
 // db.connect((err) => {
@@ -28,7 +28,7 @@ app.use(
     origin: [
       "http://localhost:4028",
       "http://127.0.0.1:4028",
-      "http://localhost:5173", 
+      "http://localhost:5173",
       "http://127.0.0.1:5173",
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
@@ -142,23 +142,30 @@ app.get("/api/purchase-logs", (req, res) => {
 
 app.post("/api/purchase-logs", (req, res) => {
   try {
+    // Ensure file exists
+    if (!fs.existsSync(PURCHASE_LOG_FILE)) {
+      fs.writeFileSync(PURCHASE_LOG_FILE, "[]");
+    }
+
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
-    const { total, items } = req.body;
+    const { total, deliveryOption, timeSlot, items } = req.body;
 
     const newLog = {
       id: Date.now(),
       date: new Date().toISOString(),
       total,
+      deliveryOption,
+      timeSlot,
       items,
     };
 
     logs.push(newLog);
     fs.writeFileSync(PURCHASE_LOG_FILE, JSON.stringify(logs, null, 2));
 
-    res.sendStatus(200); // or res.status(200).end();
+    res.status(200).json({ message: "Purchase logged", newLog });
   } catch (error) {
     console.error("Error writing purchase logs:", error);
-    res.sendStatus(500);
+    res.status(500).json({ error: "Failed to save purchase log" });
   }
 });
 
