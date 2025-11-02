@@ -67,6 +67,8 @@ export function PaymentModal({
     // Automatically enable complete payment when selecting Momo or QR
     if (selectedPaymentMethod === "momo-qr") {
       setPaymentDetails("QR/Momo Payment Selected"); // Set the payment details to a valid state
+    } else {
+      setPaymentDetails("");
     }
   }, [selectedPaymentMethod]);
 
