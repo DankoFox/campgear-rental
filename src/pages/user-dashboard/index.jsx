@@ -6,165 +6,82 @@ import NotificationCenter from "./components/NotificationCenter";
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [purchaseLogs, setPurchaseLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock user data
- const mockUser = {
-  id: 1,
-  name: JSON.parse(localStorage.getItem("user"))?.name || "Guest",
-  email: JSON.parse(localStorage.getItem("user"))?.email || "guest@gmail.com",
-  phone: "+84 901 234 567",
-  joinDate: "2023-03-15",
-};
+  const user = JSON.parse(localStorage.getItem("user")) || { id: null, name: "Guest", email: "guest@gmail.com" };
 
+  // ✅ Fetch all purchase logs from backend
+  useEffect(() => {
+    async function fetchLogs() {
+      try {
+        const res = await fetch("http://localhost:5050/api/purchase-logs");
+        if (!res.ok) throw new Error("Failed to fetch purchase logs");
 
-  // Mock account statistics
-  const mockStats = {
-    totalRentals: 12,
-    favoriteItems: 8,
-    loyaltyPoints: 750,
-    totalSpent: 2450000,
+        const allLogs = await res.json();
+        const userLogs = allLogs.filter((log) => log.userid === user?.id);
+        setPurchaseLogs(userLogs);
+      } catch (err) {
+        console.error("❌ Error fetching purchase logs:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchLogs();
+  }, [user?.id]);
+
+  // ✅ Build booking list from purchase logs
+  const bookings = purchaseLogs.map((log) => ({
+    id: log.id,
+    totalPrice: log.total,
+    startDate: log.timeSlot || "",
+    equipment: {
+      name: log.items?.map((i) => i.name).join(", ") || "Không có sản phẩm",
+      image: log.items?.[0]?.image || "",
+      imageAlt: log.items?.[0]?.name || "",
+    },
+    status: "completed",
+    provider: { name: "CampGear", rating: 5.0 },
+  }));
+
+  // ✅ Simple example stats
+  const stats = {
+    totalRentals: bookings.length,
+    favoriteItems: 0,
+    loyaltyPoints: 0,
+    totalSpent: bookings.reduce((sum, b) => sum + (b.totalPrice || 0), 0),
   };
 
-  // Mock bookings data
-  const mockBookings = [
-    {
-      id: "BK001",
-      equipment: {
-        name: "Lều cắm trại Coleman Sundome 4 người",
-        image: "https://images.unsplash.com/photo-1695918435048-1e48dab0c4e5",
-        imageAlt:
-          "Orange Coleman dome tent set up in forest clearing with camping chairs nearby",
-      },
-      startDate: "2024-10-25",
-      endDate: "2024-10-28",
-      duration: 3,
-      status: "upcoming",
-      provider: {
-        name: "Outdoor Gear Saigon",
-        rating: 4.8,
-      },
-      totalPrice: 450000,
-    },
-    {
-      id: "BK002",
-      equipment: {
-        name: "Túi ngủ North Face Eco Trail Bed 20",
-        image: "https://images.unsplash.com/photo-1611312449545-94176309c857",
-        imageAlt:
-          "Blue sleeping bag laid out on wooden deck with mountain view in background",
-      },
-      startDate: "2024-10-22",
-      endDate: "2024-10-24",
-      duration: 2,
-      status: "active",
-      provider: {
-        name: "Mountain Equipment Co.",
-        rating: 4.9,
-      },
-      totalPrice: 200000,
-    },
-    {
-      id: "BK003",
-      equipment: {
-        name: "Bếp gas mini Jetboil Flash",
-        image: "https://images.unsplash.com/photo-1722380195960-c87161dc74da",
-        imageAlt:
-          "Compact camping stove with orange pot boiling water on rocky surface outdoors",
-      },
-      startDate: "2024-10-15",
-      endDate: "2024-10-18",
-      duration: 3,
-      status: "completed",
-      provider: {
-        name: "Adventure Gear Hub",
-        rating: 4.7,
-      },
-      totalPrice: 180000,
-    },
-  ];
-
-  // Mock activity feed
-  const mockActivities = [
+  // ✅ Temporary notifications placeholder
+  const notifications = [
     {
       id: 1,
-      type: "booking",
-      title: "Đặt thuê thành công",
-      description: "Lều cắm trại Coleman Sundome 4 người - Outdoor Gear Saigon",
-      timestamp: new Date(Date.now() - 30 * 60 * 1000),
-      actionRequired: false,
-    },
-    {
-      id: 2,
-      type: "payment",
-      title: "Thanh toán hoàn tất",
-      description: "Đã thanh toán 450.000₫ cho đơn hàng #BK001",
-      timestamp: new Date(Date.now() - 45 * 60 * 1000),
-      actionRequired: false,
-    },
-    {
-      id: 3,
-      type: "message",
-      title: "Tin nhắn mới từ nhà cung cấp",
-      description:
-        "Mountain Equipment Co. đã gửi thông tin về địa điểm nhận hàng",
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-      actionRequired: true,
-    },
-    {
-      id: 4,
-      type: "review",
-      title: "Yêu cầu đánh giá",
-      description: "Hãy đánh giá trải nghiệm thuê Bếp gas mini Jetboil Flash",
-      timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
-      actionRequired: true,
-    },
-  ];
-
-  // Mock notifications
-  const mockNotifications = [
-    {
-      id: 1,
-      type: "reminder",
-      title: "Nhắc nhở nhận hàng",
-      message: "Đơn hàng #BK001 sẽ được nhận vào ngày mai lúc 9:00 AM",
-      timestamp: new Date(Date.now() - 15 * 60 * 1000),
-      isRead: false,
-    },
-    {
-      id: 2,
-      type: "promotion",
-      title: "Ưu đãi đặc biệt",
-      message: "Giảm 20% cho lần thuê tiếp theo - Mã: CAMP20",
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-      isRead: false,
-    },
-    {
-      id: 3,
-      type: "booking",
-      title: "Xác nhận đặt hàng",
-      message: "Đơn hàng #BK001 đã được xác nhận bởi Outdoor Gear Saigon",
-      timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
-      isRead: true,
-    },
-    {
-      id: 4,
       type: "system",
-      title: "Cập nhật hệ thống",
-      message: "Chúng tôi đã cải thiện tính năng tìm kiếm thiết bị",
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+      title: "Thông báo hệ thống",
+      message: "Chào mừng bạn đến với CampGear Dashboard!",
+      timestamp: new Date(),
       isRead: true,
     },
   ];
 
   const tabs = [
     { id: "overview", label: "Tổng quan", count: null },
-    { id: "bookings", label: "Đặt thuê", count: mockBookings?.length },
+    { id: "bookings", label: "Đặt thuê", count: bookings?.length },
     {
       id: "notifications",
       label: "Thông báo",
-      count: mockNotifications?.filter((n) => !n?.isRead)?.length,
+      count: notifications?.filter((n) => !n?.isRead)?.length,
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-muted-foreground">
+        Đang tải dữ liệu...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -175,13 +92,13 @@ const UserDashboard = () => {
           content="Quản lý tài khoản và theo dõi đơn hàng thuê thiết bị cắm trại của bạn"
         />
       </Helmet>
-      {/* <Header user={mockUser} cartCount={2} /> */}
+
       <main>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Page Header */}
           <div className="mb-6 sm:mb-8">
             <h1 className="font-heading font-bold text-2xl sm:text-3xl text-foreground mb-2">
-              Chào mừng trở lại, {mockUser?.name?.split(" ")?.pop()}!
+              Chào mừng trở lại, {user?.name?.split(" ")?.pop()}!
             </h1>
             <p className="text-muted-foreground">
               Quản lý đặt thuê và theo dõi hoạt động của bạn
@@ -225,17 +142,22 @@ const UserDashboard = () => {
                     Đặt thuê gần đây
                   </h2>
                   <div className="space-y-4">
-                    {mockBookings?.slice(0, 3)?.map((booking) => (
-                      <BookingCard key={booking?.id} booking={booking} />
-                    ))}
+                    {bookings.length > 0 ? (
+                      bookings.slice(0, 3).map((booking) => (
+                        <BookingCard key={booking?.id} booking={booking} />
+                      ))
+                    ) : (
+                      <p className="text-muted-foreground">
+                        Bạn chưa có đơn đặt thuê nào.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Right Column */}
               <div className="space-y-6">
-                {/* Account Summary */}
-                <AccountSummary user={mockUser} stats={mockStats} />
+                <AccountSummary user={user} stats={stats} />
               </div>
             </div>
           )}
@@ -248,14 +170,20 @@ const UserDashboard = () => {
                     Tất cả đặt thuê
                   </h2>
                   <div className="space-y-4">
-                    {mockBookings?.map((booking) => (
-                      <BookingCard key={booking?.id} booking={booking} />
-                    ))}
+                    {bookings.length > 0 ? (
+                      bookings.map((booking) => (
+                        <BookingCard key={booking?.id} booking={booking} />
+                      ))
+                    ) : (
+                      <p className="text-muted-foreground">
+                        Bạn chưa có đơn đặt thuê nào.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="space-y-6">
-                <AccountSummary user={mockUser} stats={mockStats} />
+                <AccountSummary user={user} stats={stats} />
               </div>
             </div>
           )}
@@ -263,10 +191,10 @@ const UserDashboard = () => {
           {activeTab === "notifications" && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <NotificationCenter notifications={mockNotifications} />
+                <NotificationCenter notifications={notifications} />
               </div>
               <div className="space-y-6">
-                <AccountSummary user={mockUser} stats={mockStats} />
+                <AccountSummary user={user} stats={stats} />
               </div>
             </div>
           )}
