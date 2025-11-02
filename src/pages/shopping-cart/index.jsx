@@ -8,6 +8,7 @@ import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
+import { PaymentModal } from "./components/PaymentModal";
 import { calculateRentalPrice } from "@/utils/pricing";
 
 // const LOCAL_STORAGE_KEY = "shoppingCartItems";
@@ -28,6 +29,25 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
     email: "nguyen.van.an@email.com",
   });
 
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+  // New states for delivery info
+  const [deliveryOption, setDeliveryOption] = useState("delivery"); // default delivery
+  const [timeSlot, setTimeSlot] = useState(""); // initial empty time slot
+
+  const handleProceedToCheckout = async (checkoutData) => {
+    setDeliveryOption(checkoutData.deliveryOption);
+    setTimeSlot(checkoutData.timeSlot);
+
+    setIsPaymentModalOpen(true); // Open payment modal when ready to checkout
+  };
+
+  const handlePaymentSuccess = () => {
+    setCartItems([]);
+    setCartCount(0);
+    navigate("/thank-you");
+  };
+
   const handleUpdateQuantity = (itemId, newQuantity) => {
     setCartItems((items) =>
       items.map((item) => {
@@ -37,7 +57,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           new Date(item.startDate),
           new Date(item.endDate),
           item.productPrice,
-          newQuantity
+          newQuantity,
         );
 
         return {
@@ -45,7 +65,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           quantity: newQuantity,
           orderPrice: totalPrice,
         };
-      })
+      }),
     );
   };
 
@@ -58,7 +78,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           new Date(startDate),
           new Date(endDate),
           item.productPrice,
-          item.quantity
+          item.quantity,
         );
 
         return {
@@ -67,7 +87,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           endDate,
           orderPrice: totalPrice,
         };
-      })
+      }),
     );
   };
 
@@ -99,7 +119,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const calculateTotal = () => {
     const subtotal = cartItems.reduce(
       (total, item) => total + (item.orderPrice || 0),
-      0
+      0,
     );
 
     const deliveryFee = subtotal > 1000000 ? 0 : 50000;
@@ -107,50 +127,6 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
     const discount = promoCode ? subtotal * 0.1 : 0;
 
     return subtotal + deliveryFee + tax - discount;
-  };
-
-  const handleProceedToCheckout = async (checkoutData) => {
-    setIsProcessing(true);
-
-    const purchaseData = {
-      total: calculateTotal(),
-      deliveryOption: checkoutData.deliveryOption,
-      timeSlot: checkoutData.timeSlot,
-      items: cartItems.map((item) => ({
-        id: item.id,
-        name: item.productName || item.name,
-        brand: item.brand || "Unknown",
-        category: item.type || "Equipment",
-        quantity: item.quantity,
-        price: item.productPrice,
-        orderPrice: item.orderPrice,
-      })),
-    };
-
-    try {
-      const res = await fetch("http://localhost:5050/api/purchase-logs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(purchaseData),
-      });
-
-      if (!res.ok) throw new Error("Failed to save purchase log");
-
-      const result = await res.json();
-      console.log("Purchase logged:", result);
-
-      localStorage.setItem("latest_purchase", JSON.stringify(purchaseData));
-
-      setCartItems([]);
-      setCartCount(0);
-
-      navigate("/thank-you");
-    } catch (err) {
-      console.error("Purchase failed:", err);
-      alert("Purchase failed. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
   };
 
   if (cartItems.length === 0) {
@@ -300,6 +276,18 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
         title="Clear All Cart Item?"
         description="Are you sure you want to clear the cart"
         onConfirm={confirmRemoveAll}
+      />
+
+      <PaymentModal
+        open={isPaymentModalOpen}
+        onOpenChange={setIsPaymentModalOpen}
+        onPaymentSuccess={handlePaymentSuccess}
+        total={calculateTotal()} // Pass the total amount
+        cartItems={cartItems} // Pass cart items for review or any other purposes
+        checkoutData={{
+          deliveryOption: deliveryOption,
+          timeSlot: timeSlot,
+        }} // Pass the checkout data
       />
     </div>
   );
