@@ -73,6 +73,52 @@ app.get("/api/equipment", (req, res) => {
     res.status(500).json({ error: "Failed to load equipment data" });
   }
 });
+app.post("/api/equipment", (req, res) => {
+  try {
+    const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
+    const newEquipmentData = req.body;
+
+    const requiredFields = [
+      "name",
+      "brand",
+      "type",
+      "price",
+      "location",
+      "availability",
+    ];
+    for (const field of requiredFields) {
+      if (!newEquipmentData[field]) {
+        return res.status(400).json({ error: `Field "${field}" is required` });
+      }
+    }
+
+    // Generate unique random 5-digit ID
+    let newId;
+    do {
+      newId = Math.floor(10000 + Math.random() * 90000); // 10000-99999
+    } while (equipment.some((eq) => eq.id === newId));
+
+    // Rebuild object with id on top
+    const newEquipment = {
+      id: newId,
+      ...newEquipmentData,
+      image: Array.isArray(newEquipmentData.image)
+        ? newEquipmentData.image
+        : [],
+      features: Array.isArray(newEquipmentData.features)
+        ? newEquipmentData.features
+        : [],
+    };
+
+    equipment.push(newEquipment);
+    fs.writeFileSync(EQUIP_FILE, JSON.stringify(equipment, null, 2), "utf-8");
+
+    res.status(201).json(newEquipment);
+  } catch (error) {
+    console.error("Error creating equipment:", error);
+    res.status(500).json({ error: "Failed to create equipment" });
+  }
+});
 
 app.get("/api/equipment/:id", (req, res) => {
   try {
@@ -268,6 +314,37 @@ app.post("/api/register", (req, res) => {
   } catch (error) {
     console.error("Error saving new user:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Get all unique types
+app.get("/api/types", (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
+    // Normalize case and remove duplicates
+    const types = [
+      ...new Set(data.map((item) => item.type.trim().toLowerCase())),
+    ];
+    // Return capitalized for nicer display
+    const formattedTypes = types.map(
+      (t) => t.charAt(0).toUpperCase() + t.slice(1)
+    );
+    res.json(formattedTypes);
+  } catch (error) {
+    console.error("Error reading types:", error);
+    res.status(500).json({ error: "Failed to load types" });
+  }
+});
+
+// Get all unique brands
+app.get("/api/brands", (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
+    const brands = [...new Set(data.map((item) => item.brand.trim()))];
+    res.json(brands);
+  } catch (error) {
+    console.error("Error reading brands:", error);
+    res.status(500).json({ error: "Failed to load brands" });
   }
 });
 
