@@ -164,7 +164,7 @@ const EquipmentCard = ({ equipment, onAddToCart, onQuickView }) => {
             <div className="space-y-1">
               <div className="flex items-baseline space-x-2">
                 <span className="text-lg font-bold text-foreground">
-                  {formatPrice(equipment?.price)}₫
+                  {formatPrice(equipment?.price)}
                 </span>
                 {equipment?.originalPrice && (
                   <span className="text-sm text-muted-foreground line-through">
