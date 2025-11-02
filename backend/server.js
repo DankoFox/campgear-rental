@@ -40,7 +40,6 @@ app.use(express.json());
 
 const DATA_FILE = "./data/card-data.json";
 const EQUIP_FILE = "./data/equipment-data.json";
-const USER_FILE = "./data/user-list.json";
 const PURCHASE_LOG_FILE = "./data/purchaseLogs.json";
 
 app.get("/api/data", (req, res) => {
@@ -160,77 +159,6 @@ app.post("/api/purchase-logs", (req, res) => {
   } catch (error) {
     console.error("Error writing purchase logs:", error);
     res.sendStatus(500);
-  }
-});
-
-// // === Register user using MySQL ===
-// app.post("/api/register", (req, res) => {
-//   const { username, email, password } = req.body;
-
-//   if (!username || !email || !password) {
-//     return res.status(400).json({ error: "Missing required fields" });
-//   }
-
-//   // Check if user already exists
-//   db.query("SELECT id FROM users WHERE email = ?", [email], (err, results) => {
-//     if (err) {
-//       console.error(" Database error:", err);
-//       return res.status(500).json({ error: "Database error" });
-//     }
-
-//     if (results.length > 0) {
-//       return res.status(400).json({ error: "Email already exists" });
-//     }
-
-//     // Insert new user
-//     const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-//     db.query(sql, [username, email, password], (err2, result) => {
-//       if (err2) {
-//         console.error(" Insert error:", err2);
-//         return res.status(500).json({ error: "Failed to register user" });
-//       }
-
-//       console.log(" New user added:", { id: result.insertId, username, email });
-//       res.status(201).json({
-//         message: "User registered successfully",
-//         user: { id: result.insertId, username, email },
-//       });
-//     });
-//   });
-// });
-
-//for json file
-app.post("/api/register", (req, res) => {
-  try {
-    const users = JSON.parse(fs.readFileSync(USER_FILE, "utf-8"));
-    const { username, email, password } = req.body;
-
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    const exists = users.find(
-      (u) => u.username === username || u.email === email
-    );
-    if (exists) {
-      return res.status(400).json({ error: "User already exists" });
-    }
-
-    const newUser = {
-      id: Date.now(),
-      username,
-      email,
-      password,
-      createdAt: new Date().toISOString(),
-    };
-
-    users.push(newUser);
-    fs.writeFileSync(USER_FILE, JSON.stringify(users, null, 2));
-
-    res.json({ message: "User registered successfully", user: newUser });
-  } catch (error) {
-    console.error("Error saving new user:", error);
-    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
