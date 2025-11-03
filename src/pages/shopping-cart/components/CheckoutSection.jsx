@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
-import Select from "../../../components/ui/Select";
 import { ConfirmDialog } from "../../../components/ConfirmDialog";
 import { formatPrice } from "@/utils/pricing";
+import { Select } from "@/components/ui/select";
 
 const CheckoutSection = ({
   cartItems,

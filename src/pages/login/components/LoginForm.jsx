@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
-import Input from "../../../components/ui/Input";
 import { Checkbox } from "../../../components/ui/Checkbox";
 import Icon from "../../../components/AppIcon";
+import { Input } from "@/components/ui/Input";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const LoginForm = () => {
 
     try {
       const user = {
-        id:  113,
+        id: 113,
         name: formData.email.split("@")[0] || "User",
         email: formData.email,
         role: "user",
@@ -213,19 +213,18 @@ const LoginForm = () => {
         </div>
 
         {/* Admin Login Button */}
-<div className="mt-4">
-  <Button
-    variant="secondary"
-    size="lg"
-    fullWidth
-    onClick={handleLoginAsAdmin}
-    iconName="Shield"
-    iconPosition="left"
-  >
-    Login as Admin
-  </Button>
-</div>
-
+        <div className="mt-4">
+          <Button
+            variant="secondary"
+            size="lg"
+            fullWidth
+            onClick={handleLoginAsAdmin}
+            iconName="Shield"
+            iconPosition="left"
+          >
+            Login as Admin
+          </Button>
+        </div>
 
         {/* Register Link */}
         <div className="mt-6 text-center">

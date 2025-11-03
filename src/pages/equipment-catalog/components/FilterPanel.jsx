@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Button from "../../../components/ui/Button";
-import Select from "../../../components/ui/Select";
 import { Checkbox } from "../../../components/ui/Checkbox";
 import Icon from "../../../components/AppIcon";
+import { Select } from "@/components/ui/select";
 
 const FilterPanel = ({
   products = [],
@@ -16,7 +16,8 @@ const FilterPanel = ({
 
   // --- Dynamic min & max prices ---
   const minPrice = useMemo(
-    () => (products.length ? Math.min(...products.map((p) => p.price || 0)) : 0),
+    () =>
+      products.length ? Math.min(...products.map((p) => p.price || 0)) : 0,
     [products]
   );
   const maxPrice = useMemo(
@@ -29,31 +30,27 @@ const FilterPanel = ({
     if (filters?.priceRange) setPriceRange(filters.priceRange);
   }, [filters.priceRange]);
 
- 
-
   // --- Dynamic category and brand counts ---
   const categoryCounts = useMemo(() => {
-  const counts = {};
-  products.forEach((p) => {
-    const cat = p.type?.toLowerCase() || "other";
-    counts[cat] = (counts[cat] || 0) + 1;
-  });
-  return counts;
-}, [products]);
+    const counts = {};
+    products.forEach((p) => {
+      const cat = p.type?.toLowerCase() || "other";
+      counts[cat] = (counts[cat] || 0) + 1;
+    });
+    return counts;
+  }, [products]);
 
-
- const brandCounts = useMemo(() => {
-  const counts = {};
-  products.forEach((p) => {
-    // normalize: lowercase and remove non-alphanumeric characters
-    const normalized = (p.brand || "unknown")
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "");
-    counts[normalized] = (counts[normalized] || 0) + 1;
-  });
-  return counts;
-}, [products]);
-
+  const brandCounts = useMemo(() => {
+    const counts = {};
+    products.forEach((p) => {
+      // normalize: lowercase and remove non-alphanumeric characters
+      const normalized = (p.brand || "unknown")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+      counts[normalized] = (counts[normalized] || 0) + 1;
+    });
+    return counts;
+  }, [products]);
 
   // --- Filter options ---
   const categories = [
@@ -66,17 +63,17 @@ const FilterPanel = ({
   ];
 
   const brands = [
-  { id: "coleman", label: "Coleman" },
-  { id: "thenorthface", label: "The North Face" },
-  { id: "msr", label: "MSR" },
-  { id: "deuter", label: "Deuter" },
-  { id: "petzl", label: "Petzl" },
-  { id: "jetboil", label: "Jetboil" },
-  { id: "helinox", label: "Helinox" },
-  { id: "seatosummit", label: "Sea to Summit" },
-  { id: "yeti", label: "YETI" },
-  { id: "platypus", label: "Platypus" },
-];
+    { id: "coleman", label: "Coleman" },
+    { id: "thenorthface", label: "The North Face" },
+    { id: "msr", label: "MSR" },
+    { id: "deuter", label: "Deuter" },
+    { id: "petzl", label: "Petzl" },
+    { id: "jetboil", label: "Jetboil" },
+    { id: "helinox", label: "Helinox" },
+    { id: "seatosummit", label: "Sea to Summit" },
+    { id: "yeti", label: "YETI" },
+    { id: "platypus", label: "Platypus" },
+  ];
 
   const locations = [
     { value: "Hanoi", label: "Hanoi" },
@@ -190,7 +187,9 @@ const FilterPanel = ({
 
       {/* Categories */}
       <div className="space-y-3">
-        <h3 className="font-heading font-semibold text-foreground">Categories</h3>
+        <h3 className="font-heading font-semibold text-foreground">
+          Categories
+        </h3>
         <div className="space-y-2">
           {categories.map((c) => (
             <div key={c.id} className="flex items-center justify-between">
@@ -201,7 +200,6 @@ const FilterPanel = ({
               />
               <span className="text-sm text-muted-foreground">
                 ({categoryCounts[c.id] || 0})
-
               </span>
             </div>
           ))}

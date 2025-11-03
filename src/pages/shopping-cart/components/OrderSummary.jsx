@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
-import Input from "../../../components/ui/Input";
 import { formatPrice } from "@/utils/pricing";
+import { Input } from "@/components/ui/Input";
 
 const OrderSummary = ({
   cartItems,

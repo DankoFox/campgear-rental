@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
-import Input from "../../../components/ui/Input";
 import { calculateRentalPrice, formatPrice } from "@/utils/pricing";
+import { Input } from "@/components/ui/Input";
 
 const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
