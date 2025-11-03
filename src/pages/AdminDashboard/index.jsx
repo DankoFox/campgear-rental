@@ -121,11 +121,27 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-background p-8 space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-heading font-bold">Admin Dashboard</h1>
-        <Button variant="outline" onClick={handleLogout} iconName="LogOut">
-          Logout
-        </Button>
-      </div>
+  <h1 className="text-3xl font-heading font-bold">Admin Dashboard</h1>
+
+  <div className="flex gap-3">
+    <Button
+      variant="default"
+      onClick={() => navigate("/create-item")}
+      iconName="PlusCircle"
+    >
+      Create Item
+    </Button>
+    <Button
+      variant="outline"
+      onClick={handleLogout}
+      iconName="LogOut"
+    >
+      Logout
+    </Button>
+  </div>
+</div>
+
+      
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
