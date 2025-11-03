@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ChipInput from "@/components/ui/ChipInput";
 import SingleSelectChipInput from "@/components/ui/DropdownInput";
 import FileUpload from "@/components/ui/FileUpload";
@@ -8,6 +9,8 @@ import Button from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 const CreateItem = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
@@ -258,9 +261,15 @@ const CreateItem = () => {
             </select>
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-4">
+          {/* Buttons */}
+          <div className="pt-4 flex gap-3">
             <Button onClick={handleSubmit}>Create Item</Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate("/admin-dashboard")}
+            >
+              Back to Dashboard
+            </Button>
           </div>
         </form>
       </div>
