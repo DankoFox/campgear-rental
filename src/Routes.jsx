@@ -5,6 +5,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./pages/NotFound";
 
+import AdminDashboard from "./pages/AdminDashboard";
 import ShoppingCart from "./pages/shopping-cart";
 import EquipmentCatalog from "./pages/equipment-catalog";
 import LoginPage from "./pages/login";
@@ -13,6 +14,8 @@ import EquipmentDetails from "./pages/equipment-details";
 import RegisterPage from "./pages/register";
 import LandingPage from "./pages/landing-page";
 import MainLayout from "./MainLayout";
+import ThankYouPage from "./pages/purchase-status";
+import CreateItem from "./pages/ItemManagement/createItem";
 
 const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
   return (
@@ -25,30 +28,20 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
             path="/"
             element={
               <MainLayout cartCount={cartCount}>
-                <LandingPage
-                  cartCount={cartCount}
-                  setCartCount={setCartCount}
-                />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/main"
-            element={
-              <MainLayout cartCount={cartCount}>
                 <LandingPage />
               </MainLayout>
             }
           />
+
           <Route
             path="/shopping-cart"
             element={
               <MainLayout cartCount={cartCount}>
                 <ShoppingCart
                   // cartCount={cartCount}
-                  // setCartCount={setCartCount}
                   cartItems={cartItems}
                   setCartItems={setCartItems}
+                  setCartCount={setCartCount}
                 />
               </MainLayout>
             }
@@ -65,15 +58,35 @@ const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
               </MainLayout>
             }
           />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
           <Route
             path="/equipment-details/:id"
             element={
               <MainLayout cartCount={cartCount}>
-                <EquipmentDetails />
+                <EquipmentDetails
+                  setCartCount={setCartCount}
+                  setCartItems={setCartItems}
+                />
               </MainLayout>
             }
           />
-
+          <Route
+            path="thank-you"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <ThankYouPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="create-item"
+            element={
+              <MainLayout cartCount={cartCount}>
+                <CreateItem />
+              </MainLayout>
+            }
+          />
           {/* Routes WITHOUT layout */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

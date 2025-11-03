@@ -25,7 +25,6 @@ const ImageGallery = ({ images = [], productName }) => {
   };
 
   const currentImage = images[selectedImageIndex];
-  console.log(currentImage);
 
   return (
     <div className="space-y-4">

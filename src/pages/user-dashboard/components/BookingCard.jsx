@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Image from "../../../components/AppImage";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
+import { formatPrice } from "@/utils/pricing";
 
 const BookingCard = ({ booking }) => {
   const getStatusColor = (status) => {
@@ -41,13 +42,6 @@ const BookingCard = ({ booking }) => {
       month: "2-digit",
       year: "numeric",
     });
-  };
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    })?.format(price);
   };
 
   return (

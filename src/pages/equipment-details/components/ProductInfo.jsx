@@ -1,12 +1,9 @@
 import ReviewHover from "@/components/ui/ReviewHover";
 import Icon from "../../../components/AppIcon";
+import { formatPrice } from "@/utils/pricing";
 
 const ProductInfo = ({ product }) => {
   const weeklyPrice = product.price * 5;
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US")?.format(price) + "$";
-  };
 
   return (
     <div className="space-y-6">
@@ -56,7 +53,7 @@ const ProductInfo = ({ product }) => {
             <div className="flex items-center space-x-3 mt-1">
               <div className="flex items-center w-24 justify-center">
                 <img
-                  src={`/svg/${product?.brand
+                  src={`public/svg/${product?.brand
                     ?.toLowerCase()
                     .replace(/\s+/g, "")}.svg`}
                   alt={product?.brand}

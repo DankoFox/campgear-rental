@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import Header from "../../components/ui/Header";
 import ImageGallery from "./components/ImageGallery";
 import ProductInfo from "./components/ProductInfo";
 import SpecificationsPanel from "./components/SpecificationsPanel";
@@ -12,24 +11,22 @@ import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { mockIncludedItems } from "./some-mock-data";
 
-const EquipmentDetails = () => {
+const EquipmentDetails = ({ setCartCount, setCartItems }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [selectedDates, setSelectedDates] = useState({
     start: null,
     end: null,
   });
-  const [cartCount, setCartCount] = useState(2);
   const [equipment, setEquipment] = useState(false);
   const [instruction, setInstruction] = useState(false);
   const [specifications, setSpecifications] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams(); // Mock user data
-  const mockUser = {
-    name: "Nguyễn Văn An",
-    email: "nguyen.van.an@email.com",
-  };
+  // Get user from localStorage instead of hardcoded mock data
+const mockUser = JSON.parse(localStorage.getItem("user"));
+
 
   // Mock product data
   const mockProduct = {
@@ -50,53 +47,30 @@ const EquipmentDetails = () => {
     ],
 
     provider: {
-      name: "CampGear Việt Nam",
-      location: "Quận 1, TP.HCM",
-      responseTime: "2 giờ",
-      businessType: "Cửa hàng thiết bị cắm trại",
+      name: "CampGear Viet Nam",
+      location: "District 1, TP.HCM",
+      responseTime: "2 hours",
+      businessType: "Camping gear store",
       memberSince: "2020",
-      address: "123 Đường Nguyễn Huệ, Quận 1, TP.HCM",
+      address: "123 Nguyen Hue, District 1, TP.HCM",
       phone: "0901 234 567",
       deliveryAvailable: true,
       businessHours: {
-        "thứ 2": "8:00 - 18:00",
-        "thứ 3": "8:00 - 18:00",
-        "thứ 4": "8:00 - 18:00",
-        "thứ 5": "8:00 - 18:00",
-        "thứ 6": "8:00 - 18:00",
-        "thứ 7": "9:00 - 17:00",
-        "chủ nhật": "9:00 - 17:00",
+        Monday: "8:00 - 18:00",
+        Tuesday: "8:00 - 18:00",
+        Wednesday: "8:00 - 18:00",
+        Thursay: "8:00 - 18:00",
+        Friday: "8:00 - 18:00",
+        Saturday: "9:00 - 17:00",
+        Sunday: "9:00 - 17:00",
       },
-      certifications: [
-        "Đại lý chính thức Coleman",
-        "Chứng nhận chất lượng ISO",
-      ],
+      certifications: ["Official Coleman dealer", "ISO quality certification"],
       coordinates: {
         lat: 10.7769,
         lng: 106.7009,
       },
     },
   };
-
-  // Mock product images
-  const mockImages = [
-    {
-      url: "https://images.unsplash.com/photo-1687762035856-cab4f81f2b39",
-      alt: "Orange Coleman Sundome tent set up in green forest clearing with four-person capacity",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1502943615053-d8bd8c74eb1b",
-      alt: "Interior view of spacious camping tent showing sleeping area with sleeping bags and gear storage",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1633005619430-3ae90a73d56f",
-      alt: "Close-up of tent entrance with zippered door and mesh ventilation panels",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1532555283690-cbf89e69cec7",
-      alt: "Camping tent setup process showing easy assembly with color-coded poles and clips",
-    },
-  ];
 
   // Mock availability data
   const mockAvailabilityData = [
@@ -116,9 +90,10 @@ const EquipmentDetails = () => {
     setSelectedDates(dates);
   };
 
-  const handleAddToCart = (bookingData) => {
-    console.log("Adding to cart:", bookingData);
+  const handleAddToCart = (cartItem) => {
     setCartCount((prev) => prev + 1);
+    setCartItems((prev) => [...prev, cartItem]);
+    console.log("dạng của 1 booking trong trang detial", cartItem);
     alert("Đã thêm vào giỏ hàng thành công!");
   };
 
@@ -133,6 +108,7 @@ const EquipmentDetails = () => {
         if (!res.ok) throw new Error("Equipment not found");
         const data = await res.json();
         setEquipment(data);
+        console.log("Product detail được set ở ngay đây nha", equipment);
       } catch (err) {
         console.error(err);
       } finally {
@@ -171,7 +147,6 @@ const EquipmentDetails = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* <Header user={mockUser} cartCount={cartCount} /> */}
       <main>
         {/* Breadcrumb */}
         <div className="bg-muted/30 border-b border-border">
@@ -240,7 +215,7 @@ const EquipmentDetails = () => {
 
               {/* Booking Widget */}
               <BookingWidget
-                product={mockProduct}
+                product={equipment}
                 selectedDates={selectedDates}
                 onAddToCart={handleAddToCart}
               />

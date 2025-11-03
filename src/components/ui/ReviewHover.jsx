@@ -14,7 +14,6 @@ const ReviewHover = ({ search, option = "reddit" }) => {
         url = `https://www.reddit.com/search/?q=${query}`; // fallback
     }
 
-    console.log(url);
     window.open(url, "_blank");
   };
 
@@ -26,7 +25,11 @@ const ReviewHover = ({ search, option = "reddit" }) => {
       <div className="relative w-36 h-12 flex justify-center items-center overflow-hidden">
         {/* Logo (default visible) */}
         <img
-          src={option === "tiktok" ? "../svg/tiktok.svg" : "../svg/reddit.svg"}
+          src={
+            option === "tiktok"
+              ? "public/svg/tiktok.svg"
+              : "public/svg/reddit.svg"
+          }
           alt={`${option} logo`}
           className="absolute w-48 h-12 opacity-100 translate-y-0 transition-all duration-500 
           group-hover:opacity-0 group-hover:-translate-y-3"

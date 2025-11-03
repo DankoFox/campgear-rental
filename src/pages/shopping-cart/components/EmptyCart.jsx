@@ -19,11 +19,11 @@ const EmptyCart = () => {
         {/* Empty State Content */}
         <div className="space-y-3">
           <h2 className="font-heading font-semibold text-2xl text-foreground">
-            Giỏ hàng trống
+            Your Cart is Empty
           </h2>
           <p className="text-muted-foreground">
-            Bạn chưa có sản phẩm nào trong giỏ hàng. Hãy khám phá các thiết bị
-            cắm trại tuyệt vời của chúng tôi!
+            You don’t have any items in your cart yet. Explore our amazing
+            camping gear!
           </p>
         </div>
 
@@ -37,24 +37,24 @@ const EmptyCart = () => {
               iconPosition="left"
               fullWidth
             >
-              Khám phá thiết bị
+              Explore Equipment
             </Button>
           </Link>
 
           <div className="text-sm text-muted-foreground">
-            Hoặc{" "}
+            Or{" "}
             <Link
               to="/equipment-catalog"
               className="text-primary hover:underline"
             >
-              xem danh mục sản phẩm
+              browse the product catalog
             </Link>
           </div>
         </div>
 
         {/* Popular Categories */}
         <div className="pt-8 space-y-4">
-          <h3 className="font-medium text-foreground">Danh mục phổ biến</h3>
+          <h3 className="font-medium text-foreground">Popular Categories</h3>
           <div className="grid grid-cols-2 gap-3">
             <Link
               to="/equipment-catalog?category=tents"
@@ -65,9 +65,7 @@ const EmptyCart = () => {
                 size={24}
                 className="mx-auto mb-2 text-primary"
               />
-              <span className="text-sm font-medium text-foreground">
-                Lều trại
-              </span>
+              <span className="text-sm font-medium text-foreground">Tents</span>
             </Link>
             <Link
               to="/equipment-catalog?category=sleeping"
@@ -79,7 +77,7 @@ const EmptyCart = () => {
                 className="mx-auto mb-2 text-primary"
               />
               <span className="text-sm font-medium text-foreground">
-                Đồ ngủ
+                Sleeping Gear
               </span>
             </Link>
             <Link
@@ -92,7 +90,7 @@ const EmptyCart = () => {
                 className="mx-auto mb-2 text-primary"
               />
               <span className="text-sm font-medium text-foreground">
-                Nấu ăn
+                Cooking Gear
               </span>
             </Link>
             <Link
@@ -104,7 +102,9 @@ const EmptyCart = () => {
                 size={24}
                 className="mx-auto mb-2 text-primary"
               />
-              <span className="text-sm font-medium text-foreground">Ba lô</span>
+              <span className="text-sm font-medium text-foreground">
+                Backpacks
+              </span>
             </Link>
           </div>
         </div>

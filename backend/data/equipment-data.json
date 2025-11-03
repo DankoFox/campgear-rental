@@ -10,7 +10,6 @@
       "public/assets/imgs/tent-b.png"
     ],
     "price": 150000,
-    "originalPrice": 200000,
     "location": "Hanoi",
     "availability": "available",
     "features": ["Waterproof", "Easy setup", "4-person", "Window included"],
@@ -338,5 +337,178 @@
       "Water-resistant",
       "Night hiking"
     ]
+  },
+  {
+    "id": 26,
+    "name": "Platypus GravityWorks Water Filter System",
+    "brand": "Platypus",
+    "type": "Purifier",
+    "image": ["public/assets/imgs/id-26-a.png"],
+    "price": 75000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["4L capacity", "Fast flow", "No pumping", "Lightweight"]
+  },
+  {
+    "id": 27,
+    "name": "Sea to Summit Comfort Plus Sleeping Mat",
+    "brand": "Sea to Summit",
+    "type": "Sleeping",
+    "image": ["public/assets/imgs/id-27-a.png"],
+    "price": 125000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": ["Dual layer", "Insulated", "Compact", "Lightweight"]
+  },
+  {
+    "id": 28,
+    "name": "Platypus QuickDraw Microfilter System",
+    "brand": "Platypus",
+    "type": "Purifier",
+    "image": ["public/assets/imgs/id-28-a.png"],
+    "price": 50000,
+    "location": "Da Nang",
+    "availability": "limited",
+    "features": ["Portable", "Fast filtering", "Durable", "Easy to clean"]
+  },
+  {
+    "id": 29,
+    "name": "Sea to Summit X-Set 11 Cooking Kit",
+    "brand": "Sea to Summit",
+    "type": "Cooking",
+    "image": ["public/assets/imgs/id-29-a.png"],
+    "price": 70000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": ["Collapsible", "Lightweight", "BPA-free", "Compact storage"]
+  },
+  {
+    "id": 30,
+    "name": "Platypus Hoser Hydration Reservoir 2L",
+    "brand": "Platypus",
+    "type": "Tools",
+    "image": ["public/assets/imgs/id-30-a.png"],
+    "price": 40000,
+    "location": "Ha Long",
+    "availability": "available",
+    "features": ["2L capacity", "Flexible", "Taste-free", "Lightweight"]
+  },
+  {
+    "id": 31,
+    "name": "Sea to Summit Alpha Pan 8-Inch",
+    "brand": "Sea to Summit",
+    "type": "Cooking",
+    "image": ["public/assets/imgs/id-31-a.png"],
+    "price": 55000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": ["Non-stick", "Hard anodized", "Durable", "Lightweight"]
+  },
+  {
+    "id": 32,
+    "name": "Sea to Summit Spark SPII Sleeping Bag",
+    "brand": "Sea to Summit",
+    "type": "Sleeping",
+    "image": ["public/assets/imgs/id-32-a.png"],
+    "price": 95000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["850+ down fill", "Compact", "Ultralight", "Season 3"]
+  },
+  {
+    "id": 33,
+    "name": "Platypus Meta Bottle + Microfilter 1L",
+    "brand": "Platypus",
+    "type": "Tools",
+    "image": ["public/assets/imgs/id-33-a.png"],
+    "price": 48000,
+    "location": "Nha Trang",
+    "availability": "available",
+    "features": ["Collapsible", "Integrated filter", "Leakproof", "Reusable"]
+  },
+  {
+    "id": 34,
+    "name": "Jetboil Flash Java Kit",
+    "brand": "Jetboil",
+    "type": "Cooking",
+    "image": ["public/assets/imgs/id-34-a.png"],
+    "price": 85000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": ["Fast boiling", "Coffee press", "Compact", "1L capacity"]
+  },
+  {
+    "id": 35,
+    "name": "Petzl Tikkina 300 Headlamp",
+    "brand": "Petzl",
+    "type": "Lighting",
+    "image": ["public/assets/imgs/id-35-a.png"],
+    "price": 40000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": ["300 lumens", "Compact", "AAA battery", "Adjustable beam"]
+  },
+  {
+    "id": 36,
+    "name": "Coleman Skydome 6-Person Tent",
+    "brand": "Coleman",
+    "type": "Tents",
+    "image": ["public/assets/imgs/id-36-a.png"],
+    "price": 175000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["6-person", "WeatherTec system", "Quick setup", "Spacious"]
+  },
+  {
+    "id": 37,
+    "name": "The North Face Eco Trail Sleeping Bag",
+    "brand": "The North Face",
+    "type": "Sleeping",
+    "image": ["public/assets/imgs/id-37-a.png"],
+    "price": 90000,
+    "location": "Ho Chi Minh",
+    "availability": "available",
+    "features": ["Recycled materials", "Warm", "Comfortable", "Eco-friendly"]
+  },
+  {
+    "id": 38,
+    "name": "MSR WindBurner Duo Stove System",
+    "brand": "MSR",
+    "type": "Cooking",
+    "image": ["public/assets/imgs/id-38-a.png"],
+    "price": 95000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": ["Windproof", "Fuel-efficient", "2-person", "Compact"]
+  },
+  {
+    "id": 39,
+    "name": "Deuter Trail 30L Backpack",
+    "brand": "Deuter",
+    "type": "Backpacks",
+    "image": ["public/assets/imgs/id-39-a.png"],
+    "price": 85000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": [
+      "30L capacity",
+      "Ventilated back",
+      "Hydration compatible",
+      "Durable"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Platypus Platy Bottle 2L",
+    "brand": "Platypus",
+    "type": "Tools",
+    "image": [
+      "public/assets/imgs/id-40-a.png",
+      "public/assets/imgs/cooking-a.png"
+    ],
+    "price": 35000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": ["2L", "Collapsible", "Lightweight", "Taste-free"]
   }
 ]

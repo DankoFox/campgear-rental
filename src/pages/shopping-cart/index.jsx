@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/ui/Header";
 import CartItem from "./components/CartItem";
 import OrderSummary from "./components/OrderSummary";
 import EmptyCart from "./components/EmptyCart";
@@ -9,10 +8,12 @@ import CheckoutSection from "./components/CheckoutSection";
 import Icon from "../../components/AppIcon";
 import Button from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
+import { PaymentModal } from "./components/PaymentModal";
+import { calculateRentalPrice } from "@/utils/pricing";
 
-const LOCAL_STORAGE_KEY = "shoppingCartItems";
+// const LOCAL_STORAGE_KEY = "shoppingCartItems";
 
-const ShoppingCart = ({ cartItems, setCartItems }) => {
+const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const navigate = useNavigate();
   console.log("cartItem", cartItems);
   // Core
@@ -24,44 +25,69 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [user] = useState({
-    name: "Nguyễn Văn An",
-    email: "nguyen.van.an@email.com",
+     name: JSON.parse(localStorage.getItem("user"))?.name || "Guest",
+  email: JSON.parse(localStorage.getItem("user"))?.email || "guest@gmail.com",
   });
 
-  // Persist cart in localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
-  }, [cartItems]);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+  // New states for delivery info
+  const [deliveryOption, setDeliveryOption] = useState("delivery"); // default delivery
+  const [timeSlot, setTimeSlot] = useState(""); // initial empty time slot
+
+  const handleProceedToCheckout = async (checkoutData) => {
+    setDeliveryOption(checkoutData.deliveryOption);
+    setTimeSlot(checkoutData.timeSlot);
+
+    setIsPaymentModalOpen(true); // Open payment modal when ready to checkout
+  };
+
+  const handlePaymentSuccess = () => {
+    setCartItems([]);
+    setCartCount(0);
+    navigate("/thank-you");
+  };
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
     setCartItems((items) =>
-      items.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              quantity: newQuantity,
-              totalPrice: item.pricePerDay * newQuantity * calculateDays(item),
-            }
-          : item
-      )
+      items.map((item) => {
+        if (item.id !== itemId) return item;
+
+        const { totalPrice } = calculateRentalPrice(
+          new Date(item.startDate),
+          new Date(item.endDate),
+          item.productPrice,
+          newQuantity,
+        );
+
+        return {
+          ...item,
+          quantity: newQuantity,
+          orderPrice: totalPrice,
+        };
+      }),
     );
   };
 
   const handleUpdateDates = (itemId, startDate, endDate) => {
     setCartItems((items) =>
-      items.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              startDate,
-              endDate,
-              totalPrice:
-                item.pricePerDay *
-                item.quantity *
-                calculateDaysFromDates(startDate, endDate),
-            }
-          : item
-      )
+      items.map((item) => {
+        if (item.id !== itemId) return item;
+
+        const { totalPrice } = calculateRentalPrice(
+          new Date(startDate),
+          new Date(endDate),
+          item.productPrice,
+          item.quantity,
+        );
+
+        return {
+          ...item,
+          startDate,
+          endDate,
+          orderPrice: totalPrice,
+        };
+      }),
     );
   };
 
@@ -69,31 +95,16 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
     setDeleteTarget(itemId); // open confirmation dialog
   };
 
-  const confirmRemoveItem = async () => {
-    // setCartItems((items) => items.filter((item) => item.id !== deleteTarget));
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/data/${deleteTarget}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const result = await response.json();
-
-      if (response.ok) {
-        console.log(result.message);
-        setCartItems(result.data); // update frontend after backend delete
-      } else {
-        console.error("Failed to delete item:", result.message);
-      }
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
+  const confirmRemoveItem = () => {
+    const updated = cartItems.filter((item) => item.id !== deleteTarget);
+    setCartItems(updated);
+    setCartCount(updated.length);
     setDeleteTarget(null);
   };
 
   const confirmRemoveAll = () => {
     setCartItems([]);
+    setCartCount(0);
     setConfirmClearAll(false);
   };
 
@@ -105,27 +116,11 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
     setPromoCode("");
   };
 
-  const calculateDays = (item) => {
-    const start = new Date(item.startDate);
-    const end = new Date(item.endDate);
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays || 1;
-  };
-
-  const calculateDaysFromDates = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays || 1;
-  };
-
   const calculateTotal = () => {
-    const subtotal = cartItems.reduce((total, item) => {
-      const days = calculateDays(item);
-      return total + item.pricePerDay * days * item.quantity;
-    }, 0);
+    const subtotal = cartItems.reduce(
+      (total, item) => total + (item.orderPrice || 0),
+      0,
+    );
 
     const deliveryFee = subtotal > 1000000 ? 0 : 50000;
     const tax = subtotal * 0.1;
@@ -134,30 +129,21 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
     return subtotal + deliveryFee + tax - discount;
   };
 
-  const handleProceedToCheckout = (checkoutData) => {
-    setIsProcessing(true);
-
-    setTimeout(() => {
-      setIsProcessing(false);
-      console.log("Proceeding to checkout with:", checkoutData);
-      alert("Chuyển đến trang thanh toán...");
-    }, 2000);
-  };
-
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        {/* <Header user={user} cartCount={0} /> */}
         <main>
           <EmptyCart />
         </main>
       </div>
     );
   }
-
+  // Persist cart in localStorage whenever it changes
+  // useEffect(() => {
+  //   // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
+  // }, [cartItems]);
   return (
     <div className="min-h-screen bg-background">
-      <Header user={user} cartCount={cartItems.length} />
       <main>
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8">
           {/* Page Header */}
@@ -290,6 +276,18 @@ const ShoppingCart = ({ cartItems, setCartItems }) => {
         title="Clear All Cart Item?"
         description="Are you sure you want to clear the cart"
         onConfirm={confirmRemoveAll}
+      />
+
+      <PaymentModal
+        open={isPaymentModalOpen}
+        onOpenChange={setIsPaymentModalOpen}
+        onPaymentSuccess={handlePaymentSuccess}
+        total={calculateTotal()} // Pass the total amount
+        cartItems={cartItems} // Pass cart items for review or any other purposes
+        checkoutData={{
+          deliveryOption: deliveryOption,
+          timeSlot: timeSlot,
+        }} // Pass the checkout data
       />
     </div>
   );

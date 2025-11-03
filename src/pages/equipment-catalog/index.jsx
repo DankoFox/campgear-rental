@@ -1,23 +1,23 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import Header from "../../components/ui/Header";
 import FilterPanel from "./components/FilterPanel";
 import EquipmentGrid from "./components/EquipmentGrid";
 import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
-import { useOutlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
+  const navigate = useNavigate();
+
   const [filters, setFilters] = useState({
     categories: [],
     brands: [],
     location: "",
-    priceRange: [0, 2000000],
+    priceRange: [0, 200000],
     sortBy: "relevance",
   });
-
   const [equipment, setEquipment] = useState([]);
   const [allEquipment, setAllEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +26,18 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      if (parsedUser.role !== "user") {
+        navigate("/login", { replace: true });
+      }
+    } else {
+      navigate("/login", { replace: true });
+    }
+  }, []); // ✅ only run once on mount
 
   useEffect(() => {
     const fetchEquipment = async () => {
@@ -112,19 +124,39 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const handleFiltersChange = (newFilters) => setFilters(newFilters);
 
   const handleAddToCart = (item) => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
+    setCartItems((prevCart) => {
+      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
 
-    const cartItem = {
-      ...item,
-      quantity: 1,
-      startDate: today.toISOString().split("T")[0],
-      endDate: tomorrow.toISOString().split("T")[0],
-    };
-    setCartCount((prev) => prev + cartItem.quantity);
-    setCartItems((prev) => [...prev, cartItem]);
-    console.log("Added to cart:", cartItem);
+      if (existingItem) {
+        const updatedCart = prevCart.map((cartItem) =>
+          cartItem.id === item.id
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity + 1,
+                orderPrice: (cartItem.quantity + 1) * cartItem.productPrice,
+              }
+            : cartItem
+        );
+        return updatedCart;
+      } else {
+        // If new item → add to cart
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        const newCartItem = {
+          ...item,
+          productPrice: item.price,
+          quantity: 1,
+          orderPrice: item.price,
+          startDate: today.toISOString().split("T")[0],
+          endDate: tomorrow.toISOString().split("T")[0],
+        };
+
+        setCartCount((prevCount) => prevCount + 1);
+        return [...prevCart, newCartItem];
+      }
+    });
   };
 
   const handleQuickView = (item) => {
@@ -133,7 +165,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   };
 
   const handleLoadMore = () => {
-    // You can later make this fetch more data from API
     setHasMore(false);
   };
 
@@ -150,7 +181,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* <Header cartCount={cartCount} /> */}
       <main>
         <HeroSection
           searchTerm={searchTerm}
@@ -167,6 +197,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
               onFiltersChange={handleFiltersChange}
               isOpen={isMobileFilterOpen}
               onToggle={toggleMobileFilter}
+              className="sticky top-20" // <-- makes it stick
             />
 
             {/* Main Section */}
@@ -215,8 +246,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
         onClose={() => setIsQuickViewOpen(false)}
         onAddToCart={handleAddToCart}
       />
-
-      <Footer />
     </div>
   );
 };

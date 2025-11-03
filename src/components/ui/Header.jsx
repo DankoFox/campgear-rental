@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Icon from "../AppIcon";
 import Button from "./Button";
 
-const Header = ({ cartCount = 0 }) => {
+const Header = ({ cartCount }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -12,13 +12,13 @@ const Header = ({ cartCount = 0 }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ Load user from localStorage whenever page loads
+  // Load user from localStorage whenever page loads
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     setUser(storedUser ? JSON.parse(storedUser) : null);
   }, []);
 
-  // ✅ Close menus when navigating
+  // Close menus when navigating
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
@@ -26,12 +26,12 @@ const Header = ({ cartCount = 0 }) => {
 
   const navigationItems = [
     {
-      label: "Thiết bị cắm trại",
+      label: "Camping Equipment",
       path: "/equipment-catalog",
       icon: "Tent",
     },
     {
-      label: "Giỏ hàng",
+      label: "Shopping Cart",
       path: "/shopping-cart",
       icon: "ShoppingCart",
       badge: cartCount > 0 ? cartCount : null,
@@ -48,7 +48,7 @@ const Header = ({ cartCount = 0 }) => {
     return location?.pathname === path;
   };
 
-  // ✅ Handle logout
+  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
@@ -67,7 +67,7 @@ const Header = ({ cartCount = 0 }) => {
     <header className="fixed top-0 left-0 right-0 z-[1000] bg-card border-b border-border">
       <nav className="flex items-center justify-between h-16 px-4 lg:px-6">
         {/* Logo */}
-        <Link to="/main" className="flex items-center space-x-2 flex-shrink-0">
+        <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <Icon name="Mountain" size={20} color="white" />
           </div>
@@ -113,9 +113,13 @@ const Header = ({ cartCount = 0 }) => {
                   </span>
                 </div>
                 <span className="hidden lg:block text-sm font-medium text-foreground">
-                  {user?.name || "Người dùng"}
+                  {user?.name || "User"}
                 </span>
-                <Icon name="ChevronDown" size={16} className="hidden lg:block" />
+                <Icon
+                  name="ChevronDown"
+                  size={16}
+                  className="hidden lg:block"
+                />
               </button>
 
               {/* Dropdown */}
@@ -127,14 +131,14 @@ const Header = ({ cartCount = 0 }) => {
                       className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-popover-foreground hover:bg-muted rounded-md transition-micro"
                     >
                       <Icon name="User" size={16} />
-                      <span>Tài khoản của tôi</span>
+                      <span>My Account</span>
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-popover-foreground hover:bg-muted rounded-md transition-micro"
                     >
                       <Icon name="LogOut" size={16} />
-                      <span>Đăng xuất</span>
+                      <span>Logout</span>
                     </button>
                   </div>
                 </div>
@@ -144,12 +148,12 @@ const Header = ({ cartCount = 0 }) => {
             <div className="hidden md:flex items-center space-x-3">
               <Link to="/login">
                 <Button variant="ghost" size="sm">
-                  Đăng nhập
+                  Login
                 </Button>
               </Link>
               <Link to="/register">
                 <Button variant="default" size="sm">
-                  Đăng ký
+                  Register
                 </Button>
               </Link>
             </div>

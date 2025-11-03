@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
-import Input from "../../../components/ui/Input";
+import { formatPrice } from "@/utils/pricing";
+import { Input } from "@/components/ui/Input";
 
 const OrderSummary = ({
   cartItems,
@@ -12,22 +13,11 @@ const OrderSummary = ({
   const [promoInput, setPromoInput] = useState("");
   const [promoError, setPromoError] = useState("");
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    })?.format(price);
-  };
-
   const calculateSubtotal = () => {
-    return cartItems?.reduce((total, item) => {
-      const days =
-        Math.ceil(
-          (new Date(item.endDate) - new Date(item.startDate)) /
-            (1000 * 60 * 60 * 24),
-        ) || 1;
-      return total + item?.pricePerDay * days * item?.quantity;
-    }, 0);
+    return cartItems?.reduce(
+      (total, item) => total + (item.orderPrice || 0),
+      0
+    );
   };
 
   const subtotal = calculateSubtotal();
@@ -66,7 +56,7 @@ const OrderSummary = ({
         </div>
 
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Shopping fee</span>
+          <span className="text-muted-foreground">Shipping fee</span>
           <span className="text-foreground">
             {deliveryFee === 0 ? "Free of Charge" : formatPrice(deliveryFee)}
           </span>

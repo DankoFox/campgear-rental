@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../../../components/AppIcon";
 
-const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
+const AvailabilityCalendar = ({ onDateSelect }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState({
     start: null,
     end: null,
   });
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN")?.format(price) + "₫";
-  };
 
   const getDaysInMonth = (date) => {
     const year = date?.getFullYear();
@@ -24,29 +20,22 @@ const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
 
     // Add empty cells for days before the first day of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days?.push(null);
+      days.push(null);
     }
 
     // Add all days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      days?.push(new Date(year, month, day));
+      days.push(new Date(year, month, day));
     }
 
     return days;
   };
 
-  const getDateAvailability = (date) => {
-    if (!date) return null;
-
-    const dateStr = date?.toISOString()?.split("T")?.[0];
-    return availabilityData?.find((item) => item?.date === dateStr);
-  };
-
   const handleDateClick = (date) => {
     if (!date) return;
 
-    const availability = getDateAvailability(date);
-    if (!availability || !availability?.available) return;
+    const isPast = date < new Date().setHours(0, 0, 0, 0);
+    if (isPast) return;
 
     if (!selectedDates?.start || (selectedDates?.start && selectedDates?.end)) {
       setSelectedDates({ start: date, end: null });
@@ -75,10 +64,10 @@ const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
     });
   };
 
-  const weekDays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const days = getDaysInMonth(currentMonth);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedDates?.start && selectedDates?.end) {
       onDateSelect(selectedDates);
     }
@@ -86,8 +75,9 @@ const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
 
   return (
     <div className="bg-card border border-border rounded-lg p-4">
+      {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-heading font-semibold">Lịch trống</h3>
+        <h3 className="font-heading font-semibold">Available at</h3>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => navigateMonth(-1)}
@@ -96,7 +86,7 @@ const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
             <Icon name="ChevronLeft" size={16} />
           </button>
           <span className="font-medium min-w-[120px] text-center">
-            {currentMonth?.toLocaleDateString("vi-VN", {
+            {currentMonth?.toLocaleDateString("en-US", {
               month: "long",
               year: "numeric",
             })}
@@ -109,10 +99,11 @@ const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
           </button>
         </div>
       </div>
+
       {/* Calendar Grid */}
       <div className="grid grid-cols-7 gap-1 mb-4">
-        {/* Week day headers */}
-        {weekDays?.map((day) => (
+        {/* Weekday headers */}
+        {weekDays.map((day) => (
           <div
             key={day}
             className="text-center text-xs font-medium text-muted-foreground p-2"
@@ -122,68 +113,63 @@ const AvailabilityCalendar = ({ availabilityData, onDateSelect }) => {
         ))}
 
         {/* Calendar days */}
-        {days?.map((date, index) => {
+        {days.map((date, index) => {
           if (!date) {
             return <div key={index} className="p-2" />;
           }
 
-          const availability = getDateAvailability(date);
           const isSelected = isDateInRange(date);
           const isToday = date?.toDateString() === new Date()?.toDateString();
-          const isPast = date < new Date()?.setHours(0, 0, 0, 0);
+          const isPast = date < new Date().setHours(0, 0, 0, 0);
 
           return (
             <button
               key={index}
               onClick={() => handleDateClick(date)}
-              disabled={isPast || !availability?.available}
+              disabled={isPast}
               className={`relative p-2 text-sm rounded-md transition-micro ${
-                isPast || !availability?.available
+                isPast
                   ? "text-muted cursor-not-allowed"
                   : isSelected
                   ? "bg-primary text-primary-foreground"
                   : isToday
                   ? "bg-accent text-accent-foreground"
-                  : availability?.isPeak
-                  ? "bg-warning/20 text-warning-foreground hover:bg-warning/30"
                   : "hover:bg-muted"
               }`}
             >
-              <div className="text-center">
-                <div>{date?.getDate()}</div>
-                {availability?.available && availability?.price && (
-                  <div className="text-xs opacity-75">
-                    {formatPrice(availability?.price)}
-                  </div>
-                )}
-              </div>
-              {availability?.isPeak && (
-                <div className="absolute top-0 right-0 w-2 h-2 bg-warning rounded-full" />
-              )}
+              <div className="text-center">{date?.getDate()}</div>
             </button>
           );
         })}
       </div>
+
       {/* Legend */}
       <div className="flex flex-wrap gap-4 text-xs">
         <div className="flex items-center space-x-1">
           <div className="w-3 h-3 bg-primary rounded" />
-          <span>Đã chọn</span>
+          <span>Selected</span>
         </div>
         <div className="flex items-center space-x-1">
           <div className="w-3 h-3 bg-warning/20 rounded" />
-          <span>Cao điểm</span>
+          <span>High season</span>
         </div>
         <div className="flex items-center space-x-1">
           <div className="w-3 h-3 bg-muted rounded" />
-          <span>Không có sẵn</span>
+          <span>Not available</span>
         </div>
       </div>
+
       {/* Selected Date Range Display */}
       {selectedDates?.start && (
-        <div className="mt-4 p-3 bg-primary/10 rounded-md">
+        <div
+          className={`mt-4 p-3 rounded-md border ${
+            selectedDates.end
+              ? "bg-primary/10 border-primary/20"
+              : "bg-yellow-50 border-yellow-200"
+          }`}
+        >
           <p className="text-sm font-medium">
-            Ngày đã chọn: {selectedDates?.start?.toLocaleDateString("vi-VN")}
+            Selected date: {selectedDates?.start?.toLocaleDateString("vi-VN")}
             {selectedDates?.end &&
               ` - ${selectedDates?.end?.toLocaleDateString("vi-VN")}`}
           </p>

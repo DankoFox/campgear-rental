@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/ui/Header";
 import LoginForm from "./components/LoginForm";
 import TrustPanel from "./components/TrustPanel";
 import Icon from "../../components/AppIcon";
