@@ -7,22 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const app = express();
 const PORT = 5050;
-//If use DB instead of json use the comment code
-// const db = mysql.createConnection({
-//   host: "127.0.0.1",
-//   user: "root",
-//   password: "",
-//   database: "campgear_db",
-//   port: 3307,
-// });
-
-// db.connect((err) => {
-//   if (err) {
-//     console.error("❌ MySQL connection failed:", err);
-//   } else {
-//     console.log("✅ Connected to MySQL database");
-//   }
-// });
 
 app.use(
   cors({
@@ -39,7 +23,6 @@ app.use(
 
 app.use(express.json());
 
-const DATA_FILE = "./data/card-data.json";
 const EQUIP_FILE = "./data/equipment-data.json";
 const USER_FILE = "./data/user-list.json";
 const PURCHASE_LOG_FILE = "./data/purchaseLogs.json";

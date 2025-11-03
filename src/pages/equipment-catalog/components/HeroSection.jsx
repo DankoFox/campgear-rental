@@ -47,7 +47,7 @@ const HeroSection = ({ searchTerm, setSearchTerm, onSearch }) => {
 
         {/* Right image */}
         <img
-          src="/assets/images/horizontal-section.png"
+          src="public/assets/images/horizontal-section.png"
           alt="Camping equipment"
           className="w-full md:max-w-lg h-auto object-contain rounded-xl"
         />
