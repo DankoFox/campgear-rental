@@ -9,9 +9,13 @@ const UserDashboard = () => {
   const [purchaseLogs, setPurchaseLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const user = JSON.parse(localStorage.getItem("user")) || { id: null, name: "Guest", email: "guest@gmail.com" };
+  const user = JSON.parse(localStorage.getItem("user")) || {
+    id: null,
+    name: "Guest",
+    email: "guest@gmail.com",
+  };
 
-  // ✅ Fetch all purchase logs from backend
+  // Fetch all purchase logs from backend
   useEffect(() => {
     async function fetchLogs() {
       try {
@@ -31,13 +35,13 @@ const UserDashboard = () => {
     fetchLogs();
   }, [user?.id]);
 
-  // ✅ Build booking list from purchase logs
+  // Build booking list from purchase logs
   const bookings = purchaseLogs.map((log) => ({
     id: log.id,
     totalPrice: log.total,
     startDate: log.timeSlot || "",
     equipment: {
-      name: log.items?.map((i) => i.name).join(", ") || "Không có sản phẩm",
+      name: log.items?.map((i) => i.name).join(", ") || "No items",
       image: log.items?.[0]?.image || "",
       imageAlt: log.items?.[0]?.name || "",
     },
@@ -45,7 +49,7 @@ const UserDashboard = () => {
     provider: { name: "CampGear", rating: 5.0 },
   }));
 
-  // ✅ Simple example stats
+  // Example stats
   const stats = {
     totalRentals: bookings.length,
     favoriteItems: 0,
@@ -53,24 +57,24 @@ const UserDashboard = () => {
     totalSpent: bookings.reduce((sum, b) => sum + (b.totalPrice || 0), 0),
   };
 
-  // ✅ Temporary notifications placeholder
+  // Temporary notifications placeholder
   const notifications = [
     {
       id: 1,
       type: "system",
-      title: "Thông báo hệ thống",
-      message: "Chào mừng bạn đến với CampGear Dashboard!",
+      title: "System Notification",
+      message: "Welcome to your CampGear Dashboard!",
       timestamp: new Date(),
       isRead: true,
     },
   ];
 
   const tabs = [
-    { id: "overview", label: "Tổng quan", count: null },
-    { id: "bookings", label: "Đặt thuê", count: bookings?.length },
+    { id: "overview", label: "Overview", count: null },
+    { id: "bookings", label: "Bookings", count: bookings?.length },
     {
       id: "notifications",
-      label: "Thông báo",
+      label: "Notifications",
       count: notifications?.filter((n) => !n?.isRead)?.length,
     },
   ];
@@ -78,7 +82,7 @@ const UserDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-muted-foreground">
-        Đang tải dữ liệu...
+        Loading data...
       </div>
     );
   }
@@ -86,10 +90,10 @@ const UserDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Bảng điều khiển - CampGear</title>
+        <title>Dashboard - CampGear</title>
         <meta
           name="description"
-          content="Quản lý tài khoản và theo dõi đơn hàng thuê thiết bị cắm trại của bạn"
+          content="Manage your account and track your camping equipment rental orders"
         />
       </Helmet>
 
@@ -98,10 +102,10 @@ const UserDashboard = () => {
           {/* Page Header */}
           <div className="mb-6 sm:mb-8">
             <h1 className="font-heading font-bold text-2xl sm:text-3xl text-foreground mb-2">
-              Chào mừng trở lại, {user?.name?.split(" ")?.pop()}!
+              Welcome back, {user?.name?.split(" ")?.pop()}!
             </h1>
             <p className="text-muted-foreground">
-              Quản lý đặt thuê và theo dõi hoạt động của bạn
+              Manage your rentals and track your activity
             </p>
           </div>
 
@@ -139,16 +143,18 @@ const UserDashboard = () => {
                 {/* Recent Bookings */}
                 <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
                   <h2 className="font-heading font-semibold text-foreground text-lg mb-4">
-                    Đặt thuê gần đây
+                    Recent Bookings
                   </h2>
                   <div className="space-y-4">
                     {bookings.length > 0 ? (
-                      bookings.slice(0, 3).map((booking) => (
-                        <BookingCard key={booking?.id} booking={booking} />
-                      ))
+                      bookings
+                        .slice(0, 3)
+                        .map((booking) => (
+                          <BookingCard key={booking?.id} booking={booking} />
+                        ))
                     ) : (
                       <p className="text-muted-foreground">
-                        Bạn chưa có đơn đặt thuê nào.
+                        You have no bookings yet.
                       </p>
                     )}
                   </div>
@@ -167,7 +173,7 @@ const UserDashboard = () => {
               <div className="lg:col-span-2">
                 <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
                   <h2 className="font-heading font-semibold text-foreground text-lg mb-4">
-                    Tất cả đặt thuê
+                    All Bookings
                   </h2>
                   <div className="space-y-4">
                     {bookings.length > 0 ? (
@@ -176,7 +182,7 @@ const UserDashboard = () => {
                       ))
                     ) : (
                       <p className="text-muted-foreground">
-                        Bạn chưa có đơn đặt thuê nào.
+                        You have no bookings yet.
                       </p>
                     )}
                   </div>

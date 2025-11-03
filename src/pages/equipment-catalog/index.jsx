@@ -197,6 +197,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
               onFiltersChange={handleFiltersChange}
               isOpen={isMobileFilterOpen}
               onToggle={toggleMobileFilter}
+              className="sticky top-20" // <-- makes it stick
             />
 
             {/* Main Section */}

@@ -276,7 +276,7 @@ const FilterPanel = ({
 
   // --- Desktop Panel ---
   return (
-    <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 h-fit  top-20">
+    <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 sticky top-20 self-start">
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-heading font-semibold text-lg">Filters</h2>
         <Icon name="Filter" size={20} className="text-muted-foreground" />

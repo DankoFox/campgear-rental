@@ -12,13 +12,13 @@ const Header = ({ cartCount }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ Load user from localStorage whenever page loads
+  // Load user from localStorage whenever page loads
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     setUser(storedUser ? JSON.parse(storedUser) : null);
   }, []);
 
-  // ✅ Close menus when navigating
+  // Close menus when navigating
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
@@ -26,12 +26,12 @@ const Header = ({ cartCount }) => {
 
   const navigationItems = [
     {
-      label: "Thiết bị cắm trại",
+      label: "Camping Equipment",
       path: "/equipment-catalog",
       icon: "Tent",
     },
     {
-      label: "Giỏ hàng",
+      label: "Shopping Cart",
       path: "/shopping-cart",
       icon: "ShoppingCart",
       badge: cartCount > 0 ? cartCount : null,
@@ -48,7 +48,7 @@ const Header = ({ cartCount }) => {
     return location?.pathname === path;
   };
 
-  // ✅ Handle logout
+  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
@@ -113,7 +113,7 @@ const Header = ({ cartCount }) => {
                   </span>
                 </div>
                 <span className="hidden lg:block text-sm font-medium text-foreground">
-                  {user?.name || "Người dùng"}
+                  {user?.name || "User"}
                 </span>
                 <Icon
                   name="ChevronDown"
@@ -131,14 +131,14 @@ const Header = ({ cartCount }) => {
                       className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-popover-foreground hover:bg-muted rounded-md transition-micro"
                     >
                       <Icon name="User" size={16} />
-                      <span>Tài khoản của tôi</span>
+                      <span>My Account</span>
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-popover-foreground hover:bg-muted rounded-md transition-micro"
                     >
                       <Icon name="LogOut" size={16} />
-                      <span>Đăng xuất</span>
+                      <span>Logout</span>
                     </button>
                   </div>
                 </div>
@@ -148,12 +148,12 @@ const Header = ({ cartCount }) => {
             <div className="hidden md:flex items-center space-x-3">
               <Link to="/login">
                 <Button variant="ghost" size="sm">
-                  Đăng nhập
+                  Login
                 </Button>
               </Link>
               <Link to="/register">
                 <Button variant="default" size="sm">
-                  Đăng ký
+                  Register
                 </Button>
               </Link>
             </div>
