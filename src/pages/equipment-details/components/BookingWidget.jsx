@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import { calculateRentalPrice, formatPrice } from "@/utils/pricing";
-import { Input } from "@/components/ui/Input";
+import Input from "../../../components/ui/Input";
 
 const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
@@ -14,7 +14,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
       selectedDates?.start,
       selectedDates?.end,
       product?.dailyPrice || product?.price,
-      quantity
+      quantity,
     );
 
     setRentalDays(rentalDays);
@@ -29,7 +29,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
   const handleQuantityChange = (newQuantity) => {
     const qty = Math.max(
       1,
-      Math.min(newQuantity, product?.availableQuantity || 10)
+      Math.min(newQuantity, product?.availableQuantity || 10),
     );
     setQuantity(qty);
   };
@@ -146,7 +146,7 @@ const BookingWidget = ({ product, selectedDates, onAddToCart }) => {
               <span>
                 -
                 {formatPrice(
-                  rentalDays * product?.price * quantity - totalPrice
+                  rentalDays * product?.price * quantity - totalPrice,
                 )}
               </span>
             </div>

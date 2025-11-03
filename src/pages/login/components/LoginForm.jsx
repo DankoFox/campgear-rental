@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
 import { Checkbox } from "../../../components/ui/Checkbox";
 import Icon from "../../../components/AppIcon";
-import { Input } from "@/components/ui/Input";
+import Input from "../../../components/ui/Input";
 
 const LoginForm = () => {
   const navigate = useNavigate();

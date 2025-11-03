@@ -3,7 +3,7 @@ import Image from "../../../components/AppImage";
 
 import Button from "../../../components/ui/Button";
 import { calculateDays, formatPrice } from "@/utils/pricing";
-import { Input } from "@/components/ui/Input";
+import Input from "../../../components/ui/Input";
 
 const CartItem = ({ item, onUpdateQuantity, onUpdateDates, onRemove }) => {
   const [isEditing, setIsEditing] = useState(false);

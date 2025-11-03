@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ChipInput from "@/components/ui/ChipInput";
 import SingleSelectChipInput from "@/components/ui/DropdownInput";
 import FileUpload from "@/components/ui/FileUpload";
-import ItemPreview from "./ItemPreview";
+import ItemPreview from "./itemPreview";
 import Button from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
