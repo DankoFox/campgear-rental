@@ -4,7 +4,13 @@ import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import { ConfirmDialog } from "../../../components/ConfirmDialog";
 import { formatPrice } from "@/utils/pricing";
-import { Select } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectValue,
+  SelectItem,
+} from "../../../components/ui/select.jsx";
 
 const CheckoutSection = ({
   cartItems,
@@ -13,8 +19,8 @@ const CheckoutSection = ({
   onProceedToCheckout,
 }) => {
   const navigate = useNavigate();
-  const [deliveryOption, setDeliveryOption] = useState("delivery");
-  const [timeSlot, setTimeSlot] = useState("");
+  const [deliveryOption, setDeliveryOption] = useState(null);
+  const [timeSlot, setTimeSlot] = useState(null);
 
   const [showTimeSlotAlert, setShowTimeSlotAlert] = useState(false);
 
@@ -46,21 +52,37 @@ const CheckoutSection = ({
           Delivery Options
         </h3>
 
-        <Select
-          label="Delivery Methods"
-          options={deliveryOptions}
-          value={deliveryOption}
-          onChange={setDeliveryOption}
-        />
+        <Select value={deliveryOption} onValueChange={setDeliveryOption}>
+          <SelectTrigger>
+            <SelectValue>
+              {deliveryOptions.find((o) => o.value === deliveryOption)?.label ||
+                "Select Delivery Method"}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {deliveryOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <Select
-          label="Time Window"
-          options={timeSlotOptions}
-          value={timeSlot}
-          onChange={setTimeSlot}
-          placeholder="Select Time Window"
-          required
-        />
+        <Select value={timeSlot} onValueChange={setTimeSlot}>
+          <SelectTrigger>
+            <SelectValue>
+              {timeSlotOptions.find((o) => o.value === timeSlot)?.label ||
+                "Select Time Window"}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {timeSlotOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         {deliveryOption === "delivery" && (
           <div className="p-4 bg-muted/50 rounded-lg">

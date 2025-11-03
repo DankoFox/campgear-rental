@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Icon from "../../../components/AppIcon";
 import Button from "../../../components/ui/Button";
 import { formatPrice } from "@/utils/pricing";
-import { Input } from "@/components/ui/Input";
+import Input from "../../../components/ui/Input";
 
 const OrderSummary = ({
   cartItems,
@@ -16,7 +16,7 @@ const OrderSummary = ({
   const calculateSubtotal = () => {
     return cartItems?.reduce(
       (total, item) => total + (item.orderPrice || 0),
-      0
+      0,
     );
   };
 
