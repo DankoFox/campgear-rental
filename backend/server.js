@@ -2,6 +2,7 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
+import { v4 as uuidv4 } from "uuid";
 // import mysql from "mysql2";
 
 const app = express();
@@ -189,16 +190,20 @@ app.get("/api/purchase-logs", (req, res) => {
 
 app.post("/api/purchase-logs", (req, res) => {
   try {
-    // Ensure file exists
     if (!fs.existsSync(PURCHASE_LOG_FILE)) {
       fs.writeFileSync(PURCHASE_LOG_FILE, "[]");
     }
 
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
-    const { total, deliveryOption, timeSlot, items } = req.body;
+    const { userid, total, deliveryOption, timeSlot, items } = req.body; // ✅ include userid here
+
+    if (!userid) {
+      return res.status(400).json({ error: "Missing userid" });
+    }
 
     const newLog = {
       id: Date.now(),
+      userid,
       date: new Date().toISOString(),
       total,
       deliveryOption,
@@ -209,7 +214,7 @@ app.post("/api/purchase-logs", (req, res) => {
     logs.push(newLog);
     fs.writeFileSync(PURCHASE_LOG_FILE, JSON.stringify(logs, null, 2));
 
-    res.status(200).json({ message: "Purchase logged", newLog });
+    res.status(200).json({ message: "✅ Purchase logged", newLog });
   } catch (error) {
     console.error("Error writing purchase logs:", error);
     res.status(500).json({ error: "Failed to save purchase log" });
@@ -300,7 +305,7 @@ app.post("/api/register", (req, res) => {
     }
 
     const newUser = {
-      id: Date.now(),
+      id: uuidv4(),
       username,
       email,
       password,
