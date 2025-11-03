@@ -490,14 +490,22 @@
     "price": 85000,
     "location": "Da Lat",
     "availability": "available",
-    "features": ["30L capacity", "Ventilated back", "Hydration compatible", "Durable"]
+    "features": [
+      "30L capacity",
+      "Ventilated back",
+      "Hydration compatible",
+      "Durable"
+    ]
   },
   {
     "id": 40,
     "name": "Platypus Platy Bottle 2L",
     "brand": "Platypus",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-40-a.png"],
+    "image": [
+      "public/assets/imgs/id-40-a.png",
+      "public/assets/imgs/cooking-a.png"
+    ],
     "price": 35000,
     "location": "Hanoi",
     "availability": "available",
