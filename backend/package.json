@@ -14,6 +14,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "rechart": "^0.0.1"
+    "rechart": "^0.0.1",
+    "uuid": "^13.0.0"
   }
 }

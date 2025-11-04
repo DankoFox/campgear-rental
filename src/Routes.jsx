@@ -17,18 +17,18 @@ import MainLayout from "./MainLayout";
 import ThankYouPage from "./pages/purchase-status";
 import CreateItem from "./pages/ItemManagement/createItem";
 
-const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems }) => {
+const AppRoutes = ({ cartCount, setCartCount, cartItems, setCartItems, addToCart}) => {
   return (
     <BrowserRouter>
       <ErrorBoundary>
         <ScrollToTop />
         <Routes>
           {/* Routes WITH layout */}
-          <Route
+           <Route
             path="/"
             element={
               <MainLayout cartCount={cartCount}>
-                <LandingPage />
+                <LandingPage addToCart={addToCart} />
               </MainLayout>
             }
           />
