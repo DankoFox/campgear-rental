@@ -178,7 +178,7 @@ app.post("/api/purchase-logs", (req, res) => {
     }
 
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
-    const { userid, total, deliveryOption, timeSlot, items } = req.body; // ✅ include userid here
+    const { userid, total, deliveryOption, timeSlot, items } = req.body; 
 
     if (!userid) {
       return res.status(400).json({ error: "Missing userid" });
@@ -333,6 +333,25 @@ app.get("/api/brands", (req, res) => {
   } catch (error) {
     console.error("Error reading brands:", error);
     res.status(500).json({ error: "Failed to load brands" });
+  }
+});
+app.get("/api/providers/:brand", (req, res) => {
+  try {
+    const providers = JSON.parse(fs.readFileSync("./data/brand-providers.json", "utf-8"));
+    const { brand } = req.params;
+
+    const provider = providers.find(
+      (p) => p.brand.toLowerCase() === brand.toLowerCase()
+    );
+
+    if (!provider) {
+      return res.status(404).json({ error: `No provider found for brand: ${brand}` });
+    }
+
+    res.json(provider.provider);
+  } catch (error) {
+    console.error("Error reading provider data:", error);
+    res.status(500).json({ error: "Failed to load provider data" });
   }
 });
 

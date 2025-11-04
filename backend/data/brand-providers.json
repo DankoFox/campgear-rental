@@ -1,0 +1,262 @@
+[
+  {
+    "brand": "Coleman",
+    "provider": {
+      "name": "Coleman Vietnam",
+      "businessType": "Camping Gear Distributor",
+      "address": "12 Nguyen Trai, District 1, Ho Chi Minh City",
+      "phone": "0909 123 456",
+      "responseTime": "2 hours",
+      "deliveryAvailable": true,
+      "rating": 4.7,
+      "reviewCount": 168,
+      "memberSince": "2019",
+      "certifications": ["Official Coleman Partner", "Warranty Authorized"],
+      "coordinates": { "lat": 10.7769, "lng": 106.7009 },
+      "logo": "../../public/assets/brands_logo/coleman.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "The North Face",
+    "provider": {
+      "name": "The North Face Vietnam",
+      "businessType": "Outdoor Apparel and Gear Retailer",
+      "address": "50 Ly Tu Trong, District 1, Ho Chi Minh City",
+      "phone": "0912 222 333",
+      "responseTime": "3 hours",
+      "deliveryAvailable": true,
+      "rating": 4.8,
+      "reviewCount": 210,
+      "memberSince": "2018",
+      "certifications": ["Authorized TNF Reseller", "ISO 9001 Certified"],
+      "coordinates": { "lat": 10.7765, "lng": 106.703 },
+      "logo": "../../public/assets/brands_logo/thenorthface.png",
+      "businessHours": {
+        "Monday": "9:00 - 19:00",
+        "Tuesday": "9:00 - 19:00",
+        "Wednesday": "9:00 - 19:00",
+        "Thursday": "9:00 - 19:00",
+        "Friday": "9:00 - 19:00",
+        "Saturday": "9:00 - 18:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "MSR",
+    "provider": {
+      "name": "MSR Vietnam",
+      "businessType": "Expedition Equipment Supplier",
+      "address": "15 Pham Ngu Lao, Da Nang",
+      "phone": "0904 789 012",
+      "responseTime": "1 hour",
+      "deliveryAvailable": true,
+      "rating": 4.9,
+      "reviewCount": 182,
+      "memberSince": "2020",
+      "certifications": ["Official Cascade Designs Partner", "Eco-Safe Certified"],
+      "coordinates": { "lat": 16.0544, "lng": 108.2022 },
+      "logo": "../../public/assets/brands_logo/msr.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "Deuter",
+    "provider": {
+      "name": "Deuter Vietnam",
+      "businessType": "Outdoor Equipment Retailer",
+      "address": "88 Vo Thi Sau, Da Lat, Lam Dong",
+      "phone": "0908 456 789",
+      "responseTime": "1 hour",
+      "deliveryAvailable": true,
+      "rating": 4.9,
+      "reviewCount": 245,
+      "memberSince": "2020",
+      "certifications": ["Official Deuter Partner", "ISO 9001 Certified"],
+      "coordinates": { "lat": 11.9404, "lng": 108.4583 },
+      "logo": "../../public/assets/brands_logo/deuter.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "Petzl",
+    "provider": {
+      "name": "Petzl Vietnam",
+      "businessType": "Climbing and Safety Gear Distributor",
+      "address": "22 Le Duan, District 1, Ho Chi Minh City",
+      "phone": "0905 345 987",
+      "responseTime": "2 hours",
+      "deliveryAvailable": true,
+      "rating": 4.8,
+      "reviewCount": 190,
+      "memberSince": "2021",
+      "certifications": ["Official Petzl Partner", "Safety Standard Certified"],
+      "coordinates": { "lat": 10.7811, "lng": 106.6999 },
+      "logo": "../../public/assets/brands_logo/petzl.png",
+      "businessHours": {
+        "Monday": "9:00 - 18:00",
+        "Tuesday": "9:00 - 18:00",
+        "Wednesday": "9:00 - 18:00",
+        "Thursday": "9:00 - 18:00",
+        "Friday": "9:00 - 18:00",
+        "Saturday": "10:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "Jetboil",
+    "provider": {
+      "name": "Jetboil Vietnam",
+      "businessType": "Camping Stove Supplier",
+      "address": "56 Nguyen Van Troi, Ho Chi Minh City",
+      "phone": "0906 777 123",
+      "responseTime": "2 hours",
+      "deliveryAvailable": true,
+      "rating": 4.6,
+      "reviewCount": 134,
+      "memberSince": "2022",
+      "certifications": ["Authorized Jetboil Dealer"],
+      "coordinates": { "lat": 10.797, "lng": 106.676 },
+      "logo": "../../public/assets/brands_logo/jetboil.png",
+      "businessHours": {
+        "Monday": "8:30 - 18:00",
+        "Tuesday": "8:30 - 18:00",
+        "Wednesday": "8:30 - 18:00",
+        "Thursday": "8:30 - 18:00",
+        "Friday": "8:30 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "Helinox",
+    "provider": {
+      "name": "Helinox Vietnam",
+      "businessType": "Ultralight Furniture Retailer",
+      "address": "33 Nguyen Hue, Ho Chi Minh City",
+      "phone": "0911 222 999",
+      "responseTime": "1.5 hours",
+      "deliveryAvailable": true,
+      "rating": 4.7,
+      "reviewCount": 155,
+      "memberSince": "2020",
+      "certifications": ["Official Helinox Distributor"],
+      "coordinates": { "lat": 10.775, "lng": 106.703 },
+      "logo": "../../public/assets/brands_logo/helinox.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "Sea to Summit",
+    "provider": {
+      "name": "Sea to Summit Vietnam",
+      "businessType": "Outdoor Essentials Retailer",
+      "address": "9 Tran Phu, Da Nang",
+      "phone": "0908 987 654",
+      "responseTime": "3 hours",
+      "deliveryAvailable": true,
+      "rating": 4.8,
+      "reviewCount": 178,
+      "memberSince": "2019",
+      "certifications": ["Official Sea to Summit Partner"],
+      "coordinates": { "lat": 16.0678, "lng": 108.2208 },
+      "logo": "../../public/assets/brands_logo/seatosummit.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "YETI",
+    "provider": {
+      "name": "YETI Vietnam",
+      "businessType": "Cooler and Drinkware Distributor",
+      "address": "101 Hai Ba Trung, Hanoi",
+      "phone": "0988 321 432",
+      "responseTime": "2 hours",
+      "deliveryAvailable": true,
+      "rating": 4.9,
+      "reviewCount": 200,
+      "memberSince": "2020",
+      "certifications": ["Official YETI Dealer"],
+      "coordinates": { "lat": 21.0278, "lng": 105.8342 },
+      "logo": "../../public/assets/brands_logo/seatosummit.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  },
+  {
+    "brand": "Platypus",
+    "provider": {
+      "name": "Platypus Vietnam",
+      "businessType": "Hydration Gear Retailer",
+      "address": "72 Tran Hung Dao, Hanoi",
+      "phone": "0977 654 321",
+      "responseTime": "2 hours",
+      "deliveryAvailable": true,
+      "rating": 4.7,
+      "reviewCount": 150,
+      "memberSince": "2021",
+      "certifications": ["Authorized Platypus Dealer"],
+      "coordinates": { "lat": 21.025, "lng": 105.835 },
+      "logo": "../../public/assets/brands_logo/seatosummit.png",
+      "businessHours": {
+        "Monday": "8:00 - 18:00",
+        "Tuesday": "8:00 - 18:00",
+        "Wednesday": "8:00 - 18:00",
+        "Thursday": "8:00 - 18:00",
+        "Friday": "8:00 - 18:00",
+        "Saturday": "9:00 - 17:00",
+        "Sunday": "Closed"
+      }
+    }
+  }
+]

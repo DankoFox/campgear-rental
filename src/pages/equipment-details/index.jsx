@@ -14,65 +14,17 @@ import { mockIncludedItems } from "./some-mock-data";
 const EquipmentDetails = ({ setCartCount, setCartItems }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [selectedDates, setSelectedDates] = useState({
-    start: null,
-    end: null,
-  });
-  const [equipment, setEquipment] = useState(false);
-  const [instruction, setInstruction] = useState(false);
-  const [specifications, setSpecifications] = useState(false);
+  const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
+  const [equipment, setEquipment] = useState(null);
+  const [instruction, setInstruction] = useState(null);
+  const [specifications, setSpecifications] = useState(null);
+  const [provider, setProvider] = useState(null);
 
   const [loading, setLoading] = useState(true);
-  const [searchParams] = useSearchParams(); // Mock user data
-  // Get user from localStorage instead of hardcoded mock data
-const mockUser = JSON.parse(localStorage.getItem("user"));
+  const [searchParams] = useSearchParams();
 
+  const mockUser = JSON.parse(localStorage.getItem("user"));
 
-  // Mock product data
-  const mockProduct = {
-    id: "tent-001",
-    name: "Lều Cắm Trại 4 Người Coleman Sundome",
-    category: "Lều cắm trại",
-    dailyPrice: 150000,
-    weeklyPrice: 900000,
-    availability: "available",
-    availableQuantity: 5,
-    keyFeatures: [
-      "Chống thấm nước hoàn toàn",
-      "Thiết lập dễ dàng trong 10 phút",
-      "Hệ thống thông gió tối ưu",
-      "Chất liệu bền bỉ chống UV",
-      "Túi đựng gọn nhẹ",
-      "Bảo hành 2 năm",
-    ],
-
-    provider: {
-      name: "CampGear Viet Nam",
-      location: "District 1, TP.HCM",
-      responseTime: "2 hours",
-      businessType: "Camping gear store",
-      memberSince: "2020",
-      address: "123 Nguyen Hue, District 1, TP.HCM",
-      phone: "0901 234 567",
-      deliveryAvailable: true,
-      businessHours: {
-        Monday: "8:00 - 18:00",
-        Tuesday: "8:00 - 18:00",
-        Wednesday: "8:00 - 18:00",
-        Thursay: "8:00 - 18:00",
-        Friday: "8:00 - 18:00",
-        Saturday: "9:00 - 17:00",
-        Sunday: "9:00 - 17:00",
-      },
-      certifications: ["Official Coleman dealer", "ISO quality certification"],
-      coordinates: {
-        lat: 10.7769,
-        lng: 106.7009,
-      },
-    },
-  };
-
-  // Mock availability data
   const mockAvailabilityData = [
     { date: "2025-10-21", available: true, price: 150000, isPeak: false },
     { date: "2025-10-22", available: true, price: 150000, isPeak: false },
@@ -93,13 +45,15 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
   const handleAddToCart = (cartItem) => {
     setCartCount((prev) => prev + 1);
     setCartItems((prev) => [...prev, cartItem]);
-    console.log("dạng của 1 booking trong trang detial", cartItem);
+    console.log("Booking data:", cartItem);
     alert("Đã thêm vào giỏ hàng thành công!");
   };
 
   const handleBackToCatalog = () => {
     navigate("/equipment-catalog");
   };
+
+  // 🟢 Fetch equipment detail
   useEffect(() => {
     const fetchEquipment = async () => {
       try {
@@ -108,7 +62,7 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
         if (!res.ok) throw new Error("Equipment not found");
         const data = await res.json();
         setEquipment(data);
-        console.log("Product detail được set ở ngay đây nha", equipment);
+        console.log("Equipment detail loaded:", data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -118,6 +72,7 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
     fetchEquipment();
   }, [id]);
 
+  // 🟢 Fetch instructions & specifications
   useEffect(() => {
     if (!equipment?.type) return;
     const fetchDetails = async () => {
@@ -130,10 +85,12 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
 
         if (!instructionRes.ok || !specRes.ok)
           throw new Error("Failed to fetch details");
+
         const [instructionData, specData] = await Promise.all([
           instructionRes.json(),
           specRes.json(),
         ]);
+
         setInstruction(instructionData);
         setSpecifications(specData);
       } catch (err) {
@@ -144,6 +101,25 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
     };
     fetchDetails();
   }, [equipment?.type]);
+
+  // 🟢 Fetch provider based on brand
+  useEffect(() => {
+    if (!equipment?.brand) return;
+    const fetchProvider = async () => {
+      try {
+        const encodedBrand = encodeURIComponent(equipment.brand);
+        const res = await fetch(`http://localhost:5050/api/providers/${encodedBrand}`);
+        if (!res.ok) throw new Error("Provider not found");
+        const data = await res.json();
+        setProvider(data);
+        console.log("Provider loaded:", data);
+      } catch (err) {
+        console.error("Error loading provider:", err);
+        setProvider(null);
+      }
+    };
+    fetchProvider();
+  }, [equipment?.brand]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -199,8 +175,14 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
                 />
               </div>
 
-              {/* Provider Contact */}
-              <ProviderContact provider={mockProduct?.provider} />
+              {/* 🟢 Provider Contact (dynamic) */}
+              {provider ? (
+                <ProviderContact provider={provider} />
+              ) : (
+                <div className="text-sm text-muted-foreground italic">
+                  Loading provider information...
+                </div>
+              )}
             </div>
 
             {/* Right Column - Booking Widget and Calendar */}
@@ -229,10 +211,9 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
             <div>
               <p className="text-sm text-muted-foreground">Giá từ</p>
               <p className="font-bold text-primary">
-                {new Intl.NumberFormat("vi-VN")?.format(
-                  mockProduct?.dailyPrice
-                )}
-                ₫/ngày
+                {equipment?.price
+                  ? new Intl.NumberFormat("vi-VN").format(equipment.price)
+                  : "—"}₫/ngày
               </p>
             </div>
             <Button
@@ -240,8 +221,8 @@ const mockUser = JSON.parse(localStorage.getItem("user"));
               onClick={() => {
                 if (selectedDates?.start && selectedDates?.end) {
                   handleAddToCart({
-                    productId: mockProduct?.id,
-                    productName: mockProduct?.name,
+                    productId: equipment?.id,
+                    productName: equipment?.name,
                     quantity: 1,
                     startDate: selectedDates?.start,
                     endDate: selectedDates?.end,
