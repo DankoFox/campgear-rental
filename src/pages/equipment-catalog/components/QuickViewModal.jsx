@@ -198,7 +198,7 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
                 Add to Cart
               </Button>
 
-              <Link to="/equipment-details">
+              <Link to={`/equipment-details/${equipment.id}`}>
                 <Button
                   variant="outline"
                   iconName="Eye"
