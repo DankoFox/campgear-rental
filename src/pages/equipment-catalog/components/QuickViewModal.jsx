@@ -100,11 +100,11 @@ const QuickViewModal = ({ equipment, isOpen, onClose, onAddToCart }) => {
             <div>
               <div className="flex items-baseline space-x-2">
                 <span className="text-2xl font-bold text-foreground">
-                  {formatPrice(equipment?.price)}₫
+                  {formatPrice(equipment?.price)}
                 </span>
                 {equipment?.price && (
                   <span className="text-lg text-muted-foreground line-through">
-                    {formatPrice(equipment?.price)}₫
+                    {formatPrice(equipment?.price)}
                   </span>
                 )}
               </div>
