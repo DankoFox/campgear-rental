@@ -511,126 +511,122 @@
     "availability": "available",
     "features": ["2L", "Collapsible", "Lightweight", "Taste-free"]
   },
-  [
-    {
-      "id": 41,
-      "name": "The North Face Trail Winder Trekking Poles",
-      "brand": "The North Face",
-      "type": "Trekking Poles",
-      "image": [
-        "public/assets/imgs/id-41-a.png",
-        "public/assets/imgs/trekkingpole-northface.png"
-      ],
-      "price": 150000,
-      "location": "Hanoi",
-      "availability": "available",
-      "features": [
-        "Foldable aluminum design",
-        "Extended EVA foam handle for comfort",
-        "Adjustable 100–135 cm length",
-        "Lightweight and durable"
-      ]
-    },
-    {
-      "id": 42,
-      "name": "MSR DynaLock Ascent Carbon Poles",
-      "brand": "MSR",
-      "type": "Trekking Poles",
-      "image": [
-        "public/assets/imgs/id-42-a.png",
-        "public/assets/imgs/trekking-a.png",
-        "public/assets/imgs/trekking-b.png"
-      ],
-      "price": 180000,
-      "location": "Da Nang",
-      "availability": "available",
-      "features": [
-        "Carbon fiber construction for strength and low weight",
-        "Secure DynaLock adjustment system",
-        "Ergonomic foam grip",
-        "Packable three-section design"
-      ]
-    },
-    {
-      "id": 43,
-      "name": "Deuter Alpine Trekking Poles",
-      "brand": "Deuter",
-      "type": "Trekking Poles",
-      "image": [
-        "public/assets/imgs/id-43-a.png",
-        "public/assets/imgs/trekking-b.png",
-        "public/assets/imgs/trekking-c.png"
-      ],
-      "price": 120000,
-      "location": "Ho Chi Minh City",
-      "availability": "available",
-      "features": [
-        "Adjustable 65–135 cm length",
-        "Anti-shock system for rough trails",
-        "Non-slip rubber tip",
-        "Comfortable cork grip handle"
-      ]
-    },
-    {
-      "id": 44,
-      "name": "Helinox Passport TL Trekking Poles",
-      "brand": "Helinox",
-      "type": "Trekking Poles",
-      "image": [
-        "public/assets/imgs/id-44-a.png",
-        "public/assets/imgs/trekking-a.png",
-        "public/assets/imgs/trekking-b.png",
-        "public/assets/imgs/trekking-c.png"
-      ],
-      "price": 160000,
-      "location": "Da Lat",
-      "availability": "available",
-      "features": [
-        "7075 aluminum alloy for ultra-light performance",
-        "Twist-lock adjustment",
-        "Compact foldable sections",
-        "Ergonomic foam grip and wrist strap"
-      ]
-    },
-    [
-      {
-        "id": 45,
-        "name": "Coleman Adventure First Aid Kit 205-Piece",
-        "brand": "Coleman",
-        "type": "Tools",
-        "image": [
-          "public/assets/imgs/id-45-a.png",
-          "public/assets/imgs/emergency.png"
-        ],
-        "price": 95000,
-        "location": "Ho Chi Minh City",
-        "availability": "available",
-        "features": [
-          "Comprehensive 205-piece medical set for outdoor and camping use",
-          "Includes bandages, antiseptic wipes, and tools",
-          "Compact, water-resistant carry case",
-          "Ideal for camping, hiking, and vehicle use"
-        ]
-      },
-      {
-        "id": 46,
-        "name": "Sea to Summit Emergency Shelter & Survival Kit",
-        "brand": "Sea to Summit",
-        "type": "Tools",
-        "image": [
-          "public/assets/imgs/id-46-a.png",
-          "public/assets/imgs/emergency.png"
-        ],
-        "price": 120000,
-        "location": "Da Nang",
-        "availability": "available",
-        "features": [
-          "Lightweight, all-weather emergency shelter for 2 people",
-          "Includes heat-reflective blanket and repair tape",
-          "Compact design fits easily into backpacks",
-          "Durable waterproof fabric and bright color for visibility"
-        ]
-      }
+  {
+    "id": 41,
+    "name": "The North Face Trail Winder Trekking Poles",
+    "brand": "The North Face",
+    "type": "Trekking Poles",
+    "image": [
+      "public/assets/imgs/id-41-a.png",
+      "public/assets/imgs/trekkingpole-northface.png"
+    ],
+    "price": 150000,
+    "location": "Hanoi",
+    "availability": "available",
+    "features": [
+      "Foldable aluminum design",
+      "Extended EVA foam handle for comfort",
+      "Adjustable 100–135 cm length",
+      "Lightweight and durable"
     ]
-  ]
+  },
+  {
+    "id": 42,
+    "name": "MSR DynaLock Ascent Carbon Poles",
+    "brand": "MSR",
+    "type": "Trekking Poles",
+    "image": [
+      "public/assets/imgs/id-42-a.png",
+      "public/assets/imgs/trekking-a.png",
+      "public/assets/imgs/trekking-b.png"
+    ],
+    "price": 180000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": [
+      "Carbon fiber construction for strength and low weight",
+      "Secure DynaLock adjustment system",
+      "Ergonomic foam grip",
+      "Packable three-section design"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Deuter Alpine Trekking Poles",
+    "brand": "Deuter",
+    "type": "Trekking Poles",
+    "image": [
+      "public/assets/imgs/id-43-a.png",
+      "public/assets/imgs/trekking-b.png",
+      "public/assets/imgs/trekking-c.png"
+    ],
+    "price": 120000,
+    "location": "Ho Chi Minh City",
+    "availability": "available",
+    "features": [
+      "Adjustable 65–135 cm length",
+      "Anti-shock system for rough trails",
+      "Non-slip rubber tip",
+      "Comfortable cork grip handle"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Helinox Passport TL Trekking Poles",
+    "brand": "Helinox",
+    "type": "Trekking Poles",
+    "image": [
+      "public/assets/imgs/id-44-a.png",
+      "public/assets/imgs/trekking-a.png",
+      "public/assets/imgs/trekking-b.png",
+      "public/assets/imgs/trekking-c.png"
+    ],
+    "price": 160000,
+    "location": "Da Lat",
+    "availability": "available",
+    "features": [
+      "7075 aluminum alloy for ultra-light performance",
+      "Twist-lock adjustment",
+      "Compact foldable sections",
+      "Ergonomic foam grip and wrist strap"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Coleman Adventure First Aid Kit 205-Piece",
+    "brand": "Coleman",
+    "type": "Tools",
+    "image": [
+      "public/assets/imgs/id-45-a.png",
+      "public/assets/imgs/emergency.png"
+    ],
+    "price": 95000,
+    "location": "Ho Chi Minh City",
+    "availability": "available",
+    "features": [
+      "Comprehensive 205-piece medical set for outdoor and camping use",
+      "Includes bandages, antiseptic wipes, and tools",
+      "Compact, water-resistant carry case",
+      "Ideal for camping, hiking, and vehicle use"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Sea to Summit Emergency Shelter & Survival Kit",
+    "brand": "Sea to Summit",
+    "type": "Tools",
+    "image": [
+      "public/assets/imgs/id-46-a.png",
+      "public/assets/imgs/emergency.png"
+    ],
+    "price": 120000,
+    "location": "Da Nang",
+    "availability": "available",
+    "features": [
+      "Lightweight, all-weather emergency shelter for 2 people",
+      "Includes heat-reflective blanket and repair tape",
+      "Compact design fits easily into backpacks",
+      "Durable waterproof fabric and bright color for visibility"
+    ]
+  }
 ]
