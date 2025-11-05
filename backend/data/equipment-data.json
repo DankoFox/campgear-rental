@@ -591,6 +591,46 @@
         "Compact foldable sections",
         "Ergonomic foam grip and wrist strap"
       ]
-    }
+    },
+    [
+      {
+        "id": 45,
+        "name": "Coleman Adventure First Aid Kit 205-Piece",
+        "brand": "Coleman",
+        "type": "Tools",
+        "image": [
+          "public/assets/imgs/id-45-a.png",
+          "public/assets/imgs/emergency.png"
+        ],
+        "price": 95000,
+        "location": "Ho Chi Minh City",
+        "availability": "available",
+        "features": [
+          "Comprehensive 205-piece medical set for outdoor and camping use",
+          "Includes bandages, antiseptic wipes, and tools",
+          "Compact, water-resistant carry case",
+          "Ideal for camping, hiking, and vehicle use"
+        ]
+      },
+      {
+        "id": 46,
+        "name": "Sea to Summit Emergency Shelter & Survival Kit",
+        "brand": "Sea to Summit",
+        "type": "Tools",
+        "image": [
+          "public/assets/imgs/id-46-a.png",
+          "public/assets/imgs/emergency.png"
+        ],
+        "price": 120000,
+        "location": "Da Nang",
+        "availability": "available",
+        "features": [
+          "Lightweight, all-weather emergency shelter for 2 people",
+          "Includes heat-reflective blanket and repair tape",
+          "Compact design fits easily into backpacks",
+          "Durable waterproof fabric and bright color for visibility"
+        ]
+      }
+    ]
   ]
 ]
