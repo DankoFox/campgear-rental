@@ -6,10 +6,11 @@ import QuickViewModal from "./components/QuickViewModal";
 import Button from "../../components/ui/Button";
 import HeroSection from "./components/HeroSection";
 import Footer from "../../components/ui/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [filters, setFilters] = useState({
     categories: [],
@@ -25,7 +26,10 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const [searchTerm, setSearchTerm] = useState(
+    new URLSearchParams(location.search).get("search") || "",
+  );
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -58,7 +62,6 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
     fetchEquipment();
   }, []);
 
-  // ✅ Apply filters and sorting
   useEffect(() => {
     if (!allEquipment.length) return;
 
@@ -66,40 +69,47 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
     const timer = setTimeout(() => {
       let filtered = [...allEquipment];
 
-      // Filter by location
-      if (filters.location) {
+      // 🔍 Search filter (by name)
+      if (searchTerm.trim() !== "") {
         filtered = filtered.filter((item) =>
-          item.location?.toLowerCase().includes(filters.location.toLowerCase())
+          item.name?.toLowerCase().includes(searchTerm.toLowerCase()),
         );
       }
 
-      // Filter by price range
+      // 📍 Location filter
+      if (filters.location) {
+        filtered = filtered.filter((item) =>
+          item.location?.toLowerCase().includes(filters.location.toLowerCase()),
+        );
+      }
+
+      // 💰 Price range filter
       filtered = filtered.filter(
         (item) =>
           item.price >= filters.priceRange[0] &&
-          item.price <= filters.priceRange[1]
+          item.price <= filters.priceRange[1],
       );
 
-      // Filter by categories
+      // 🏕 Category filter
       if (filters.categories?.length > 0) {
         filtered = filtered.filter((item) =>
-          filters.categories.includes(item.type)
+          filters.categories.includes(item.type),
         );
       }
 
-      // Filter by brands
+      // 🏭 Brand filter
       if (filters.brands?.length > 0) {
         filtered = filtered.filter((item) =>
           filters.brands.some((b) =>
             item.brand
               ?.toLowerCase()
               .replace(/[^a-z0-9]/g, "")
-              .includes(b)
-          )
+              .includes(b),
+          ),
         );
       }
 
-      // Sort results
+      // 🔢 Sort
       switch (filters.sortBy) {
         case "price_low":
           filtered.sort((a, b) => a.price - b.price);
@@ -119,7 +129,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [filters, allEquipment]);
+  }, [filters, searchTerm, allEquipment]);
 
   const handleFiltersChange = (newFilters) => setFilters(newFilters);
 
@@ -135,7 +145,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
                 quantity: cartItem.quantity + 1,
                 orderPrice: (cartItem.quantity + 1) * cartItem.productPrice,
               }
-            : cartItem
+            : cartItem,
         );
         return updatedCart;
       } else {
@@ -174,7 +184,7 @@ const EquipmentCatalog = ({ cartCount, setCartCount, setCartItems }) => {
 
   const handleSearch = () => {
     const filtered = allEquipment.filter((item) =>
-      item.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      item.name?.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setEquipment(filtered);
   };
