@@ -18,7 +18,7 @@ app.use(
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 app.use(express.json());
@@ -124,12 +124,12 @@ app.get("/api/equipment/:id", (req, res) => {
 app.get("/api/instructions/:type", (req, res) => {
   try {
     const instructions = JSON.parse(
-      fs.readFileSync("./data/instruction.json", "utf-8")
+      fs.readFileSync("./data/instruction.json", "utf-8"),
     );
 
     const { type } = req.params;
     const result = instructions.find(
-      (item) => item.type.toLowerCase() === type.toLowerCase()
+      (item) => item.type.toLowerCase() === type.toLowerCase(),
     );
     if (!result) {
       return res
@@ -146,7 +146,7 @@ app.get("/api/instructions/:type", (req, res) => {
 app.get("/api/specifications/:type", (req, res) => {
   try {
     const specs = JSON.parse(
-      fs.readFileSync("./data/specification-data.json", "utf-8")
+      fs.readFileSync("./data/specification-data.json", "utf-8"),
     );
     const item = specs.find((s) => s.type === req.params.type);
 
@@ -178,11 +178,7 @@ app.post("/api/purchase-logs", (req, res) => {
     }
 
     const logs = JSON.parse(fs.readFileSync(PURCHASE_LOG_FILE, "utf-8"));
-    const { userid, total, deliveryOption, timeSlot, items } = req.body; 
-
-    if (!userid) {
-      return res.status(400).json({ error: "Missing userid" });
-    }
+    const { total, deliveryOption, timeSlot, items } = req.body;
 
     const newLog = {
       id: Date.now(),
@@ -281,7 +277,7 @@ app.post("/api/register", (req, res) => {
     }
 
     const exists = users.find(
-      (u) => u.username === username || u.email === email
+      (u) => u.username === username || u.email === email,
     );
     if (exists) {
       return res.status(400).json({ error: "User already exists" });
@@ -315,7 +311,7 @@ app.get("/api/types", (req, res) => {
     ];
     // Return capitalized for nicer display
     const formattedTypes = types.map(
-      (t) => t.charAt(0).toUpperCase() + t.slice(1)
+      (t) => t.charAt(0).toUpperCase() + t.slice(1),
     );
     res.json(formattedTypes);
   } catch (error) {
@@ -337,15 +333,19 @@ app.get("/api/brands", (req, res) => {
 });
 app.get("/api/providers/:brand", (req, res) => {
   try {
-    const providers = JSON.parse(fs.readFileSync("./data/brand-providers.json", "utf-8"));
+    const providers = JSON.parse(
+      fs.readFileSync("./data/brand-providers.json", "utf-8"),
+    );
     const { brand } = req.params;
 
     const provider = providers.find(
-      (p) => p.brand.toLowerCase() === brand.toLowerCase()
+      (p) => p.brand.toLowerCase() === brand.toLowerCase(),
     );
 
     if (!provider) {
-      return res.status(404).json({ error: `No provider found for brand: ${brand}` });
+      return res
+        .status(404)
+        .json({ error: `No provider found for brand: ${brand}` });
     }
 
     res.json(provider.provider);
