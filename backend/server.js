@@ -182,7 +182,6 @@ app.post("/api/purchase-logs", (req, res) => {
 
     const newLog = {
       id: Date.now(),
-      userid,
       date: new Date().toISOString(),
       total,
       deliveryOption,
