@@ -4,7 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
 import { Checkbox } from "../../../components/ui/Checkbox";
-import Select from "../../../components/ui/Select";
+import { Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem, } from "../../../components/ui/Select";
 import Icon from "../../../components/AppIcon";
 
 const RegistrationForm = () => {
@@ -36,74 +40,54 @@ const RegistrationForm = () => {
 
     switch (name) {
       case "fullName":
-        if (!value?.trim()) {
-          newErrors.fullName = "Please enter your full name";
-        } else if (value?.trim()?.length < 2) {
+        if (!value?.trim()) newErrors.fullName = "Please enter your full name";
+        else if (value.trim().length < 2)
           newErrors.fullName = "Full name must be at least 2 characters";
-        } else {
-          delete newErrors.fullName;
-        }
+        else delete newErrors.fullName;
         break;
 
       case "email":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!value) {
-          newErrors.email = "Please enter your email address";
-        } else if (!emailRegex.test(value)) {
+        if (!value) newErrors.email = "Please enter your email address";
+        else if (!emailRegex.test(value))
           newErrors.email = "Please enter a valid email address";
-        } else {
-          delete newErrors.email;
-        }
+        else delete newErrors.email;
         break;
 
       case "phone":
         const phoneRegex = /^[0-9]{10,11}$/;
-        if (!value) {
-          newErrors.phone = "Please enter your phone number";
-        } else if (!phoneRegex.test(value?.replace(/\s/g, ""))) {
-          newErrors.phone = "Phone number must be 10-11 digits";
-        } else {
-          delete newErrors.phone;
-        }
+        if (!value) newErrors.phone = "Please enter your phone number";
+        else if (!phoneRegex.test(value?.replace(/\s/g, "")))
+          newErrors.phone = "Phone number must be 10–11 digits";
+        else delete newErrors.phone;
         break;
 
       case "password":
-        if (!value) {
-          newErrors.password = "Please enter a password";
-        } else if (value.length < 8) {
+        if (!value) newErrors.password = "Please enter a password";
+        else if (value.length < 8)
           newErrors.password = "Password must be at least 8 characters";
-        } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+        else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value))
           newErrors.password =
             "Password must include uppercase, lowercase, and a number";
-        } else {
-          delete newErrors.password;
-        }
+        else delete newErrors.password;
         break;
 
       case "confirmPassword":
-        if (!value) {
-          newErrors.confirmPassword = "Please confirm your password";
-        } else if (value !== formData.password) {
+        if (!value) newErrors.confirmPassword = "Please confirm your password";
+        else if (value !== formData.password)
           newErrors.confirmPassword = "Passwords do not match";
-        } else {
-          delete newErrors.confirmPassword;
-        }
+        else delete newErrors.confirmPassword;
         break;
 
       case "location":
-        if (!value) {
-          newErrors.location = "Please select your location";
-        } else {
-          delete newErrors.location;
-        }
+        if (!value) newErrors.location = "Please select your location";
+        else delete newErrors.location;
         break;
 
       case "termsAccepted":
-        if (!value) {
+        if (!value)
           newErrors.termsAccepted = "You must agree to the Terms of Use";
-        } else {
-          delete newErrors.termsAccepted;
-        }
+        else delete newErrors.termsAccepted;
         break;
 
       default:
@@ -140,79 +124,67 @@ const RegistrationForm = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: newValue,
-    }));
-
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
     validateField(name, newValue);
   };
 
   const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     validateField(name, value);
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const fieldsToValidate = [
-    "fullName",
-    "email",
-    "phone",
-    "password",
-    "confirmPassword",
-    "location",
-    "termsAccepted",
-  ];
-  let isValid = true;
+    const fieldsToValidate = [
+      "fullName",
+      "email",
+      "phone",
+      "password",
+      "confirmPassword",
+      "location",
+      "termsAccepted",
+    ];
 
-  fieldsToValidate.forEach((field) => {
-    const fieldValue = formData[field];
-    if (!validateField(field, fieldValue)) {
-      isValid = false;
-    }
-  });
-
-  if (!isValid) return;
-
-  setIsLoading(true);
-  setErrors({});
-
-  try {
-    const response = await fetch("http://localhost:5050/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: formData.fullName,
-        email: formData.email,
-        password: formData.password,
-      }),
+    let isValid = true;
+    fieldsToValidate.forEach((field) => {
+      const fieldValue = formData[field];
+      if (!validateField(field, fieldValue)) isValid = false;
     });
 
-    const result = await response.json();
+    if (!isValid) return;
 
-    if (!response.ok) {
-      setErrors({ submit: result.error || "Registration failed." });
-    } else {
-      navigate("/login", {
-        state: {
-          message: "Registration successful! You can now log in.",
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      const response = await fetch("http://localhost:5050/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formData.fullName,
           email: formData.email,
-        },
+          password: formData.password,
+        }),
       });
+
+      const result = await response.json();
+      if (!response.ok)
+        setErrors({ submit: result.error || "Registration failed." });
+      else {
+        navigate("/login", {
+          state: {
+            message: "Registration successful! You can now log in.",
+            email: formData.email,
+          },
+        });
+      }
+    } catch {
+      setErrors({ submit: "Network error. Please try again." });
+    } finally {
+      setIsLoading(false);
     }
-  } catch (err) {
-    console.error("Error sending registration:", err);
-    setErrors({ submit: "Network error. Please try again." });
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -227,85 +199,117 @@ const RegistrationForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Information */}
-        <div className="space-y-4">
-          <Input
-            label="Full Name"
-            type="text"
-            name="fullName"
-            placeholder="John Doe"
-            value={formData.fullName}
-            onChange={handleInputChange}
-            error={errors.fullName}
-            required
-          />
+        <h3 className="text-lg font-heading font-semibold text-foreground">
+          Personal Information
+        </h3>
 
-          <Input
-            label="Email Address"
-            type="email"
-            name="email"
-            placeholder="john@example.com"
-            value={formData.email}
-            onChange={handleInputChange}
-            error={errors.email}
-            required
-          />
+        <div className="space-y-5">
+          <div className="space-y-1 mb-4">
+            <label className="text-sm font-medium text-foreground">
+              Full Name <span className="text-red-500">*</span>
+            </label>
+            <Input
+              type="text"
+              name="fullName"
+              placeholder="John Doe"
+              value={formData.fullName}
+              onChange={handleInputChange}
+              error={errors.fullName}
+              required
+            />
+          </div>
 
-          <Input
-            label="Phone Number"
-            type="text"
-            name="phone"
-            placeholder="0123456789"
-            value={formData.phone}
-            onChange={handleInputChange}
-            error={errors.phone}
-            required
-          />
+          <div className="space-y-1 mb-4">
+            <label className="text-sm font-medium text-foreground">
+              Email Address <span className="text-red-500">*</span>
+            </label>
+            <Input
+              type="email"
+              name="email"
+              placeholder="john@example.com"
+              value={formData.email}
+              onChange={handleInputChange}
+              error={errors.email}
+              required
+            />
+          </div>
+
+          <div className="space-y-1 mb-4">
+            <label className="text-sm font-medium text-foreground">
+              Phone Number <span className="text-red-500">*</span>
+            </label>
+            <Input
+              type="text"
+              name="phone"
+              placeholder="0123456789"
+              value={formData.phone}
+              onChange={handleInputChange}
+              error={errors.phone}
+              required
+            />
+          </div>
         </div>
 
-        {/* Account Credentials */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-heading font-semibold text-foreground">
-            Account Information
-          </h3>
+        {/* Account Information */}
+        <h3 className="text-lg font-heading font-semibold text-foreground">
+          Account Information
+        </h3>
 
-          <Input
-            label="Password"
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleInputChange}
-            error={errors.password}
-            description="At least 8 characters, including uppercase, lowercase, and a number."
-            required
-          />
+        <div className="space-y-5">
+          <div className="space-y-1 mb-4">
+            <label className="text-sm font-medium text-foreground">
+              Password <span className="text-red-500">*</span>
+            </label>
+            <Input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleInputChange}
+              error={errors.password}
+              required
+            />
+          </div>
 
-          <Input
-            label="Confirm Password"
-            type="password"
-            name="confirmPassword"
-            placeholder="Re-enter your password"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            error={errors.confirmPassword}
-            required
-          />
+          <div className="space-y-1 mb-4">
+            <label className="text-sm font-medium text-foreground">
+              Confirm Password <span className="text-red-500">*</span>
+            </label>
+            <Input
+              type="password"
+              name="confirmPassword"
+              placeholder="Re-enter your password"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              error={errors.confirmPassword}
+              required
+            />
+          </div>
+
+          <div className="space-y-1 mb-4">
+            <label className="text-sm font-medium text-foreground">
+              Location <span className="text-red-500">*</span>
+            </label>
+              <Select
+                value={formData.location}
+                onValueChange={(value) => handleSelectChange("location", value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select your location" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  {locationOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+          </div>
         </div>
 
-        {/* User Type and Location */}
-        <div className="space-y-4">
-          <Select
-            label="Location"
-            placeholder="Select your location"
-            options={locationOptions}
-            value={formData.location}
-            onChange={(value) => handleSelectChange("location", value)}
-            error={errors.location}
-            required
-          />
-        </div>
-
-        {/* Consent and Terms */}
+        {/* Terms and Conditions */}
         <div className="space-y-4">
           <Checkbox
             label={
@@ -318,6 +322,7 @@ const RegistrationForm = () => {
                 <Link to="/privacy" className="text-primary hover:underline">
                   Privacy Policy
                 </Link>
+                .
               </span>
             }
             name="termsAccepted"

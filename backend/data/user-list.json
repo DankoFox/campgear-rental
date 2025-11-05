@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "0de258ac-091a-419a-ab00-680482f39fd7",
+    "username": "asfqf",
+    "email": "wehfhwe@gmail.com",
+    "password": "2qef23bfiq23",
+    "createdAt": "2025-11-05T06:20:32.777Z"
+  },
+  {
+    "id": "7bbfdfb7-6bc0-4939-96b8-8c12cd2f97d3",
+    "username": "asd",
+    "email": "awqwc@gmail.com",
+    "password": "qwfcqecaqwsc",
+    "phone": "5484848",
+    "location": "Hanoi",
+    "termsAccepted": true,
+    "createdAt": "2025-11-05T06:44:41.318Z"
+  }
+]
