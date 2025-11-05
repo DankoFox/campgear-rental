@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppRoutes from "./Routes";
 
 function App() {
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
+
+// Load cart data from localStorage on initial load
+  useEffect(() => {
+    const storedCartCount = localStorage.getItem("cartCount");
+    const storedCartItems = localStorage.getItem("cartItems");
+
+    if (storedCartCount && storedCartItems) {
+      setCartCount(Number(storedCartCount));
+      setCartItems(JSON.parse(storedCartItems));
+    }
+  }, []);
+
+  // Save cart data to localStorage when cart state changes
+  useEffect(() => {
+    localStorage.setItem("cartCount", cartCount);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartCount, cartItems]);
 
   const addToCart = (item) => {
   // Safely get the image
