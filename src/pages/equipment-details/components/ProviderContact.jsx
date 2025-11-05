@@ -21,11 +21,20 @@ const ProviderContact = ({ provider }) => {
       <div className="space-y-4">
         {/* Provider Profile */}
         <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-            <span className="text-primary-foreground text-xl font-bold">
-              {provider?.name?.charAt(0)}
-            </span>
-          </div>
+          {provider?.logo ? (
+  <img
+    src={provider.logo}
+    alt={provider.name}
+    className="w-16 h-16 rounded-full border border-border object-contain bg-white p-1"
+  />
+) : (
+  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
+    <span className="text-primary-foreground text-xl font-bold">
+      {provider?.name?.charAt(0)}
+    </span>
+  </div>
+)}
+
           <div className="flex-1">
             <h4 className="font-semibold text-lg">{provider?.name}</h4>
             <p className="text-muted-foreground">{provider?.businessType}</p>

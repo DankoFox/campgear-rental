@@ -10,7 +10,7 @@ import {
   DialogFooter,
 } from "../../../components/ui/dialog.jsx";
 import Button from "../../../components/ui/Button.jsx";
-import { Input } from "../../../components/ui/input.jsx";
+import  Input  from "../../../components/ui/input.jsx";
 import {
   Select,
   SelectContent,
