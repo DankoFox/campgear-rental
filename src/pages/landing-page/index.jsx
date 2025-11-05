@@ -1,53 +1,78 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeroSection from "../../pages/equipment-catalog/components/HeroSection.jsx";
 import Footer from "../../components/ui/Footer.jsx";
 import { mockEquipment } from "../../data/equipment-data.js";
-// import { mockEquipment } from "backend/data/equipment-data.json"
 import Button from "../../components/ui/Button.jsx";
-import Image from "../../components/AppImage.jsx"; // use your app image component if available
-
-import { useNavigate } from "react-router-dom"; // Add useNavigate for redirection
+import Image from "../../components/AppImage.jsx";
+import { useNavigate } from "react-router-dom";
+import CategoryCard from "./components/CategoryCard.jsx";
 
 const LandingPage = ({ addToCart }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate(); // Initialize navigate
+  const [types, setTypes] = useState([]);
+  const [loadingTypes, setLoadingTypes] = useState(false);
+  const navigate = useNavigate();
 
-  // Get all unique brands
+  useEffect(() => {
+    const fetchTypes = async () => {
+      setLoadingTypes(true);
+      try {
+        const response = await fetch("http://localhost:5050/api/types");
+        if (!response.ok) throw new Error("Failed to fetch types");
+        const data = await response.json();
+        setTypes(data);
+      } catch (error) {
+        console.error("Error fetching types:", error);
+      } finally {
+        setLoadingTypes(false);
+      }
+    };
+    fetchTypes();
+  }, []);
+
+  const categoryImages = {
+    Tent: "public/assets/imgs/tent-a.png",
+    Cooking: "public/assets/imgs/cooking-a.png",
+    Sleeping: "public/assets/imgs/sleeping-c.png",
+    Tools: "public/assets/imgs/tool-a.png",
+    Trekkingpoles: "public/assets/imgs/trekking-a.png",
+    Backpacks: "public/assets/imgs/backpack-a.png",
+    Lighting: "public/assets/imgs/light-c.png",
+    Purifier: "public/assets/imgs/purifier-b.png",
+  };
+
   const brands = [...new Set(mockEquipment.map((item) => item.brand))];
-
-  // Group equipment by brand (make sure this is defined BEFORE the JSX that uses it)
   const equipmentByBrand = {};
   mockEquipment.forEach((item) => {
     if (!equipmentByBrand[item.brand]) equipmentByBrand[item.brand] = [];
     equipmentByBrand[item.brand].push(item);
   });
 
-  // Handle "Add All" logic
   const handleAddAll = (brandName) => {
     const items = equipmentByBrand[brandName] || [];
-    console.log("AddAll -> brand:", brandName, items);
     items.forEach((item) => addToCart(item));
   };
 
-  // Helper to safely get the brand image (handles string or array)
   const getBrandImage = (sampleItem) => {
     if (!sampleItem) return null;
     const img = sampleItem.image;
     if (!img) return null;
-    if (Array.isArray(img)) return img[0];
-    return img; // string
+    return Array.isArray(img) ? img[0] : img;
   };
 
-  // Handle the search functionality
   const handleSearch = () => {
-    // Navigate to EquipmentCatalog page with search term as query param
     navigate(`/equipment-catalog?search=${searchTerm}`);
+  };
+
+  const handleCategoryClick = (type) => {
+    const normalizedType = type.toLowerCase().replace(/\s+/g, "");
+    navigate(`/equipment-catalog?category=${normalizedType}`);
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="flex flex-col gap-8">
+      <main className="flex flex-col gap-10">
         <HeroSection
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -55,23 +80,51 @@ const LandingPage = ({ addToCart }) => {
         />
 
         <section className="px-6">
+          {loadingTypes ? (
+            <p className="text-center text-muted-foreground">
+              Loading categories...
+            </p>
+          ) : (
+            <div className="overflow-x-auto">
+              <div
+                className="
+          grid grid-flow-col 
+          auto-cols-[minmax(280px,1fr)] sm:auto-cols-[minmax(300px,1fr)] 
+          md:auto-cols-[minmax(340px,1fr)] lg:auto-cols-[minmax(380px,1fr)]
+          gap-8 
+          snap-x snap-mandatory
+          px-2 pb-4
+        "
+              >
+                {types.map((type) => (
+                  <div key={type} className="snap-center">
+                    <CategoryCard
+                      title={type}
+                      image={
+                        categoryImages[type] || "public/assets/imgs/default.jpg"
+                      }
+                      onClick={() => handleCategoryClick(type)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        <section className="px-6">
           <h2 className="text-xl font-bold mb-6 text-center">
             Available Brands
           </h2>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {brands.map((brand) => {
-              const sampleItem = equipmentByBrand[brand]?.[0]; // first product for this brand
+              const sampleItem = equipmentByBrand[brand]?.[0];
               const imgSrc = getBrandImage(sampleItem);
-
-              console.log(brand, sampleItem);
-
               return (
                 <div
                   key={brand}
                   className="p-6 border rounded-xl bg-card shadow-sm flex flex-col items-center gap-4 hover:shadow-lg transition"
                 >
-                  {/* Brand image */}
                   {imgSrc ? (
                     <Image
                       src={imgSrc}
@@ -85,16 +138,11 @@ const LandingPage = ({ addToCart }) => {
                       </span>
                     </div>
                   )}
-
                   <h3 className="text-lg font-semibold">{brand}</h3>
-
-                  {/* Optional: show how many items */}
                   <p className="text-sm text-muted-foreground">
                     {equipmentByBrand[brand]?.length || 0} item
                     {equipmentByBrand[brand]?.length > 1 ? "s" : ""}
                   </p>
-
-                  {/* Starting price (optional) */}
                   {sampleItem?.price && (
                     <p className="text-sm text-muted-foreground">
                       From{" "}
@@ -103,7 +151,6 @@ const LandingPage = ({ addToCart }) => {
                       </span>
                     </p>
                   )}
-
                   <Button
                     onClick={() => handleAddAll(brand)}
                     className="w-full mt-2"
@@ -116,8 +163,6 @@ const LandingPage = ({ addToCart }) => {
             })}
           </div>
         </section>
-
-        <Footer />
       </main>
     </div>
   );
