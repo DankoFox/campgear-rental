@@ -70,7 +70,11 @@
     "name": "Core Lumens LED Headlamp",
     "brand": "YETI",
     "type": "Lighting",
-    "image": ["public/assets/imgs/id-5-a.png"],
+    "image": [
+      "public/assets/imgs/id-5-a.png",
+      "public/assets/imgs/light-a.png",
+      "public/assets/imgs/light-c.png"
+    ],
     "price": 35000,
     "location": "Ha Long",
     "availability": "available",
@@ -111,7 +115,7 @@
     "id": 8,
     "name": "Trail Pro Trekking Poles",
     "brand": "Coleman",
-    "type": "Trekking Poles",
+    "type": "TrekkingPoles",
     "image": ["public/assets/imgs/id-8-a.png"],
     "price": 60000,
     "location": "Da Lat",
@@ -442,7 +446,11 @@
     "name": "Petzl Tikkina 300 Headlamp",
     "brand": "Petzl",
     "type": "Lighting",
-    "image": ["public/assets/imgs/id-35-a.png"],
+    "image": [
+      "public/assets/imgs/id-35-a.png",
+      "public/assets/imgs/light-a.png",
+      "public/assets/imgs/light-c.png"
+    ],
     "price": 40000,
     "location": "Da Nang",
     "availability": "available",
@@ -452,7 +460,7 @@
     "id": 36,
     "name": "Coleman Skydome 6-Person Tent",
     "brand": "Coleman",
-    "type": "Tents",
+    "type": "Tent",
     "image": ["public/assets/imgs/id-36-a.png"],
     "price": 175000,
     "location": "Hanoi",
@@ -515,7 +523,7 @@
     "id": 41,
     "name": "The North Face Trail Winder Trekking Poles",
     "brand": "The North Face",
-    "type": "Trekking Poles",
+    "type": "TrekkingPoles",
     "image": [
       "public/assets/imgs/id-41-a.png",
       "public/assets/imgs/trekkingpole-northface.png"
@@ -534,7 +542,7 @@
     "id": 42,
     "name": "MSR DynaLock Ascent Carbon Poles",
     "brand": "MSR",
-    "type": "Trekking Poles",
+    "type": "TrekkingPoles",
     "image": [
       "public/assets/imgs/id-42-a.png",
       "public/assets/imgs/trekking-a.png",
@@ -554,7 +562,7 @@
     "id": 43,
     "name": "Deuter Alpine Trekking Poles",
     "brand": "Deuter",
-    "type": "Trekking Poles",
+    "type": "TrekkingPoles",
     "image": [
       "public/assets/imgs/id-43-a.png",
       "public/assets/imgs/trekking-b.png",
@@ -574,7 +582,7 @@
     "id": 44,
     "name": "Helinox Passport TL Trekking Poles",
     "brand": "Helinox",
-    "type": "Trekking Poles",
+    "type": "TrekkingPoles",
     "image": [
       "public/assets/imgs/id-44-a.png",
       "public/assets/imgs/trekking-a.png",

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useMemo, useEffect } from "react";
 import Button from "../../../components/ui/Button";
 import { Checkbox } from "../../../components/ui/Checkbox";
@@ -6,15 +7,67 @@ import { Select } from "@/components/ui/select";
 
 const FilterPanel = ({
   products = [],
-  filters,
+  filters = {
+    categories: [],
+    brands: [],
+    priceRange: [0, 200000],
+    location: "",
+    sortBy: "relevance",
+  },
   onFiltersChange,
   isOpen,
   onToggle,
   isMobile = false,
 }) => {
   const [priceRange, setPriceRange] = useState([0, 200000]);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // --- Dynamic min & max prices ---
+  // --- Helper: normalize strings for consistent matching ---
+  const normalizeCategory = (str) =>
+    str?.toLowerCase().replace(/\s+/g, "") || "";
+  const normalizeBrand = (str) =>
+    str?.toLowerCase().replace(/[^a-z0-9]/g, "") || "";
+
+  // ✅ Fetch dynamic filters from API
+  useEffect(() => {
+    const fetchFilters = async () => {
+      try {
+        const [typeRes, brandRes] = await Promise.all([
+          fetch("http://localhost:5050/api/types"),
+          fetch("http://localhost:5050/api/brands"),
+        ]);
+
+        const [typesData, brandsData] = await Promise.all([
+          typeRes.json(),
+          brandRes.json(),
+        ]);
+
+        // Store formatted categories and brands
+        setCategories(
+          typesData.map((t) => ({
+            id: normalizeCategory(t),
+            label: t,
+          }))
+        );
+        setBrands(
+          brandsData.map((b) => ({
+            id: normalizeBrand(b),
+            label: b,
+          }))
+        );
+      } catch (err) {
+        console.error("Error fetching filters:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilters();
+  }, []);
+
+  // ✅ Dynamic min & max prices
   const minPrice = useMemo(
     () =>
       products.length ? Math.min(...products.map((p) => p.price || 0)) : 0,
@@ -30,50 +83,25 @@ const FilterPanel = ({
     if (filters?.priceRange) setPriceRange(filters.priceRange);
   }, [filters.priceRange]);
 
-  // --- Dynamic category and brand counts ---
+  // ✅ Category counts (normalized)
   const categoryCounts = useMemo(() => {
     const counts = {};
     products.forEach((p) => {
-      const cat = p.type?.toLowerCase() || "other";
+      const cat = normalizeCategory(p.type) || "other";
       counts[cat] = (counts[cat] || 0) + 1;
     });
     return counts;
   }, [products]);
 
+  // ✅ Brand counts (normalized)
   const brandCounts = useMemo(() => {
     const counts = {};
     products.forEach((p) => {
-      // normalize: lowercase and remove non-alphanumeric characters
-      const normalized = (p.brand || "unknown")
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, "");
-      counts[normalized] = (counts[normalized] || 0) + 1;
+      const brand = normalizeBrand(p.brand || "unknown");
+      counts[brand] = (counts[brand] || 0) + 1;
     });
     return counts;
   }, [products]);
-
-  // --- Filter options ---
-  const categories = [
-    { id: "tents", label: "Tents" },
-    { id: "sleeping", label: "Sleeping Bags" },
-    { id: "cooking", label: "Cooking Gear" },
-    { id: "backpacks", label: "Backpacks" },
-    { id: "lighting", label: "Lighting" },
-    { id: "tools", label: "Tools" },
-  ];
-
-  const brands = [
-    { id: "coleman", label: "Coleman" },
-    { id: "thenorthface", label: "The North Face" },
-    { id: "msr", label: "MSR" },
-    { id: "deuter", label: "Deuter" },
-    { id: "petzl", label: "Petzl" },
-    { id: "jetboil", label: "Jetboil" },
-    { id: "helinox", label: "Helinox" },
-    { id: "seatosummit", label: "Sea to Summit" },
-    { id: "yeti", label: "YETI" },
-    { id: "platypus", label: "Platypus" },
-  ];
 
   const locations = [
     { value: "Hanoi", label: "Hanoi" },
@@ -91,18 +119,18 @@ const FilterPanel = ({
     { value: "rating", label: "Top Rated" },
   ];
 
-  // --- Event handlers ---
+  // --- Handlers ---
   const handleCategoryChange = (id, checked) => {
     const newCategories = checked
-      ? [...(filters.categories || []), id]
-      : (filters.categories || []).filter((c) => c !== id);
+      ? [...filters.categories, id]
+      : filters.categories.filter((c) => c !== id);
     onFiltersChange({ ...filters, categories: newCategories });
   };
 
   const handleBrandChange = (id, checked) => {
     const newBrands = checked
-      ? [...(filters.brands || []), id]
-      : (filters.brands || []).filter((b) => b !== id);
+      ? [...filters.brands, id]
+      : filters.brands.filter((b) => b !== id);
     onFiltersChange({ ...filters, brands: newBrands });
   };
 
@@ -137,7 +165,7 @@ const FilterPanel = ({
         <h3 className="font-heading font-semibold text-foreground">Sort By</h3>
         <Select
           options={sortOptions}
-          value={filters?.sortBy || "relevance"}
+          value={filters.sortBy}
           onChange={(value) => onFiltersChange({ ...filters, sortBy: value })}
         />
       </div>
@@ -147,7 +175,7 @@ const FilterPanel = ({
         <h3 className="font-heading font-semibold text-foreground">Location</h3>
         <Select
           options={locations}
-          value={filters?.location || ""}
+          value={filters.location}
           onChange={(value) => onFiltersChange({ ...filters, location: value })}
           placeholder="Select city"
           clearable
@@ -167,7 +195,7 @@ const FilterPanel = ({
             step="10000"
             value={priceRange[0]}
             onChange={(e) => handlePriceChange(0, e.target.value)}
-            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+            className="w-full h-2 bg-muted rounded-lg cursor-pointer accent-primary"
           />
           <input
             type="range"
@@ -176,7 +204,7 @@ const FilterPanel = ({
             step="10000"
             value={priceRange[1]}
             onChange={(e) => handlePriceChange(1, e.target.value)}
-            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+            className="w-full h-2 bg-muted rounded-lg cursor-pointer accent-primary"
           />
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>{priceRange[0].toLocaleString("en-US")}₫</span>
@@ -190,39 +218,47 @@ const FilterPanel = ({
         <h3 className="font-heading font-semibold text-foreground">
           Categories
         </h3>
-        <div className="space-y-2">
-          {categories.map((c) => (
-            <div key={c.id} className="flex items-center justify-between">
-              <Checkbox
-                label={c.label}
-                checked={filters.categories.includes(c.id)}
-                onChange={(e) => handleCategoryChange(c.id, e.target.checked)}
-              />
-              <span className="text-sm text-muted-foreground">
-                ({categoryCounts[c.id] || 0})
-              </span>
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-sm text-muted-foreground">Loading categories...</p>
+        ) : (
+          <div className="space-y-2">
+            {categories.map((c) => (
+              <div key={c.id} className="flex items-center justify-between">
+                <Checkbox
+                  label={c.label}
+                  checked={filters.categories.includes(c.id)}
+                  onChange={(e) => handleCategoryChange(c.id, e.target.checked)}
+                />
+                <span className="text-sm text-muted-foreground">
+                  ({categoryCounts[c.id] || 0})
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Brands */}
       <div className="space-y-3">
         <h3 className="font-heading font-semibold text-foreground">Brands</h3>
-        <div className="space-y-2">
-          {brands.map((b) => (
-            <div key={b.id} className="flex items-center justify-between">
-              <Checkbox
-                label={b.label}
-                checked={filters.brands.includes(b.id)}
-                onChange={(e) => handleBrandChange(b.id, e.target.checked)}
-              />
-              <span className="text-sm text-muted-foreground">
-                ({brandCounts[b.id] || 0})
-              </span>
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-sm text-muted-foreground">Loading brands...</p>
+        ) : (
+          <div className="space-y-2">
+            {brands.map((b) => (
+              <div key={b.id} className="flex items-center justify-between">
+                <Checkbox
+                  label={b.label}
+                  checked={filters.brands.includes(b.id)}
+                  onChange={(e) => handleBrandChange(b.id, e.target.checked)}
+                />
+                <span className="text-sm text-muted-foreground">
+                  ({brandCounts[b.id] || 0})
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Reset */}
@@ -276,7 +312,7 @@ const FilterPanel = ({
 
   // --- Desktop Panel ---
   return (
-    <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 h-fit  top-20">
+    <div className="hidden md:block w-80 bg-card border border-border rounded-lg p-6 h-fit top-20">
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-heading font-semibold text-lg">Filters</h2>
         <Icon name="Filter" size={20} className="text-muted-foreground" />
