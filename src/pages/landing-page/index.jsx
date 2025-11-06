@@ -121,18 +121,13 @@ const LandingPage = ({ addToCart }) => {
           addToCart(equipment);
         } else {
           console.warn(
-            `⚠️ Equipment with ID ${id} not found for combo ${combo.name}`
+            `! Equipment with ID ${id} not found for combo ${combo.name}`,
           );
         }
       });
     } else {
-      console.warn("⚠️ Combo items-list is not an array:", combo);
+      console.warn("! Combo items-list is not an array:", combo);
     }
-  };
-
-  const handleCategoryClick = (type) => {
-    const normalizedType = type.toLowerCase().replace(/\s+/g, "");
-    navigate(`/equipment-catalog?category=${normalizedType}`);
   };
 
   return (
@@ -190,7 +185,8 @@ const LandingPage = ({ addToCart }) => {
                     <CategoryCard
                       title={type}
                       image={
-                        categoryImages[type] || "public/assets/imgs/default.jpg"
+                        CATEGORY_IMAGES[type] ||
+                        "public/assets/imgs/default.jpg"
                       }
                       onClick={() => handleCategoryClick(type)}
                     />
