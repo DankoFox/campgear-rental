@@ -130,6 +130,11 @@ const LandingPage = ({ addToCart }) => {
     }
   };
 
+  const handleCategoryClick = (type) => {
+    const normalizedType = type.toLowerCase().replace(/\s+/g, "");
+    navigate(`/equipment-catalog?category=${normalizedType}`);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <main className="flex flex-col gap-10">
@@ -163,6 +168,39 @@ const LandingPage = ({ addToCart }) => {
         </section>
 
         {/* Seasonal Combos */}
+        <section className="px-6">
+          {loadingTypes ? (
+            <p className="text-center text-muted-foreground">
+              Loading categories...
+            </p>
+          ) : (
+            <div className="overflow-x-auto">
+              <div
+                className="
+          grid grid-flow-col 
+          auto-cols-[minmax(280px,1fr)] sm:auto-cols-[minmax(300px,1fr)] 
+          md:auto-cols-[minmax(340px,1fr)] lg:auto-cols-[minmax(380px,1fr)]
+          gap-8 
+          snap-x snap-mandatory
+          px-2 pb-4
+        "
+              >
+                {types.map((type) => (
+                  <div key={type} className="snap-center">
+                    <CategoryCard
+                      title={type}
+                      image={
+                        categoryImages[type] || "public/assets/imgs/default.jpg"
+                      }
+                      onClick={() => handleCategoryClick(type)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
         <section className="px-6">
           <h2 className="text-xl font-bold mb-6 text-center">
             Seasonal Combos
