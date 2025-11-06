@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "The North Face Trekking Day",
+    "description": "Complete set for a single-day trekking adventure, now 15% off.",
+    "image": "public/assets/imgs/trekking-d.png",
+    "items-list": ["23", "37", "41"]
+  },
+  {
+    "id": 2,
+    "name": "Multi-Day Trekking Pack",
+    "description": "All essentials for trekking over multiple days, including gear and supplies for extended trips.",
+    "image": "public/assets/imgs/tool-b.png",
+    "items-list": ["4", "8", "6", "25"]
+  },
+  {
+    "id": 3,
+    "name": "Lightweight Trek & Sleep",
+    "description": "Compact and light gear for trekking with comfortable sleeping arrangements on the go.",
+    "image": "public/assets/imgs/tool-c.png",
+    "items-list": ["16", "21", "32"]
+  },
+  {
+    "id": 4,
+    "name": "Solo Camping Starter Kit",
+    "description": "Perfect starter kit for solo campers, including shelter, basic tools, and convenience items.",
+    "image": "public/assets/imgs/tool-d.png",
+    "items-list": ["15", "20", "5"]
+  },
+  {
+    "id": 5,
+    "name": "Cooking & Hydration Combo",
+    "description": "All-in-one combo to keep you fed and hydrated while outdoors, ideal for cooking on the trail.",
+    "image": "public/assets/imgs/duffet-b.png",
+    "items-list": ["31", "26", "29"]
+  },
+  {
+    "id": 6,
+    "name": "Trekking Essentials Light",
+    "description": "Lightweight essentials for trekking, providing just what you need without extra bulk.",
+    "image": "public/assets/imgs/purifier-b.png",
+    "items-list": ["41", "42", "8"]
+  },
+  {
+    "id": 7,
+    "name": "Backpack & Shelter Kit",
+    "description": "Bundle of a sturdy backpack and shelter gear to ensure comfort and storage on your adventures.",
+    "image": "public/assets/imgs/backpack-a.png",
+    "items-list": ["9", "36", "20"]
+  },
+  {
+    "id": 8,
+    "name": "Emergency & Safety Kit",
+    "description": "A kit focused on safety and emergency preparedness, including first aid and essential survival items.",
+    "image": "public/assets/imgs/emergency.png",
+    "items-list": ["45", "46", "5"]
+  },
+  {
+    "id": 9,
+    "name": "Weekend Camp Cooking Combo",
+    "description": "Everything needed for weekend camping meals, from cooking utensils to portable cookware.",
+    "image": "public/assets/imgs/duffet-c.png",
+    "items-list": ["6", "14", "34"]
+  },
+  {
+    "id": 10,
+    "name": "Compact Trekking & Lighting",
+    "description": "Compact trekking gear with lighting solutions, perfect for evening or night treks.",
+    "image": "public/assets/imgs/purifier-c.png",
+    "items-list": ["41", "35", "25"]
+  }
+]

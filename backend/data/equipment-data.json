@@ -54,7 +54,10 @@
     "name": "Deuter Aircontact Trekking Backpack",
     "brand": "Deuter",
     "type": "Backpacks",
-    "image": ["public/assets/imgs/id-4-a.png"],
+    "image": [
+      "public/assets/imgs/id-4-a.png",
+      "public/assets/imgs/backpack-a.png"
+    ],
     "price": 120000,
     "location": "Da Lat",
     "availability": "available",
@@ -328,7 +331,6 @@
     "brand": "YETI",
     "type": "Lighting",
     "image": [
-      "public/assets/imgs/id-25-a.png",
       "public/assets/imgs/light-a.png",
       "public/assets/imgs/light-c.png"
     ],
