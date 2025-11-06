@@ -4,8 +4,17 @@ import Icon from "../../../components/AppIcon";
 
 const HeroSection = ({ searchTerm, setSearchTerm, onSearch }) => {
   return (
-    <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
+    <section className="relative bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12 overflow-hidden">
+      {/* Background image layer */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-20"
+        style={{
+          backgroundImage: 'url("public/assets/images/product-section.png")',
+        }}
+      ></div>
+
+      {/* Content */}
+      <div className="relative container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Left content */}
         <div className="max-w-3xl">
           <h1 className="font-heading font-bold text-3xl md:text-4xl mb-4">
@@ -49,7 +58,7 @@ const HeroSection = ({ searchTerm, setSearchTerm, onSearch }) => {
         <img
           src="public/assets/images/horizontal-section.png"
           alt="Camping equipment"
-          className="w-full md:max-w-lg h-auto object-contain rounded-xl"
+          className="relative w-full md:max-w-lg h-auto object-contain rounded-xl z-10"
         />
       </div>
     </section>

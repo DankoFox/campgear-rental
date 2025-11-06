@@ -15,7 +15,6 @@ import { calculateRentalPrice } from "@/utils/pricing";
 
 const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const navigate = useNavigate();
-  console.log("cartItem", cartItems);
   // Core
   const [promoCode, setPromoCode] = useState("");
 
@@ -25,8 +24,8 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [user] = useState({
-     name: JSON.parse(localStorage.getItem("user"))?.name || "Guest",
-  email: JSON.parse(localStorage.getItem("user"))?.email || "guest@gmail.com",
+    name: JSON.parse(localStorage.getItem("user"))?.name || "Guest",
+    email: JSON.parse(localStorage.getItem("user"))?.email || "guest@gmail.com",
   });
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -57,7 +56,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           new Date(item.startDate),
           new Date(item.endDate),
           item.productPrice,
-          newQuantity,
+          newQuantity
         );
 
         return {
@@ -65,7 +64,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           quantity: newQuantity,
           orderPrice: totalPrice,
         };
-      }),
+      })
     );
   };
 
@@ -78,7 +77,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           new Date(startDate),
           new Date(endDate),
           item.productPrice,
-          item.quantity,
+          item.quantity
         );
 
         return {
@@ -87,7 +86,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
           endDate,
           orderPrice: totalPrice,
         };
-      }),
+      })
     );
   };
 
@@ -119,7 +118,7 @@ const ShoppingCart = ({ cartItems, setCartItems, setCartCount }) => {
   const calculateTotal = () => {
     const subtotal = cartItems.reduce(
       (total, item) => total + (item.orderPrice || 0),
-      0,
+      0
     );
 
     const deliveryFee = subtotal > 1000000 ? 0 : 50000;
