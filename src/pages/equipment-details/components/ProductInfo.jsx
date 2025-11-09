@@ -53,7 +53,7 @@ const ProductInfo = ({ product }) => {
             <div className="flex items-center space-x-3 mt-1">
               <div className="flex items-center w-24 justify-center">
                 <img
-                  src={`public/svg/${product?.brand
+                  src={`/public/svg/${product?.brand
                     ?.toLowerCase()
                     .replace(/\s+/g, "")}.svg`}
                   alt={product?.brand}

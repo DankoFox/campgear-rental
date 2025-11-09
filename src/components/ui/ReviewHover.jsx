@@ -27,8 +27,8 @@ const ReviewHover = ({ search, option = "reddit" }) => {
         <img
           src={
             option === "tiktok"
-              ? "public/svg/tiktok.svg"
-              : "public/svg/reddit.svg"
+              ? "/public/svg/tiktok.svg"
+              : "/public/svg/reddit.svg"
           }
           alt={`${option} logo`}
           className="absolute w-48 h-12 opacity-100 translate-y-0 transition-all duration-500 

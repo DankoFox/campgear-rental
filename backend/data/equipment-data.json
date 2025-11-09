@@ -12,7 +12,12 @@
     "price": 150000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["Waterproof", "Easy setup", "4-person", "Window included"],
+    "features": [
+      "Waterproof",
+      "Easy setup",
+      "4-person",
+      "Window included"
+    ],
     "discount": 25
   },
   {
@@ -47,7 +52,12 @@
     "price": 45000,
     "location": "Da Nang",
     "availability": "limited",
-    "features": ["Compact", "Fuel efficient", "Fast boiling", "Durable"]
+    "features": [
+      "Compact",
+      "Fuel efficient",
+      "Fast boiling",
+      "Durable"
+    ]
   },
   {
     "id": 4,
@@ -101,25 +111,39 @@
     "price": 95000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["Wood-burning", "USB charging", "Portable", "Eco-friendly"]
+    "features": [
+      "Wood-burning",
+      "USB charging",
+      "Portable",
+      "Eco-friendly"
+    ]
   },
   {
     "id": 7,
     "name": "Purifier Helinox Pro3",
     "brand": "Helinox",
     "type": "Purifier",
-    "image": ["public/assets/imgs/id-7-a.png"],
+    "image": [
+      "public/assets/imgs/id-7-a.png"
+    ],
     "price": 55000,
     "location": "Hanoi",
     "availability": "limited",
-    "features": ["Ultra-light", "Compact", "Comfortable", "Durable"]
+    "features": [
+      "Ultra-light",
+      "Compact",
+      "Comfortable",
+      "Durable"
+    ]
   },
   {
     "id": 8,
     "name": "Trail Pro Trekking Poles",
     "brand": "Coleman",
     "type": "TrekkingPoles",
-    "image": ["public/assets/imgs/id-8-a.png"],
+    "image": [
+      "public/assets/imgs/id-8-a.png"
+    ],
     "price": 60000,
     "location": "Da Lat",
     "availability": "available",
@@ -135,7 +159,9 @@
     "name": "Osprey Atmos AG 65L Backpack",
     "brand": "Helinox",
     "type": "Backpacks",
-    "image": ["public/assets/imgs/id-9-a.png"],
+    "image": [
+      "public/assets/imgs/id-9-a.png"
+    ],
     "price": 120000,
     "location": "Da Nang",
     "availability": "available",
@@ -151,22 +177,36 @@
     "name": "Torrentshell 3L Rain Jacket",
     "brand": "Helinox",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-10-a.png"],
+    "image": [
+      "public/assets/imgs/id-10-a.png"
+    ],
     "price": 90000,
     "location": "Ho Chi Minh",
     "availability": "available",
-    "features": ["Waterproof", "Breathable", "Lightweight", "Packable"]
+    "features": [
+      "Waterproof",
+      "Breathable",
+      "Lightweight",
+      "Packable"
+    ]
   },
   {
     "id": 12,
     "name": "Coleman Mosquito Head Net",
     "brand": "Coleman",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-12-a.png"],
+    "image": [
+      "public/assets/imgs/id-12-a.png"
+    ],
     "price": 40000,
     "location": "Ho Chi Minh",
     "availability": "available",
-    "features": ["Ultra-light", "Fine mesh", "Easy setup", "Compact"]
+    "features": [
+      "Ultra-light",
+      "Fine mesh",
+      "Easy setup",
+      "Compact"
+    ]
   },
   {
     "id": 13,
@@ -181,36 +221,57 @@
     "price": 95000,
     "location": "Da Nang",
     "availability": "available",
-    "features": ["Ultralight", "Insulated", "Compact", "Durable material"]
+    "features": [
+      "Ultralight",
+      "Insulated",
+      "Compact",
+      "Durable material"
+    ]
   },
   {
     "id": 14,
     "name": "Helinox Flash Cooking System",
     "brand": "Helinox",
     "type": "Cooking",
-    "image": ["public/assets/imgs/id-14-a.png"],
+    "image": [
+      "public/assets/imgs/id-14-a.png"
+    ],
     "price": 65000,
     "location": "Nha Trang",
     "availability": "available",
-    "features": ["Fast boiling", "Fuel efficient", "1L capacity", "Insulated"]
+    "features": [
+      "Fast boiling",
+      "Fuel efficient",
+      "1L capacity",
+      "Insulated"
+    ]
   },
   {
     "id": 15,
     "name": "MSR Hubba Hubba NX 2-Person Tent",
     "brand": "MSR",
     "type": "Tent",
-    "image": ["public/assets/imgs/id-15-a.png"],
+    "image": [
+      "public/assets/imgs/id-15-a.png"
+    ],
     "price": 130000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["2-person", "Ultralight", "Freestanding", "Compact"]
+    "features": [
+      "2-person",
+      "Ultralight",
+      "Freestanding",
+      "Compact"
+    ]
   },
   {
     "id": 16,
     "name": "Deuter Futura 44L SL Daypack",
     "brand": "Deuter",
     "type": "Backpacks",
-    "image": ["public/assets/imgs/id-16-a.png"],
+    "image": [
+      "public/assets/imgs/id-16-a.png"
+    ],
     "price": 70000,
     "location": "Da Lat",
     "availability": "available",
@@ -226,7 +287,9 @@
     "name": "Helinox Sunset Chair",
     "brand": "Helinox",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-17-a.png"],
+    "image": [
+      "public/assets/imgs/id-17-a.png"
+    ],
     "price": 60000,
     "location": "Hanoi",
     "availability": "available",
@@ -242,33 +305,54 @@
     "name": "MSR R1 Fleece Jacket",
     "brand": "MSR",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-18-a.png"],
+    "image": [
+      "public/assets/imgs/id-18-a.png"
+    ],
     "price": 110000,
     "location": "Ho Chi Minh",
     "availability": "available",
-    "features": ["Recycled material", "Warm", "Lightweight", "Hiking layer"]
+    "features": [
+      "Recycled material",
+      "Warm",
+      "Lightweight",
+      "Hiking layer"
+    ]
   },
   {
     "id": 19,
     "name": "YETI Tundra 45 Cooler",
     "brand": "YETI",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-19-a.png"],
+    "image": [
+      "public/assets/imgs/id-19-a.png"
+    ],
     "price": 200000,
     "location": "Nha Trang",
     "availability": "available",
-    "features": ["Rotomolded", "Ice retention", "Durable", "Outdoor"]
+    "features": [
+      "Rotomolded",
+      "Ice retention",
+      "Durable",
+      "Outdoor"
+    ]
   },
   {
     "id": 20,
     "name": "Spark UL Sleeping Bag",
     "brand": "YETI",
     "type": "Sleeping",
-    "image": ["public/assets/imgs/id-20-a.png"],
+    "image": [
+      "public/assets/imgs/id-20-a.png"
+    ],
     "price": 90000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["Ultralight", "Down fill", "Compact pack", "Season-4"]
+    "features": [
+      "Ultralight",
+      "Down fill",
+      "Compact pack",
+      "Season-4"
+    ]
   },
   {
     "id": 21,
@@ -283,18 +367,30 @@
     "price": 50000,
     "location": "Da Nang",
     "availability": "limited",
-    "features": ["Closed-cell foam", "Ultralight", "Backpacking", "Durable"]
+    "features": [
+      "Closed-cell foam",
+      "Ultralight",
+      "Backpacking",
+      "Durable"
+    ]
   },
   {
     "id": 22,
     "name": "Coleman Event Shelter",
     "brand": "Coleman",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-22-a.png"],
+    "image": [
+      "public/assets/imgs/id-22-a.png"
+    ],
     "price": 70000,
     "location": "Ho Chi Minh",
     "availability": "available",
-    "features": ["Shelter", "10′ x 10′", "Easy setup", "Beach/park"]
+    "features": [
+      "Shelter",
+      "10′ x 10′",
+      "Easy setup",
+      "Beach/park"
+    ]
   },
   {
     "id": 23,
@@ -308,7 +404,12 @@
     "price": 135000,
     "location": "Da Lat",
     "availability": "available",
-    "features": ["Duffel bag", "Water-resistant", "50L", "Travel/outdoor"]
+    "features": [
+      "Duffel bag",
+      "Water-resistant",
+      "50L",
+      "Travel/outdoor"
+    ]
   },
   {
     "id": 24,
@@ -323,7 +424,12 @@
     "price": 85000,
     "location": "Nha Trang",
     "availability": "available",
-    "features": ["Water purifier", "Fast flow", "Backpacking", "Hiking"]
+    "features": [
+      "Water purifier",
+      "Fast flow",
+      "Backpacking",
+      "Hiking"
+    ]
   },
   {
     "id": 25,
@@ -349,99 +455,162 @@
     "name": "Platypus GravityWorks Water Filter System",
     "brand": "Platypus",
     "type": "Purifier",
-    "image": ["public/assets/imgs/id-26-a.png"],
+    "image": [
+      "public/assets/imgs/id-26-a.png"
+    ],
     "price": 75000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["4L capacity", "Fast flow", "No pumping", "Lightweight"]
+    "features": [
+      "4L capacity",
+      "Fast flow",
+      "No pumping",
+      "Lightweight"
+    ]
   },
   {
     "id": 27,
     "name": "Sea to Summit Comfort Plus Sleeping Mat",
     "brand": "Sea to Summit",
     "type": "Sleeping",
-    "image": ["public/assets/imgs/id-27-a.png"],
+    "image": [
+      "public/assets/imgs/id-27-a.png"
+    ],
     "price": 125000,
     "location": "Da Lat",
     "availability": "available",
-    "features": ["Dual layer", "Insulated", "Compact", "Lightweight"]
+    "features": [
+      "Dual layer",
+      "Insulated",
+      "Compact",
+      "Lightweight"
+    ]
   },
   {
     "id": 28,
     "name": "Platypus QuickDraw Microfilter System",
     "brand": "Platypus",
     "type": "Purifier",
-    "image": ["public/assets/imgs/id-28-a.png"],
+    "image": [
+      "public/assets/imgs/id-28-a.png"
+    ],
     "price": 50000,
     "location": "Da Nang",
     "availability": "limited",
-    "features": ["Portable", "Fast filtering", "Durable", "Easy to clean"]
+    "features": [
+      "Portable",
+      "Fast filtering",
+      "Durable",
+      "Easy to clean"
+    ]
   },
   {
     "id": 29,
     "name": "Sea to Summit X-Set 11 Cooking Kit",
     "brand": "Sea to Summit",
     "type": "Cooking",
-    "image": ["public/assets/imgs/id-29-a.png"],
+    "image": [
+      "public/assets/imgs/id-29-a.png"
+    ],
     "price": 70000,
     "location": "Ho Chi Minh",
     "availability": "available",
-    "features": ["Collapsible", "Lightweight", "BPA-free", "Compact storage"]
+    "features": [
+      "Collapsible",
+      "Lightweight",
+      "BPA-free",
+      "Compact storage"
+    ]
   },
   {
     "id": 30,
     "name": "Platypus Hoser Hydration Reservoir 2L",
     "brand": "Platypus",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-30-a.png"],
+    "image": [
+      "public/assets/imgs/id-30-a.png"
+    ],
     "price": 40000,
     "location": "Ha Long",
     "availability": "available",
-    "features": ["2L capacity", "Flexible", "Taste-free", "Lightweight"]
+    "features": [
+      "2L capacity",
+      "Flexible",
+      "Taste-free",
+      "Lightweight"
+    ]
   },
   {
     "id": 31,
     "name": "Sea to Summit Alpha Pan 8-Inch",
     "brand": "Sea to Summit",
     "type": "Cooking",
-    "image": ["public/assets/imgs/id-31-a.png"],
+    "image": [
+      "public/assets/imgs/id-31-a.png"
+    ],
     "price": 55000,
     "location": "Da Nang",
     "availability": "available",
-    "features": ["Non-stick", "Hard anodized", "Durable", "Lightweight"]
+    "features": [
+      "Non-stick",
+      "Hard anodized",
+      "Durable",
+      "Lightweight"
+    ]
   },
   {
     "id": 32,
     "name": "Sea to Summit Spark SPII Sleeping Bag",
     "brand": "Sea to Summit",
     "type": "Sleeping",
-    "image": ["public/assets/imgs/id-32-a.png"],
+    "image": [
+      "public/assets/imgs/id-32-a.png"
+    ],
     "price": 95000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["850+ down fill", "Compact", "Ultralight", "Season 3"]
+    "features": [
+      "850+ down fill",
+      "Compact",
+      "Ultralight",
+      "Season 3"
+    ]
   },
   {
     "id": 33,
     "name": "Platypus Meta Bottle + Microfilter 1L",
     "brand": "Platypus",
     "type": "Tools",
-    "image": ["public/assets/imgs/id-33-a.png"],
+    "image": [
+      "public/assets/imgs/id-33-a.png"
+    ],
     "price": 48000,
     "location": "Nha Trang",
     "availability": "available",
-    "features": ["Collapsible", "Integrated filter", "Leakproof", "Reusable"]
+    "features": [
+      "Collapsible",
+      "Integrated filter",
+      "Leakproof",
+      "Reusable"
+    ]
   },
   {
     "id": 34,
     "name": "Jetboil Flash Java Kit",
     "brand": "Jetboil",
     "type": "Cooking",
-    "image": ["public/assets/imgs/id-34-a.png"],
+    "image": [
+      "public/assets/imgs/id-34-a.png"
+    ],
     "price": 85000,
     "location": "Da Lat",
     "availability": "available",
-    "features": ["Fast boiling", "Coffee press", "Compact", "1L capacity"]
+    "features": [
+      "Fast boiling",
+      "Coffee press",
+      "Compact",
+      "1L capacity"
+    ]
   },
   {
     "id": 35,
@@ -456,47 +625,75 @@
     "price": 40000,
     "location": "Da Nang",
     "availability": "available",
-    "features": ["300 lumens", "Compact", "AAA battery", "Adjustable beam"]
+    "features": [
+      "300 lumens",
+      "Compact",
+      "AAA battery",
+      "Adjustable beam"
+    ]
   },
   {
     "id": 36,
     "name": "Coleman Skydome 6-Person Tent",
     "brand": "Coleman",
     "type": "Tent",
-    "image": ["public/assets/imgs/id-36-a.png"],
+    "image": [
+      "public/assets/imgs/id-36-a.png"
+    ],
     "price": 175000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["6-person", "WeatherTec system", "Quick setup", "Spacious"]
+    "features": [
+      "6-person",
+      "WeatherTec system",
+      "Quick setup",
+      "Spacious"
+    ]
   },
   {
     "id": 37,
     "name": "The North Face Eco Trail Sleeping Bag",
     "brand": "The North Face",
     "type": "Sleeping",
-    "image": ["public/assets/imgs/id-37-a.png"],
+    "image": [
+      "public/assets/imgs/id-37-a.png"
+    ],
     "price": 90000,
     "location": "Ho Chi Minh",
     "availability": "available",
-    "features": ["Recycled materials", "Warm", "Comfortable", "Eco-friendly"]
+    "features": [
+      "Recycled materials",
+      "Warm",
+      "Comfortable",
+      "Eco-friendly"
+    ]
   },
   {
     "id": 38,
     "name": "MSR WindBurner Duo Stove System",
     "brand": "MSR",
     "type": "Cooking",
-    "image": ["public/assets/imgs/id-38-a.png"],
+    "image": [
+      "public/assets/imgs/id-38-a.png"
+    ],
     "price": 95000,
     "location": "Da Nang",
     "availability": "available",
-    "features": ["Windproof", "Fuel-efficient", "2-person", "Compact"]
+    "features": [
+      "Windproof",
+      "Fuel-efficient",
+      "2-person",
+      "Compact"
+    ]
   },
   {
     "id": 39,
     "name": "Deuter Trail 30L Backpack",
     "brand": "Deuter",
     "type": "Backpacks",
-    "image": ["public/assets/imgs/id-39-a.png"],
+    "image": [
+      "public/assets/imgs/id-39-a.png"
+    ],
     "price": 85000,
     "location": "Da Lat",
     "availability": "available",
@@ -519,7 +716,12 @@
     "price": 35000,
     "location": "Hanoi",
     "availability": "available",
-    "features": ["2L", "Collapsible", "Lightweight", "Taste-free"]
+    "features": [
+      "2L",
+      "Collapsible",
+      "Lightweight",
+      "Taste-free"
+    ]
   },
   {
     "id": 41,
@@ -638,5 +840,21 @@
       "Compact design fits easily into backpacks",
       "Durable waterproof fabric and bright color for visibility"
     ]
+  },
+  {
+    "id": 38194,
+    "name": "New Tent",
+    "brand": "The North Face",
+    "type": "Sleeping",
+    "image": [],
+    "price": "12000",
+    "location": "TP. Hồ Chí Minh",
+    "availability": "available",
+    "features": [
+      "Lightweight",
+      "4-person",
+      "Water-resistant"
+    ],
+    "discount": ""
   }
 ]

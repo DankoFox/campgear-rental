@@ -1,6 +1,7 @@
 import React from "react";
 
 function Image({ src, alt = "Image Name", className = "", ...props }) {
+  console.log("src", src);
   return (
     <img
       src={src}

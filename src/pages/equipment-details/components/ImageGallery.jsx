@@ -4,10 +4,8 @@ import Image from "../../../components/AppImage";
 import Icon from "../../../components/AppIcon";
 
 const ImageGallery = ({ images = [], productName }) => {
-  console.log(images);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
-
   const handlePrevious = () => {
     setSelectedImageIndex((prev) =>
       prev === 0 ? images.length - 1 : prev - 1
@@ -25,13 +23,20 @@ const ImageGallery = ({ images = [], productName }) => {
   };
 
   const currentImage = images[selectedImageIndex];
-
+  const formatImagePath = (path) => {
+    if (!path) return "";
+    return path.startsWith("/public/")
+      ? path
+      : path.startsWith("public/")
+      ? "/" + path
+      : "/public/" + path;
+  };
   return (
     <div className="space-y-4">
       {/* Main Image */}
       <div className="relative bg-muted rounded-lg overflow-hidden aspect-square">
         <Image
-          src={currentImage?.replace(/^public\//, "/")}
+          src={formatImagePath(currentImage)}
           alt={`${productName || "Product"} image ${selectedImageIndex + 1}`}
           className={`w-full h-full object-cover cursor-zoom-in transition-transform duration-300 ${
             isZoomed ? "scale-150" : "scale-100"
@@ -83,7 +88,7 @@ const ImageGallery = ({ images = [], productName }) => {
               }`}
             >
               <Image
-                src={image?.replace(/^public\//, "/")}
+                src={formatImagePath(image)}
                 alt={`${productName || "Product"} thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
               />
