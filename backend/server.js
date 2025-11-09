@@ -303,7 +303,12 @@ app.post("/api/register", (req, res) => {
     users.push(newUser);
     fs.writeFileSync(USER_FILE, JSON.stringify(users, null, 2));
 
-    res.json({ message: "User registered successfully", user: newUser });
+res.status(201).json({
+  success: true,
+  message: "User registered successfully",
+  user: newUser,
+});
+
   } catch (error) {
     console.error("Error saving new user:", error);
     res.status(500).json({ error: "Internal Server Error" });
