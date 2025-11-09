@@ -25,6 +25,7 @@ const RegistrationForm = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [formProgress, setFormProgress] = useState(0);
+const [successMessage, setSuccessMessage] = useState("");
 
   const locationOptions = [
     { value: "hanoi", label: "Hanoi" },
@@ -158,30 +159,48 @@ const RegistrationForm = () => {
     setErrors({});
 
     try {
-      const response = await fetch("http://localhost:5050/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.fullName,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+  const response = await fetch("http://localhost:5050/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+      phone: formData.phone,
+      location: formData.location,
+      termsAccepted: formData.termsAccepted,
+    }),
+  });
 
-      const result = await response.json();
-      if (!response.ok)
-        setErrors({ submit: result.error || "Registration failed." });
-      else {
-        navigate("/login", {
-          state: {
-            message: "Registration successful! You can now log in.",
-            email: formData.email,
-          },
-        });
-      }
-    } catch {
-      setErrors({ submit: "Network error. Please try again." });
-    } finally {
+  // Try to safely read text first
+  const text = await response.text();
+  let result = {};
+  try {
+    result = JSON.parse(text);
+  } catch {
+    console.warn("⚠️ Response not valid JSON:", text);
+  }
+
+  if (!response.ok) {
+    setErrors({ submit: result?.error || "Registration failed." });
+  } else {
+    setSuccessMessage(" Account registered successfully!");
+    setErrors({});
+    setFormData({
+      fullName: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      location: "",
+      termsAccepted: false,
+    });
+  }
+} catch (error) {
+  console.error("Network or CORS error:", error);
+  setErrors({ submit: "Network error. Please try again." });
+}
+ finally {
       setIsLoading(false);
     }
   };
@@ -190,11 +209,19 @@ const RegistrationForm = () => {
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-          Create Your Account
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Fill in the details below to get started
-        </p>
+  Create Your Account
+</h1>
+
+{successMessage && (
+  <p className="text-green-600 font-semibold text-center mb-2">
+    {successMessage}
+  </p>
+)}
+
+<p className="text-sm text-muted-foreground">
+  Fill in the details below to get started
+</p>
+
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
