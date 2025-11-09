@@ -278,9 +278,16 @@ export async function getPurchaseLogs() {
 app.post("/api/register", (req, res) => {
   try {
     const users = JSON.parse(fs.readFileSync(USER_FILE, "utf-8"));
-    const { username, email, password } = req.body;
+    const {
+      username,
+      email,
+      password,
+      phone,
+      location,
+      termsAccepted,
+    } = req.body;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !phone || !location) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -296,6 +303,9 @@ app.post("/api/register", (req, res) => {
       username,
       email,
       password,
+      phone,
+      location,
+      termsAccepted: !!termsAccepted,
       createdAt: new Date().toISOString(),
     };
 
@@ -308,6 +318,7 @@ app.post("/api/register", (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 // Get all unique types
 app.get("/api/types", (req, res) => {
