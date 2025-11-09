@@ -18,7 +18,7 @@ app.use(
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+  })
 );
 
 app.use(express.json());
@@ -26,6 +26,7 @@ app.use(express.json());
 const EQUIP_FILE = "./data/equipment-data.json";
 const USER_FILE = "./data/user-list.json";
 const PURCHASE_LOG_FILE = "./data/purchaseLogs.json";
+const COMBO_LOG = "./data/seasonal-combo.json";
 
 app.get("/api/data", (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
@@ -47,7 +48,15 @@ app.delete("/api/data/:id", (req, res) => {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
   res.json({ message: "Item deleted", data });
 });
-
+app.get("/api/combo", (req, res) => {
+  try {
+    const combo = JSON.parse(fs.readFileSync(COMBO_LOG, "utf-8"));
+    res.json(combo);
+  } catch (error) {
+    console.error("Error reading combo file:", error);
+    res.status(500).json({ error: "Failed to load equipment data" });
+  }
+});
 app.get("/api/equipment", (req, res) => {
   try {
     const equipment = JSON.parse(fs.readFileSync(EQUIP_FILE, "utf-8"));
@@ -124,12 +133,12 @@ app.get("/api/equipment/:id", (req, res) => {
 app.get("/api/instructions/:type", (req, res) => {
   try {
     const instructions = JSON.parse(
-      fs.readFileSync("./data/instruction.json", "utf-8"),
+      fs.readFileSync("./data/instruction.json", "utf-8")
     );
 
     const { type } = req.params;
     const result = instructions.find(
-      (item) => item.type.toLowerCase() === type.toLowerCase(),
+      (item) => item.type.toLowerCase() === type.toLowerCase()
     );
     if (!result) {
       return res
@@ -146,7 +155,7 @@ app.get("/api/instructions/:type", (req, res) => {
 app.get("/api/specifications/:type", (req, res) => {
   try {
     const specs = JSON.parse(
-      fs.readFileSync("./data/specification-data.json", "utf-8"),
+      fs.readFileSync("./data/specification-data.json", "utf-8")
     );
     const item = specs.find((s) => s.type === req.params.type);
 
@@ -326,7 +335,7 @@ app.get("/api/types", (req, res) => {
     ];
     // Return capitalized for nicer display
     const formattedTypes = types.map(
-      (t) => t.charAt(0).toUpperCase() + t.slice(1),
+      (t) => t.charAt(0).toUpperCase() + t.slice(1)
     );
     res.json(formattedTypes);
   } catch (error) {
@@ -349,12 +358,12 @@ app.get("/api/brands", (req, res) => {
 app.get("/api/providers/:brand", (req, res) => {
   try {
     const providers = JSON.parse(
-      fs.readFileSync("./data/brand-providers.json", "utf-8"),
+      fs.readFileSync("./data/brand-providers.json", "utf-8")
     );
     const { brand } = req.params;
 
     const provider = providers.find(
-      (p) => p.brand.toLowerCase() === brand.toLowerCase(),
+      (p) => p.brand.toLowerCase() === brand.toLowerCase()
     );
 
     if (!provider) {

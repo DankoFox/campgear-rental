@@ -70,8 +70,8 @@ const CreateItem = () => {
     const fetchData = async () => {
       try {
         const [brandsRes, typesRes] = await Promise.all([
-          fetch(`http://localhost:5050/api/types`),
           fetch(`http://localhost:5050/api/brands`),
+          fetch(`http://localhost:5050/api/types`),
         ]);
         if (!brandsRes.ok || !typesRes.ok)
           throw new Error("Failed to fetch data");
@@ -113,22 +113,6 @@ const CreateItem = () => {
 
       // show confirm dialog
       setDialogOpen(true);
-
-      // auto-close after 0.5 seconds and reset form
-      setTimeout(() => {
-        setDialogOpen(false);
-        setFormData({
-          name: "",
-          brand: "",
-          type: "",
-          image: [],
-          price: "",
-          location: "",
-          availability: "available",
-          features: [],
-          discount: "",
-        });
-      }, 500);
     } catch (err) {
       console.error(err);
       alert("Error creating item");
@@ -144,13 +128,13 @@ const CreateItem = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto mt-10 grid grid-cols-2 gap-10">
+    <div className="max-w-6xl mx-auto my-10 grid grid-cols-2 gap-10">
       {/* Form Column */}
       <div className="bg-white shadow-md rounded-2xl p-6 border border-green-900/10">
         <h2 className="text-2xl font-semibold mb-6 text-center text-[#052E16]">
           Create New Item
         </h2>
-        <form className="space-y-5">
+        <div className="space-y-5">
           {/* Name */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">Name</label>
@@ -271,7 +255,7 @@ const CreateItem = () => {
               Back to Dashboard
             </Button>
           </div>
-        </form>
+        </div>
       </div>
 
       {/* Preview Column */}
@@ -283,7 +267,7 @@ const CreateItem = () => {
         onOpenChange={setDialogOpen}
         title="Item Created!"
         description="Your item has been successfully added to the inventory."
-        onConfirm={() => {}}
+        onConfirm={() => navigate("/admin-dashboard")}
       />
     </div>
   );

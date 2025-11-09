@@ -13,11 +13,13 @@ const Header = ({ cartCount }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // ✅ Load user from localStorage when the page loads
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     setUser(storedUser ? JSON.parse(storedUser) : null);
   }, []);
 
+  // ✅ Close menus when navigating to a new page
   useEffect(() => {
     setIsMenuOpen(false);
     setIsUserMenuOpen(false);
@@ -26,7 +28,12 @@ const Header = ({ cartCount }) => {
   const navigationItems = [
     { label: "Camping Equipment", path: "/equipment-catalog", icon: "Tent" },
     {
-      label: "Shopping Cart",
+      label: "Camping Equipment",
+      path: "/equipment-catalog",
+      icon: "Tent",
+    },
+    {
+      label: "Cart",
       path: "/shopping-cart",
       icon: "ShoppingCart",
       badge: cartCount > 0 ? cartCount : null,
@@ -137,12 +144,12 @@ const Header = ({ cartCount }) => {
             <div className="hidden md:flex items-center space-x-3">
               <Link to="/login">
                 <Button variant="ghost" size="sm">
-                  Login
+                  Sign In
                 </Button>
               </Link>
               <Link to="/register">
                 <Button variant="default" size="sm">
-                  Register
+                  Sign Up
                 </Button>
               </Link>
             </div>

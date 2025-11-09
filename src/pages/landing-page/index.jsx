@@ -1,107 +1,230 @@
 // @ts-nocheck
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+// Components
 import HeroSection from "../../pages/equipment-catalog/components/HeroSection.jsx";
-import Footer from "../../components/ui/Footer.jsx";
-import { mockEquipment } from "../../data/equipment-data.js";
-// import { mockEquipment } from "backend/data/equipment-data.json"
 import Button from "../../components/ui/Button.jsx";
-import Image from "../../components/AppImage.jsx"; // use your app image component if available
+import Image from "../../components/AppImage.jsx";
+import CategoryCard from "./components/CategoryCard.jsx";
+import SeasonalCard from "./components/SeasonalCard.jsx";
+
+// Constants
+const CATEGORY_IMAGES = {
+  Tent: "public/assets/imgs/tent-a.png",
+  Cooking: "public/assets/imgs/cooking-a.png",
+  Sleeping: "public/assets/imgs/sleeping-c.png",
+  Tools: "public/assets/imgs/tool-a.png",
+  Trekkingpoles: "public/assets/imgs/trekking-a.png",
+  Backpacks: "public/assets/imgs/backpack-a.png",
+  Lighting: "public/assets/imgs/light-c.png",
+  Purifier: "public/assets/imgs/purifier-b.png",
+};
+
+// Utility component for horizontal scroll grid
+const HorizontalGrid = ({ children }) => (
+  <div className="overflow-x-auto">
+    <div
+      className="
+        grid grid-flow-col 
+        auto-cols-[minmax(280px,1fr)] sm:auto-cols-[minmax(300px,1fr)] 
+        md:auto-cols-[minmax(340px,1fr)] lg:auto-cols-[minmax(380px,1fr)]
+        gap-8 
+        snap-x snap-mandatory
+        px-2 pb-4
+      "
+    >
+      {children}
+    </div>
+  </div>
+);
 
 const LandingPage = ({ addToCart }) => {
-  // Get all unique brands
-  const brands = [...new Set(mockEquipment.map((item) => item.brand))];
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Group equipment by brand (make sure this is defined BEFORE the JSX that uses it)
-  const equipmentByBrand = {};
-  mockEquipment.forEach((item) => {
-    if (!equipmentByBrand[item.brand]) equipmentByBrand[item.brand] = [];
-    equipmentByBrand[item.brand].push(item);
-  });
+  const [types, setTypes] = useState([]);
+  const [seasonalCombos, setSeasonalCombos] = useState([]);
+  const [equipments, setEquipments] = useState([]);
 
-  // Handle "Add All" logic
-  const handleAddAll = (brandName) => {
-    const items = equipmentByBrand[brandName] || [];
-    console.log("AddAll -> brand:", brandName, items);
-    items.forEach((item) => addToCart(item));
+  const [loadingTypes, setLoadingTypes] = useState(false);
+  const [loadingCombos, setLoadingCombos] = useState(false);
+  const [loadingEquipments, setLoadingEquipments] = useState(false);
+
+  // --- Fetch types ---
+  useEffect(() => {
+    const fetchTypes = async () => {
+      setLoadingTypes(true);
+      try {
+        const res = await fetch("http://localhost:5050/api/types");
+        if (!res.ok) throw new Error("Failed to fetch types");
+        setTypes(await res.json());
+      } catch (err) {
+        console.error("Error fetching types:", err);
+      } finally {
+        setLoadingTypes(false);
+      }
+    };
+    fetchTypes();
+  }, []);
+
+  // --- Fetch combos ---
+  useEffect(() => {
+    const fetchCombos = async () => {
+      setLoadingCombos(true);
+      try {
+        const res = await fetch("http://localhost:5050/api/combo");
+        if (!res.ok) throw new Error("Failed to fetch combos");
+        setSeasonalCombos(await res.json());
+      } catch (err) {
+        console.error("Error fetching combos:", err);
+      } finally {
+        setLoadingCombos(false);
+      }
+    };
+    fetchCombos();
+  }, []);
+
+  // --- Fetch equipments ---
+  useEffect(() => {
+    const fetchEquipments = async () => {
+      setLoadingEquipments(true);
+      try {
+        const res = await fetch("http://localhost:5050/api/equipment");
+        if (!res.ok) throw new Error("Failed to fetch equipments");
+        setEquipments(await res.json());
+      } catch (err) {
+        console.error("Error fetching equipments:", err);
+      } finally {
+        setLoadingEquipments(false);
+      }
+    };
+    fetchEquipments();
+  }, []);
+
+  // --- Handlers ---
+  const handleSearch = () => {
+    navigate(`/equipment-catalog?search=${searchTerm}`);
   };
 
+  const handleCategoryClick = (type) => {
+    const normalized = type.toLowerCase().replace(/\s+/g, "");
+    navigate(`/equipment-catalog?category=${normalized}`);
+  };
 
-  // Helper to safely get the brand image (handles string or array)
-  const getBrandImage = (sampleItem) => {
-    if (!sampleItem) return null;
-    const img = sampleItem.image;
-    if (!img) return null;
-    if (Array.isArray(img)) return img[0];
-    return img; // string
+  const handleAddCombo = (combo) => {
+    if (Array.isArray(combo["items-list"])) {
+      combo["items-list"].forEach((id) => {
+        const equipment = equipments.find((eq) => String(eq.id) === String(id));
+
+        if (equipment) {
+          addToCart(equipment);
+        } else {
+          console.warn(
+            `! Equipment with ID ${id} not found for combo ${combo.name}`,
+          );
+        }
+      });
+    } else {
+      console.warn("! Combo items-list is not an array:", combo);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="flex flex-col gap-8">
-        <HeroSection />
+      <main className="flex flex-col gap-10">
+        {/* Hero */}
+        <HeroSection
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onSearch={handleSearch}
+        />
+
+        {/* Categories */}
+        <section className="px-6">
+          <h2 className="text-xl font-bold mb-6 text-center">Categories</h2>
+          {loadingTypes ? (
+            <p className="text-center text-muted-foreground">
+              Loading categories...
+            </p>
+          ) : (
+            <HorizontalGrid>
+              {types.map((type) => (
+                <div key={type} className="snap-center">
+                  <CategoryCard
+                    title={type}
+                    image={CATEGORY_IMAGES[type] || "/assets/imgs/default.jpg"}
+                    onClick={() => handleCategoryClick(type)}
+                  />
+                </div>
+              ))}
+            </HorizontalGrid>
+          )}
+        </section>
+
+        {/* Seasonal Combos */}
+        {/* <section className="px-6"> */}
+        {/*   {loadingTypes ? ( */}
+        {/*     <p className="text-center text-muted-foreground"> */}
+        {/*       Loading categories... */}
+        {/*     </p> */}
+        {/*   ) : ( */}
+        {/*     <div className="overflow-x-auto"> */}
+        {/*       <div */}
+        {/*         className=" */}
+        {/*   grid grid-flow-col  */}
+        {/*   auto-cols-[minmax(280px,1fr)] sm:auto-cols-[minmax(300px,1fr)]  */}
+        {/*   md:auto-cols-[minmax(340px,1fr)] lg:auto-cols-[minmax(380px,1fr)] */}
+        {/*   gap-8  */}
+        {/*   snap-x snap-mandatory */}
+        {/*   px-2 pb-4 */}
+        {/* " */}
+        {/*       > */}
+        {/*         {types.map((type) => ( */}
+        {/*           <div key={type} className="snap-center"> */}
+        {/*             <CategoryCard */}
+        {/*               title={type} */}
+        {/*               image={type.image || "public/assets/imgs/default.jpg"} */}
+        {/*               onClick={() => handleCategoryClick(type)} */}
+        {/*             /> */}
+        {/*           </div> */}
+        {/*         ))} */}
+        {/*       </div> */}
+        {/*     </div> */}
+        {/*   )} */}
+        {/* </section> */}
 
         <section className="px-6">
           <h2 className="text-xl font-bold mb-6 text-center">
-            Available Brands
+            Seasonal Combos
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {brands.map((brand) => {
-              const sampleItem = equipmentByBrand[brand]?.[0]; // first product for this brand
-              const imgSrc = getBrandImage(sampleItem);
-
-              console.log(brand, sampleItem);
-              
-              return (
-                <div
-                  key={brand}
-                  className="p-6 border rounded-xl bg-card shadow-sm flex flex-col items-center gap-4 hover:shadow-lg transition"
-                >
-                  {/* Brand image */}
-                  {imgSrc ? (
-                    <Image
-                      src={imgSrc}
-                      alt={brand}
-                      className="w-full h-40 object-cover rounded-md"
-                    />
-                  ) : (
-                    <div className="w-full h-40 bg-muted rounded-md flex items-center justify-center">
-                      <span className="text-sm text-muted-foreground">No image</span>
-                    </div>
-                  )}
-
-                  <h3 className="text-lg font-semibold">{brand}</h3>
-
-                  {/* Optional: show how many items */}
-                  <p className="text-sm text-muted-foreground">
-                    {equipmentByBrand[brand]?.length || 0} item
-                    {equipmentByBrand[brand]?.length > 1 ? "s" : ""}
-                  </p>
-
-                  {/* Starting price (optional) */}
-                  {sampleItem?.price && (
-                    <p className="text-sm text-muted-foreground">
-                      From{" "}
-                      <span className="font-bold text-foreground">
-                        {sampleItem.price.toLocaleString()}₫
-                      </span>
-                    </p>
-                  )}
-
-                  <Button
-                    onClick={() => handleAddAll(brand)}
-                    className="w-full mt-2"
-                    variant="secondary"
-                  >
-                    Add All {brand} Products
-                  </Button>
+          {loadingCombos || loadingEquipments ? (
+            <p className="text-center text-muted-foreground">
+              Loading combos...
+            </p>
+          ) : seasonalCombos.length === 0 ? (
+            <p className="text-center text-muted-foreground">
+              No combos available
+            </p>
+          ) : (
+            <HorizontalGrid>
+              {seasonalCombos.map((combo) => (
+                <div key={combo.id || combo.name} className="snap-center">
+                  <SeasonalCard
+                    image={combo.image || "/assets/imgs/default.jpg"}
+                    title={combo.name}
+                    description={
+                      combo.description ||
+                      `${combo["items-list"]?.length || 0} items in this combo`
+                    }
+                    onAddToCart={() => handleAddCombo(combo)}
+                  />
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </HorizontalGrid>
+          )}
         </section>
-
-        <Footer />
       </main>
     </div>
   );
