@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: campgear-rental
+    env: node
+    buildCommand: npm install && npm run build && cp -r public build && cd backend && npm install
+    startCommand: cd backend && npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
